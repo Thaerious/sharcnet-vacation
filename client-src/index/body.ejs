@@ -1,0 +1,24 @@
+<form action="/submit" method="POST">
+    <b>Vacation Request Form</b>
+    <input type="text" name="name" />
+    <select name="institution">
+        <option value="brock">Brock</option>
+        <option value="guelph">Guelph</option>
+        <option value="laurier">Laurier</option>
+        <option value="mcmaster">McMaster</option>
+        <option value="otu">OTU</option>
+        <option value="waterloo">Waterloo</option>
+        <option value="western">Western</option>
+        <option value="windsor">Windsor</option>
+        <option value="york">York</option>
+    </select>
+    <select name="term">
+        <option value="am">AM</option>
+        <option value="pm">PM</option>
+        <option value="full" selected="selected">Full Day</option>
+    </select>    
+    <input type="date" id="start_date" name="start_date">
+    <input type="date" id="end_date" name="end_date">
+    <input type="text" name="note" />
+    <button id="submit">submit</button>
+</form>
