@@ -4,7 +4,7 @@ const parseArgsOptions = {
             long: `verbose`,
             short: `v`,
             type: `boolean`,
-        }
+        },
     ],
 };
 

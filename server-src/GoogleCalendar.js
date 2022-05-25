@@ -1,10 +1,17 @@
 // see: https://frar.ca/wordpress/?p=318
 
-import { google } from "googleapis";
+import {google} from "googleapis";
 
+/**
+ * Handler class for Google Calendar API.
+ */
 class GoogleCalendar {
-    static SCOPES = ["https://www.googleapis.com/auth/calendar"];
+    static SCOPES = [`https://www.googleapis.com/auth/calendar`];
 
+    /**
+     * Constructor makes initial authentication request.
+     * @return {undefined}
+     */
     constructor() {
         const auth = new google.auth.GoogleAuth({
             keyFilename: process.env.KEY_FILENAME,
@@ -12,13 +19,14 @@ class GoogleCalendar {
         });
 
         this.calendar = google.calendar({
-            version: "v3",
+            version: `v3`,
             auth: auth,
         });
     }
 
     /**
      * List available calendars.
+     * @return {undefined}
      */
     list() {
         return new Promise((resolve, reject) => {
@@ -32,7 +40,7 @@ class GoogleCalendar {
     /**
      * Retrieve a calendar.  By default retrievs the primary calendar.
      */
-    get(id = "primary") {
+    get(id = `primary`) {
         return new Promise((resolve, reject) => {
             const options = {
                 calendarId: id,
@@ -80,7 +88,7 @@ class GoogleCalendar {
     }
 
     // https://developers.google.com/calendar/api/guides/create-events
-    addEvent(id, start, end, summary){
+    addEvent(id, start, end, summary) {
         return new Promise((resolve, reject) => {
             const options = {
                 calendarId: id,
@@ -92,14 +100,14 @@ class GoogleCalendar {
                         date: end,
                     },
                     summary: summary,
-                },                
+                },
             };
 
             this.calendar.events.insert(options, (err, res) => {
                 if (err) reject(err);
                 if (res) resolve(res.data);
             });
-        });        
+        });
     }
 }
 

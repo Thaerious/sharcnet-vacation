@@ -1,0 +1,17 @@
+Downloading
+===========
+git clone git@github.com:Thaerious/sharcnet-vacation.git
+cd sharcnet-vacation
+npm i
+
+Running
+=======
+node server-src/Server.js
+
+Development
+===========
+Watch the .css file with 'npx run watch-css &'
+
+Views are to be added manually to the /client-src directory.
+The server-src/viewMiddleware.js file handles view requests.
+
