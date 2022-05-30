@@ -15,3 +15,6 @@ Watch the .css file with 'npx run watch-css &'
 Views are to be added manually to the /client-src directory.
 The server-src/viewMiddleware.js file handles view requests.
 
+Testing
+=======
+npx mocha

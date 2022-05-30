@@ -11,14 +11,17 @@
   "license": "ISC",
   "dependencies": {
     "@html-widget/core": "github:Thaerious/HTML-Widget",
+    "@thaerious/utility": "^0.0.4",
+    "better-sqlite3": "^7.5.3",
     "dotenv": "^16.0.1",
     "googleapis": "^100.0.0",
     "nodemailer": "^6.7.5",
-    "sqlite3": "^5.0.8"
+    "shibboleth": "^0.1.4"
   },
   "devDependencies": {
     "eslint": "^8.16.0",
-    "eslint-config-google": "^0.14.0"
+    "eslint-config-google": "^0.14.0",
+    "mocha": "^10.0.0"
   },
   "type": "module"
 }

@@ -9,6 +9,8 @@ import http from "http";
 import Logger from "@thaerious/logger";
 import SubmitHandler from "./SubmitHandler.js";
 import dotenv from "dotenv";
+import DBInterface from "./DBInterface.js";
+import shibboleth  from "shibboleth";
 dotenv.config();
 
 Logger.getLogger().channel(`standard`).enabled = true;
@@ -17,6 +19,7 @@ const logger = Logger.getLogger().all();
 
 class Server {
     constructor() {
+        this.dbi = new DBInterface("requests.db");
         this.submitHandler = new SubmitHandler();
         this.app = Express();
 
@@ -25,6 +28,7 @@ class Server {
             next();
         });
 
+        this.app.use(shibboleth.shibboleth);
         this.app.use(this.submitHandler.route);
 
         this.app.set(`views`, `client-src`);
@@ -53,8 +57,8 @@ class Server {
             logger.standard(`Listening on port ${port}`);
         });
 
-        process.on(`SIGINT`, () => stop(this.server));
-        process.on(`SIGTERM`, () => stop(this.server));
+        process.on(`SIGINT`, () => this.stop(this.server));
+        process.on(`SIGTERM`, () => this.stop(this.server));
         return this;
     }
 
