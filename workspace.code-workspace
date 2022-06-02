@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\node-mailer"
+		},
+		{
+			"path": "..\\utility"
+		},
+		{
+			"path": "..\\html-widget"
+		}
+	],
+	"settings": {}
+}

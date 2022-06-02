@@ -2,7 +2,7 @@
   "name": "vacation-app",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "server-src/Server.js",
   "scripts": {
     "watch-css": "sass client-src/index/index.scss:www/compiled/index.css --watch",
     "build-css": "sass client-src/index/index.scss:www/compiled/index.css"
@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@html-widget/core": "github:Thaerious/HTML-Widget",
-    "@thaerious/utility": "^0.0.4",
+    "@thaerious/utility": "*",
     "better-sqlite3": "^7.5.3",
     "dotenv": "^16.0.1",
     "googleapis": "^100.0.0",

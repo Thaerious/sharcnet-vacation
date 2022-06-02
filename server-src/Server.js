@@ -10,7 +10,6 @@ import Logger from "@thaerious/logger";
 import SubmitHandler from "./SubmitHandler.js";
 import dotenv from "dotenv";
 import DBInterface from "./DBInterface.js";
-import shibboleth  from "shibboleth";
 dotenv.config();
 
 Logger.getLogger().channel(`standard`).enabled = true;
@@ -28,7 +27,6 @@ class Server {
             next();
         });
 
-        this.app.use(shibboleth.shibboleth);
         this.app.use(this.submitHandler.route);
 
         this.app.set(`views`, `client-src`);
