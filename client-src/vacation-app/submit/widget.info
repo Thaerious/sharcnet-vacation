@@ -1,0 +1,19 @@
+{
+  "components": [
+    {
+      "type": "view",
+      "fullName": "submit",
+      "view": "submit.ejs",
+      "es6": "Submit.mjs",
+      "style": {
+        "src": "submit.scss",
+        "dest": "submit.css"
+      },
+      "dir": {
+        "sub": "vacation-app/submit",
+        "src": "client-src/vacation-app/submit"
+      },
+      "package": "vacation-app"
+    }
+  ]
+}

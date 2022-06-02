@@ -1,6 +1,6 @@
 import ParseArgs from "@thaerious/parseargs";
 import parseArgsOptions from "./parseArgsOptions.js";
-import viewMiddleware from "./viewMiddleware.js";
+import { WidgetMiddleware } from "@html-widget/core";
 const args = new ParseArgs().loadOptions(parseArgsOptions).run();
 if (args.flags.cwd) process.chdir(args.flags.cwd);
 
@@ -31,7 +31,9 @@ class Server {
 
         this.app.set(`views`, `client-src`);
         this.app.set(`view engine`, `ejs`);
-        this.app.use(viewMiddleware);
+
+        const mwm = new WidgetMiddleware();
+        this.app.use((req, res, next) => mwm.middleware(req, res, next));
 
         this.app.use(Express.static(`www/compiled`));
         this.app.use(Express.static(`client-src`));

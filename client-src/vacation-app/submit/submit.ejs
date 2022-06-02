@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/vacation-app/submit/submit.css">
+    <script type="importmap">
+        <% if (typeof prebuild === "undefined" || !prebuild) { %>
+        <%- include(lib_file) %>
+        <% } %>
+    </script>
+</head>
+<body>
+    <script type="module" src="/vacation-app/submit/Submit.mjs"></script>
+    <% if (typeof prebuild === "undefined" || !prebuild) { %>
+    <%- include(template_file) %>
+    <% } %>
+    <%- include('./body.ejs'); %>
+</body>
+</html>
+

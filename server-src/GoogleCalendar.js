@@ -14,7 +14,7 @@ class GoogleCalendar {
      */
     constructor() {
         const auth = new google.auth.GoogleAuth({
-            keyFilename: process.env.KEY_FILENAME,
+            keyFilename: process.env.GKEY_FILENAME,
             scopes: GoogleCalendar.SCOPES,
         });
 
@@ -98,6 +98,28 @@ class GoogleCalendar {
                     },
                     end: {
                         date: end,
+                    },
+                    summary: summary,
+                },
+            };
+
+            this.calendar.events.insert(options, (err, res) => {
+                if (err) reject(err);
+                if (res) resolve(res.data);
+            });
+        });
+    }
+
+    addTimedEvent(id, start, end, summary) {
+        return new Promise((resolve, reject) => {
+            const options = {
+                calendarId: id,
+                resource: {
+                    start: {
+                        dateTime: start,
+                    },
+                    end: {
+                        dateTime: end,
                     },
                     summary: summary,
                 },
