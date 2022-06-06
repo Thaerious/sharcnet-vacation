@@ -1,13 +1,15 @@
 import FS from "fs";
-import {loadTemplate} from "@thaerious/utility";
+import { loadTemplate } from "@thaerious/utility";
+import nodemailer from "nodemailer";
+import juice from "juice";
 
-class EMInterface{
 
+class EMInterface {
     /**
      * @param {string} login The username of the email account.
      * @param {string} password The password of the email account.
      */
-    constructor(login, password){
+    constructor(login, password) {
         this.login = login;
         this.password = password;
     }
@@ -15,9 +17,10 @@ class EMInterface{
     /**
      * Send 'filename' to 'email' using 'data' for templates.
      */
-    async sendFile(email, filename, data){
-        const html = loadTemplate(filename, data);
-        await send(email, "Vacation Request App", html);
+    async sendFile(email, filename, data) {
+        const htmlSrc = loadTemplate(filename, data);
+        const html = juice(htmlSrc);
+        await this.send(email, "Vacation Request Web-App Automated Notification", html);
     }
 
     async send(email, subject, html) {
@@ -28,7 +31,7 @@ class EMInterface{
                 pass: this.password,
             },
         });
-    
+
         // send mail with defined transport object
         let info = await transporter.sendMail({
             from: `"SHARCNET Vacation Mailer" <${this.login}>`,

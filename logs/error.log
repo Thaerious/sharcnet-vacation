@@ -1,0 +1,37 @@
+
+ *** Mon Jun 06 2022 10:13:52 GMT-0400 (Eastern Daylight Time)
+Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials m185-20020a37bcc2000000b0069c72b41b59sm11360695qkf.2 - gsmtp
+
+ *** Mon Jun 06 2022 10:17:43 GMT-0400 (Eastern Daylight Time)
+Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 66-20020aed3148000000b003026a08257fsm10688488qtg.21 - gsmtp
+
+ *** Mon Jun 06 2022 10:18:34 GMT-0400 (Eastern Daylight Time)
+Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials f32-20020a05622a1a2000b00301a475d8c8sm11145855qtb.75 - gsmtp
+
+ *** Mon Jun 06 2022 10:19:36 GMT-0400 (Eastern Daylight Time)
+Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials bq33-20020a05620a46a100b006a649e42962sm11831840qkb.70 - gsmtp
+
+ *** Mon Jun 06 2022 10:20:07 GMT-0400 (Eastern Daylight Time)
+Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials w19-20020a05620a445300b006a6b794dbc0sm3565253qkp.87 - gsmtp
+
+ *** Mon Jun 06 2022 10:20:24 GMT-0400 (Eastern Daylight Time)
+Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials u25-20020a05622a199900b00304f1a39429sm695440qtc.26 - gsmtp
+
+ *** Mon Jun 06 2022 10:21:29 GMT-0400 (Eastern Daylight Time)
+Error: Invalid login: 534-5.7.9 Application-specific password required. Learn more at
+534 5.7.9  https://support.google.com/mail/?p=InvalidSecondFactor d22-20020a05620a241600b006a6b1630e95sm4971106qkn.45 - gsmtp
+
+ *** Mon Jun 06 2022 10:28:15 GMT-0400 (Eastern Daylight Time)
+Error: No recipients defined
+
+ *** Mon Jun 06 2022 10:29:35 GMT-0400 (Eastern Daylight Time)
+Error: No recipients defined
+
+ *** Mon Jun 06 2022 12:51:50 GMT-0400 (Eastern Daylight Time)
+TypeError [ERR_MISSING_ARGS]: The "name" and "value" arguments must be specified

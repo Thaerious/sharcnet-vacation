@@ -26,9 +26,11 @@ class DBInterface {
     }
 
     add(email, start, end, type, name, inst) {
-        const sql = "INSERT INTO requests (email, start_date, end_date, type, name, institution, status)" + "values (?, ?, ?, ?, ?, ?, ?)";
+        const sql = "INSERT INTO requests (email, start_date, end_date, type, name, institution, status, hash) values (?, ?, ?, ?, ?, ?, ?, ?)";
         const stmt = this.db.prepare(sql);
-        stmt.run(email, start, end, type, name, inst, "pending");
+        const hash = this.generateHash();
+        stmt.run(email, start, end, type, name, inst, "pending", hash);        
+        return hash;
     }
 
     has(email, start) {
@@ -38,16 +40,38 @@ class DBInterface {
         return results !== undefined;
     }
 
-    get(email, start) {
-        const sql = "SELECT * FROM requests where email = ? AND start_date = ?";
+    get(hash) {
+        const sql = "SELECT * FROM requests where hash = ?";
         const stmt = this.db.prepare(sql);
-        return stmt.get(email, start);
+        return stmt.get(hash);
     }
 
-    update(email, start, status){
-        const sql = "UPDATE requests SET status = ? where email = ? AND start_date = ?";
+    update(hash, status){
+        const sql = "UPDATE requests SET status = ? where hash = ?";
         const stmt = this.db.prepare(sql);
-        return stmt.run(status, email, start);
+        return stmt.run(status, hash);
+    }
+
+    addRole(role, email){
+        const sql = "INSERT INTO emails (email, role) values (?, ?)";
+        const stmt = this.db.prepare(sql);
+        return stmt.run(email, role);
+    }
+
+    lookupRole(role){
+        const sql = "SELECT * FROM emails where role = ?";
+        const stmt = this.db.prepare(sql);
+        return stmt.get(role);
+    }
+
+    generateHash(n = 32){
+        let r = '';
+        let c = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let l = c.length;
+        while (r.length < n){
+            r += c.charAt(Math.floor(Math.random() * l));
+        }
+        return r;
     }
 }
 

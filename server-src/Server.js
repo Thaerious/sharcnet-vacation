@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import ParseArgs from "@thaerious/parseargs";
 import parseArgsOptions from "./parseArgsOptions.js";
 import { WidgetMiddleware } from "@html-widget/core";
@@ -6,15 +9,9 @@ if (args.flags.cwd) process.chdir(args.flags.cwd);
 
 import Express from "express";
 import http from "http";
-import Logger from "@thaerious/logger";
 import SubmitHandler from "./SubmitHandler.js";
-import dotenv from "dotenv";
 import DBInterface from "./DBInterface.js";
-dotenv.config();
-
-Logger.getLogger().channel(`standard`).enabled = true;
-Logger.getLogger().channel(`verbose`).enabled = false;
-const logger = Logger.getLogger().all();
+import logger from "./setupLogger.js";
 
 class Server {
     constructor() {

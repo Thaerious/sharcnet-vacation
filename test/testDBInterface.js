@@ -62,7 +62,7 @@ describe(`Test Database Interface Class`, function () {
         });
 
         it("creates a new file 'requests.db'", function () {
-            this.dbi.add("who@where.com", "2020-01-02", "2020-01-04", "full", "Waldo Rivera", "MIT");
+            this.hash = this.dbi.add("who@where.com", "2020-01-02", "2020-01-04", "full", "Waldo Rivera", "MIT");
             const actual = FS.existsSync("db/requests.db");
             assert.ok(actual);
         });
@@ -76,17 +76,35 @@ describe(`Test Database Interface Class`, function () {
             const actual = this.dbi.has("nope", "2020-01-02");
             assert.ok(!actual);
         });
+
+        describe(`Update an entry's status`, function () {
+            before(function () {
+                this.dbi = new DBInterface().open();
+                this.dbi.update(this.hash, "accepted");
+            });
+    
+            it("#get returns an object with status 'accepted'", function () {
+                const actual = this.dbi.get(this.hash).status;
+                const expected = "accepted";
+                assert.strictEqual(actual, expected);
+            });
+        });        
     });
 
-    describe(`Update an entry's status`, function () {
+    describe(`Roles`, function () {
         before(function () {
             this.dbi = new DBInterface().open();
-            this.dbi.update("who@where.com", "2020-01-02", "accepted");
         });
 
-        it("#get returns an object with status 'accepted'", function () {
-            const actual = this.dbi.get("who@where.com", "2020-01-02").status;
-            const expected = "accepted";
+        it("adds the role", function () {
+            const actual = this.dbi.addRole("manager", "manager@somewhere.com").changes;
+            const expected = 1;
+            assert.strictEqual(actual, expected);
+        });
+
+        it("retrieves correct role", function () {
+            const actual = this.dbi.lookupRole("manager").email;
+            const expected = "manager@somewhere.com";
             assert.strictEqual(actual, expected);
         });
     });
