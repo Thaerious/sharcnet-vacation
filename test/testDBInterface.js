@@ -103,6 +103,7 @@ describe(`Test Database Interface Class`, function () {
         });
 
         it("retrieves correct role", function () {
+            console.log(this.dbi.lookupRole("manager"));
             const actual = this.dbi.lookupRole("manager").email;
             const expected = "manager@somewhere.com";
             assert.strictEqual(actual, expected);

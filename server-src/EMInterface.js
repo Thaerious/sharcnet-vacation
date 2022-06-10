@@ -17,10 +17,10 @@ class EMInterface {
     /**
      * Send 'filename' to 'email' using 'data' for templates.
      */
-    async sendFile(email, filename, data) {
+    async sendFile(email, filename, subject, data) {
         const htmlSrc = loadTemplate(filename, data);
         const html = juice(htmlSrc);
-        await this.send(email, "Vacation Request Web-App Automated Notification", html);
+        await this.send(email, subject, html);
     }
 
     async send(email, subject, html) {

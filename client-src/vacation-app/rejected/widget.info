@@ -1,0 +1,19 @@
+{
+  "components": [
+    {
+      "type": "view",
+      "fullName": "rejected",
+      "view": "rejected.ejs",
+      "es6": "Rejected.mjs",
+      "style": {
+        "src": "rejected.scss",
+        "dest": "rejected.css"
+      },
+      "dir": {
+        "sub": "vacation-app/rejected",
+        "src": "client-src/vacation-app/rejected"
+      },
+      "package": "vacation-app"
+    }
+  ]
+}

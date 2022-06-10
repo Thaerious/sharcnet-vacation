@@ -1,12 +1,12 @@
 import Express from "express";
 import bodyParser from "body-parser";
-import GoogleCalendar from "./GoogleCalendar.js";
-import constants from "./constants.js";
-import { loadTemplate } from "@thaerious/utility";
-import DBInterface from "./DBInterface.js";
-import EMInterface from "./EMInterface.js";
-import logger from "./setupLogger.js";
-import FS from "fs";
+import GoogleCalendar from "../GoogleCalendar.js";
+import constants from "../constants.js";
+import DBInterface from "../DBInterface.js";
+import EMInterface from "../EMInterface.js";
+import logger from "../setupLogger.js";
+import reject400 from "../reject400.js";
+import reject500 from "../reject500.js";
 
 class SubmitHandler {
     constructor() {
@@ -17,29 +17,31 @@ class SubmitHandler {
         this.emi = new EMInterface(process.env.EMAIL_USER, process.env.EMAIL_PASSWD);
 
         this.route.post(`/submit`, async (req, res, next) => {
-            if (!req.body.email) this.reject400(req, res, "missing body parameter: email");
-            if (!req.body.name) this.reject400(req, res, "missing body parameter: name");
-            if (!req.body.start_date) this.reject400(req, res, "missing body parameter: start_date");
-            if (!req.body.end_date) this.reject400(req, res, "missing body parameter: end_date");
-            if (!req.body.term) this.reject400(req, res, "missing body parameter: term");
-            if (!req.body.email) this.reject400(req, res, "missing body parameter: email");
+            if (!req.body.email) reject400(req, res, "missing body parameter: email");
+            if (!req.body.name) reject400(req, res, "missing body parameter: name");
+            if (!req.body.start_date) reject400(req, res, "missing body parameter: start_date");
+            if (!req.body.end_date) reject400(req, res, "missing body parameter: end_date");
+            if (!req.body.term) reject400(req, res, "missing body parameter: term");
+            if (!req.body.email) reject400(req, res, "missing body parameter: email");
 
             try {
                 // store pending request in DB
                 const hash = this.dbi.add(req.body.email, req.body.start_date, req.body.end_date, req.body.term, req.body.name, req.body.institution);
 
                 // email manager
-                const acceptUrl = new URL(process.env.SERVER_NAME + "/accept");
+                const acceptUrl = new URL(constants.loc.html.ACCEPT_URL);
                 acceptUrl.searchParams.append("hash", hash);
-                const rejectURL = new URL(process.env.SERVER_NAME + "/reject");
+                const rejectURL = new URL(constants.loc.html.REJECT_URL);
                 rejectURL.searchParams.append("hash",hash);
 
                 const mData = {
-                    accept_url : acceptUrl,
-                    reject_url : rejectURL,
+                    ACCEPTED_URL : acceptUrl,
+                    REJECTED_URL : rejectURL,
                     ...req.body
                 }
-                await this.emi.sendFile(this.dbi.lookupRole("manager").email, "server-assets/request_manager.html", mData);
+
+                const subjectMgr = `Vacation Request From ${req.body.name} (2b)`;
+                await this.emi.sendFile(this.dbi.lookupRole("manager").email, "server-assets/request_manager.html", subjectMgr, mData);
 
                 // email staff
                 const sData = {
@@ -47,7 +49,8 @@ class SubmitHandler {
                     ...req.body
                 }                
                 if (sData.term == "full") sData.term = "full day";
-                await this.emi.sendFile(req.body.email, "server-assets/confirm_staff.html", sData);
+                const subectStaff = "Vacation Request Verfication Notice (2a)";
+                await this.emi.sendFile(req.body.email, "server-assets/confirm_staff.html", subectStaff, sData);
 
                 // this.addAppointment(
                 //     req.body.name,
@@ -60,24 +63,10 @@ class SubmitHandler {
                 res.end();
             } catch (error) {
                 logger.error(error.toString());
-                this.reject500(req, res, error.toString());
+                console.log(error);
+                reject500(req, res, error.toString());
             }
         });
-    }
-
-    reject400(req, res, message) {
-        const html = loadTemplate(constants.loc.html.BAD_REQUEST_400, {
-            message: message,
-            body: JSON.stringify(req.body, null, 2),
-        });
-        res.send(html);
-        res.end();
-    }
-
-    reject500(req, res, message) {
-        const html = FS.readFileSync(constants.loc.html.SERVER_ERROR_500, "utf-8");
-        res.send(html);
-        res.end();
     }
 
     async addAppointment(name, start, end, term) {

@@ -1,0 +1,25 @@
+{
+  "components": [
+    {
+      "type": "view",
+      "fullName": "accepted",
+      "view": "accepted.ejs",
+      "es6": "Accepted.mjs",
+      "style": {
+        "src": "accepted.scss",
+        "dest": "accepted.css"
+      },
+      "dir": {
+        "sub": "vacation-app/accepted",
+        "src": "client-src/vacation-app/accepted"
+      },
+      "package": "vacation-app",
+      "data": {
+        "name": "",
+        "email": "",
+        "institution": "",
+        "inst_email": ""
+      }
+    }
+  ]
+}

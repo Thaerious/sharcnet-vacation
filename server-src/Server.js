@@ -9,29 +9,35 @@ if (args.flags.cwd) process.chdir(args.flags.cwd);
 
 import Express from "express";
 import http from "http";
-import SubmitHandler from "./SubmitHandler.js";
+import SubmitHandler from "./routes/SubmitHandler.js";
 import DBInterface from "./DBInterface.js";
 import logger from "./setupLogger.js";
+import rejectRoute from "./routes/rejectHandler.js";
+import acceptRoute from "./routes/acceptHandler.js";
+import reject500 from "./reject500.js";
+import constants from "./constants.js";
+import reject400 from "./reject400.js";
 
 class Server {
     constructor() {
-        this.dbi = new DBInterface("requests.db");
+        const mwm = new WidgetMiddleware();
         this.submitHandler = new SubmitHandler();
         this.app = Express();
+        this.app.set(`views`, `client-src`);
+        this.app.set(`view engine`, `ejs`);
 
+        // ------------ ROUTES
         this.app.use(`*`, (req, res, next) => {
             logger.standard(`${req.method} ${req.originalUrl}`);
             next();
         });
 
         this.app.use(this.submitHandler.route);
+        this.app.use(acceptRoute(mwm));
+        this.app.use(rejectRoute);
 
-        this.app.set(`views`, `client-src`);
-        this.app.set(`view engine`, `ejs`);
-
-        const mwm = new WidgetMiddleware();
         this.app.use((req, res, next) => mwm.middleware(req, res, next));
-
+        this.app.use(Express.static(`www/static`));
         this.app.use(Express.static(`www/compiled`));
         this.app.use(Express.static(`client-src`));
 
