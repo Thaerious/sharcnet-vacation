@@ -1,4 +1,4 @@
-import DBInterface from "../server-src/DBInterface.js";
+import DBInterface from "../../server-src/DBInterface.js";
 import assert from "assert";
 import FS from "fs";
 import Path from "path";

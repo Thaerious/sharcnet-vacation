@@ -4,7 +4,6 @@ import Express from "express";
 const route = Express.Router();
 
 route.get(`/index`, (req, res, next) => {
-    console.log("Index View");
     const path = Path.join(`index`, `index`);
     res.render(path, {}, (err, html) => {
         if (err) {

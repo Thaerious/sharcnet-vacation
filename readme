@@ -7,7 +7,11 @@ npm i
 Running
 =======
 node .
+browser to 127.0.0.1/index
 
 Testing
 =======
 npx mocha
+
+Setup
+=====

@@ -1,30 +1,27 @@
+import dotenv from "dotenv";
 import Express from "express";
-import constants from "../constants.js";
+import reject400 from "../reject400.js"
+import reject500 from "../reject400.js"
 import DBInterface from "../DBInterface.js";
+import logger from "../setupLogger.js";
 import EMInterface from "../EMInterface.js";
+import acceptRequest from "../functionality/acceptRequest.js";
 
-function acceptRoute(wmw){
-    const route =  Express.Router();
-    const dbi = new DBInterface().open();
-    const emi = new EMInterface(process.env.EMAIL_USER, process.env.EMAIL_PASSWD);
+dotenv.config();
 
-    route.use(constants.loc.endpoint.ACCEPT, async (req, res, next) => {    
-        dbi.update(req.query.hash, constants.status.REJECTED);
-        res.redirect(constants.loc.endpoint.ACCEPTED + "?hash=" + req.query.hash);
-    });
+const rejectRoute =  Express.Router();
+const dbi = new DBInterface().open();
+const emi = new EMInterface(process.env.EMAIL_USER, process.env.EMAIL_PASSWD);
 
-    route.use(constants.loc.endpoint.ACCEPTED, async (req, res, next) => {    
-        const data = dbi.get(req.query.hash);
+rejectRoute.use(`/accept`, async (req, res, next) => {    
+    try {
+        acceptRequest(req.query.hash, dbi, emi, req.body);
+        res.redirect("/accepted");
+    } catch (error){
+        logger.error(error.toString());
+        reject500(req, res);
+    }
+});
 
-        try{
-            const r = await wmw.render(constants.loc.endpoint.ACCEPTED, data, res, next);
-        } catch (err) {
-            console.log(err);
-        }
-    });
-
-    return route;
-}
-
-export default acceptRoute;
+export default rejectRoute;
 

@@ -77,5 +77,5 @@ try {
     await server.load();
     server.start();
 } catch (err) {
-    console.log(err);
+    console.error(err);
 }

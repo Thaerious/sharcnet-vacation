@@ -104,6 +104,8 @@ class GoogleCalendar {
             };
 
             this.calendar.events.insert(options, (err, res) => {
+                console.log("insert");
+                console.log(res);
                 if (err) reject(err);
                 if (res) resolve(res.data);
             });

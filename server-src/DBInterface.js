@@ -25,11 +25,11 @@ class DBInterface {
         this.db = undefined;
     }
 
-    add(email, start, end, type, name, inst) {
+    add(data) {
         const sql = "INSERT INTO requests (email, start_date, end_date, type, name, institution, status, hash) values (?, ?, ?, ?, ?, ?, ?, ?)";
         const stmt = this.db.prepare(sql);
         const hash = this.generateHash();
-        stmt.run(email, start, end, type, name, inst, "pending", hash);        
+        stmt.run(data.email, data.start_date, data.end_date, data.type, data.name, data.institution, "pending", hash);        
         return hash;
     }
 

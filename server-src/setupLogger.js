@@ -9,7 +9,7 @@ appLogger.channel(`standard`).enabled = true;
 appLogger.channel(`verbose`).enabled = false;
 
 errorChannel.log = function(string){
-    console.log("Error: see log files");
+    console.error("Error: see log files");
     const path = mkdirif(process.env.LOG_DIR, "error.log");
     FS.appendFileSync(path, "\n *** " + new Date().toString() + "\n" + string + "\n");
 }
