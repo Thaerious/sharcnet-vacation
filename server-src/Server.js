@@ -9,19 +9,14 @@ if (args.flags.cwd) process.chdir(args.flags.cwd);
 
 import Express from "express";
 import http from "http";
-import SubmitHandler from "./routes/SubmitHandler.js";
-import DBInterface from "./DBInterface.js";
+import submitHandler from "./routes/submitRoute.js";
 import logger from "./setupLogger.js";
 import rejectRoute from "./routes/rejectHandler.js";
 import acceptRoute from "./routes/acceptHandler.js";
-import reject500 from "./reject500.js";
-import constants from "./constants.js";
-import reject400 from "./reject400.js";
 
 class Server {
     constructor() {
         const mwm = new WidgetMiddleware();
-        this.submitHandler = new SubmitHandler();
         this.app = Express();
         this.app.set(`views`, `client-src`);
         this.app.set(`view engine`, `ejs`);
@@ -32,8 +27,8 @@ class Server {
             next();
         });
 
-        this.app.use(this.submitHandler.route);
-        this.app.use(acceptRoute(mwm));
+        this.app.use(submitHandler);
+        this.app.use(acceptRoute);
         this.app.use(rejectRoute);
 
         this.app.use((req, res, next) => mwm.middleware(req, res, next));
@@ -48,10 +43,6 @@ class Server {
             res.send(`404: page not found`);
             res.end();
         });
-    }
-
-    async load() {
-        await this.submitHandler.load();
     }
 
     start(port = 8000, ip = `0.0.0.0`) {
@@ -74,7 +65,6 @@ class Server {
 
 try {
     const server = new Server();
-    await server.load();
     server.start();
 } catch (err) {
     console.error(err);

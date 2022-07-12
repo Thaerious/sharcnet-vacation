@@ -8,11 +8,11 @@ const loc = {
 };
 
 loc.endpoint = {
-    "ACCEPTED" : "/accepted",
-    "REJECTED" : "/rejected",
-    "ACCEPT" : "/accept",
-    "REJECT" : "/reject",
-    "SUBMIT" : "/submit"
+    "ACCEPTED"  : "/accepted",
+    "REJECTED"  : "/rejected",
+    "ACCEPT"    : "/accept",
+    "REJECT"    : "/reject",
+    "SUBMITTED" : "/submitted"
 }
 
 loc.html = {
