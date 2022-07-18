@@ -7,14 +7,14 @@ const googleCalendar = new GoogleCalendar();
  * hash : stored db index hash for the request
  * data : from request body (as json) see doc/vacation_accept.pdf (1)
  */
- async function acceptRequest(data, dbi, emi){
-    dbi.update(data.hash, constants.status.ACCEPTED);
+ async function acceptRequest(hash, dbi, emi){
+    dbi.update(hash, constants.status.ACCEPTED);    
 
-    data = {
+    const data = {
         todays_date : new Date().toString(),
         manager_email : dbi.lookupRole("manager").email,
         status : constants.status.ACCEPTED,
-        ...data
+        ...dbi.get(hash)
     }       
 
     const staffSubject = "Vacation Request Update: Accepted.";

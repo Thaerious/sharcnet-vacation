@@ -1,27 +1,46 @@
 <form action="/submit" method="POST">
-    <b>Vacation Request Form</b>
-    <b>Name</b>
-    <input type="text" name="name" />
-    <b>Email</b>
-    <input type="text" name="email" />
-    <select name="institution">
-        <option value="brock">Brock</option>
-        <option value="guelph">Guelph</option>
-        <option value="laurier">Laurier</option>
-        <option value="mcmaster">McMaster</option>
-        <option value="otu">OTU</option>
-        <option value="waterloo">Waterloo</option>
-        <option value="western">Western</option>
-        <option value="windsor">Windsor</option>
-        <option value="york">York</option>
-    </select>
-    <select name="term">
-        <option value="am">AM</option>
-        <option value="pm">PM</option>
-        <option value="full" selected="selected">Full Day</option>
-    </select>    
-    <input type="date" id="start_date" name="start_date">
-    <input type="date" id="end_date" name="end_date">
-    <input type="text" name="note" />
-    <button id="submit">submit</button>
+    <div class="section">
+        <h2 class="center">Vacation Request Form</h2>
+
+        <div class="section">
+            <b>Name</b>
+            <input type="text" name="name" />
+        </div>
+        <div class="section">
+            <b>Email</b>
+            <input type="text" name="email" />
+        </div>
+        <div class="section">
+            <b>Institution</b>
+            <select name="institution">
+                <option value="n/a"></option>
+                <option value="brock">Brock</option>
+                <option value="guelph">Guelph</option>
+                <option value="laurier">Laurier</option>
+                <option value="mcmaster">McMaster</option>
+                <option value="otu">OTU</option>
+                <option value="waterloo">Waterloo</option>
+                <option value="western">Western</option>
+                <option value="windsor">Windsor</option>
+                <option value="york">York</option>
+            </select>
+        </div>
+        <div class="section">
+            <b>Length</b>
+            <select name="term">
+                <option value="am">AM</option>
+                <option value="pm">PM</option>
+                <option value="full" selected="selected">Full Day</option>
+            </select>
+        </div>
+        <div class="section">
+            <b>Duration</b>
+            <div>From</div>
+            <input type="date" id="start_date" name="start_date" />
+            <div>To</div>
+            <input type="date" id="end_date" name="end_date" />
+            <div class="note">From and to dates inclusive.</div>
+        </div>
+        <button id="submit" disabled>SUBMIT</button>
+    </div>
 </form>

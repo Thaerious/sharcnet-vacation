@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@html-widget/core": "file:../html-widget",
+    "@html-widget/core": "github:Thaerious/HTML-Widget",
     "@thaerious/logger": "^0.2.1",
     "@thaerious/parseargs": "^0.5.0",
     "@thaerious/utility": "*",

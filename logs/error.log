@@ -13,3 +13,9 @@ ReferenceError: dbi is not defined
 
  *** Mon Jul 11 2022 11:26:38 GMT-0400 (Eastern Daylight Time)
 ReferenceError: dbi is not defined
+
+ *** Mon Jul 18 2022 13:23:28 GMT-0400 (Eastern Daylight Time)
+TypeError: Cannot read properties of undefined (reading 'institution')
+
+ *** Mon Jul 18 2022 13:30:52 GMT-0400 (Eastern Daylight Time)
+TypeError: Cannot read properties of undefined (reading 'institution')

@@ -1,27 +1,28 @@
 import dotenv from "dotenv";
 import Express from "express";
-import reject400 from "../reject400.js"
-import reject500 from "../reject400.js"
+import reject500 from "../reject500.js"
 import DBInterface from "../DBInterface.js";
 import logger from "../setupLogger.js";
 import EMInterface from "../EMInterface.js";
-import rejectRequest from "../functionality/rejectRequest.js";
+import { WidgetMiddleware } from "@html-widget/core";
 
 dotenv.config();
 
-const rejectRoute =  Express.Router();
+const rejectedRoute =  Express.Router();
 const dbi = new DBInterface().open();
 const emi = new EMInterface(process.env.EMAIL_USER, process.env.EMAIL_PASSWD);
+const mwm = new WidgetMiddleware();
 
-rejectRoute.use(`/reject`, async (req, res, next) => {    
+rejectedRoute.use(`/rejected`, async (req, res, next) => {    
     try {
-        rejectRequest(req.query.hash, dbi, emi, req.body);
-        res.redirect(`/rejected?hash=${req.query.hash}`);
+        const data = dbi.get(req.query.hash);
+        data.inst_email = dbi.lookupRole(data.institution).email;
+        await mwm.render("rejected", res, next, data);
     } catch (error){
         logger.error(error.toString());
         reject500(req, res);
     }
 });
 
-export default rejectRoute;
+export default rejectedRoute;
 

@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "..\\node_env"
+		},
+		{
+			"path": "..\\html-widget"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

@@ -13,6 +13,8 @@ import submitHandler from "./routes/submitRoute.js";
 import logger from "./setupLogger.js";
 import rejectRoute from "./routes/rejectHandler.js";
 import acceptRoute from "./routes/acceptHandler.js";
+import acceptedRoute from "./routes/acceptedHandler.js";
+import rejectedRoute from "./routes/rejectedHandler.js";
 
 class Server {
     constructor() {
@@ -29,9 +31,12 @@ class Server {
 
         this.app.use(submitHandler);
         this.app.use(acceptRoute);
+        this.app.use(acceptedRoute);        
         this.app.use(rejectRoute);
+        this.app.use(rejectedRoute);
 
         this.app.use((req, res, next) => mwm.middleware(req, res, next));
+
         this.app.use(Express.static(`www/static`));
         this.app.use(Express.static(`www/compiled`));
         this.app.use(Express.static(`client-src`));
