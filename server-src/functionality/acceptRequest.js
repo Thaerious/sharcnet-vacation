@@ -2,6 +2,7 @@ import constants from "../constants.js";
 import GoogleCalendar from "../GoogleCalendar.js";
 
 const googleCalendar = new GoogleCalendar();
+await googleCalendar.insert(process.env.CALENDAR_ID);
 
 /**
  * hash : stored db index hash for the request
@@ -29,14 +30,14 @@ const googleCalendar = new GoogleCalendar();
 
 async function addAppointment(data) {
     const summary = `${data.name} on vacation`;
-
-    if (data.type === "full") {
+console.log(data);
+    if (data.duration === "full") {
         await googleCalendar.addEvent(process.env.CALENDAR_ID, data.start_date, data.end_date, summary);
-    } else if (data.type === "am") {
+    } else if (data.duration === "am") {
         data.start_date = data.start_date + "T09:00:00-04:00";
         data.end_date = data.end_date + "T13:00:00-04:00";
         await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, data.start_date, data.end_date, summary);
-    } else if (data.type === "pm") {
+    } else if (data.duration === "pm") {
         data.start_date = data.start_date + "T12:00:00-04:00";
         data.end_date = data.end_date + "T17:00:00-04:00";
         await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, data.start_date, data.end_date, summary);

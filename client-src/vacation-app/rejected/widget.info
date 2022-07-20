@@ -13,7 +13,13 @@
         "sub": "vacation-app/rejected",
         "src": "client-src/vacation-app/rejected"
       },
-      "package": "vacation-app"
+      "package": "vacation-app",
+      "data": {
+        "name": "",
+        "email": "",
+        "institution": "",
+        "inst_email": ""
+      }
     }
   ]
 }

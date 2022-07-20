@@ -26,10 +26,10 @@ class DBInterface {
     }
 
     add(data) {
-        const sql = "INSERT INTO requests (email, start_date, end_date, type, name, institution, status, hash) values (?, ?, ?, ?, ?, ?, ?, ?)";
+        const sql = "INSERT INTO requests (email, start_date, end_date, duration, name, institution, status, hash) values (?, ?, ?, ?, ?, ?, ?, ?)";
         const stmt = this.db.prepare(sql);
         const hash = this.generateHash();
-        stmt.run(data.email, data.start_date, data.end_date, data.type, data.name, data.institution, "pending", hash);        
+        stmt.run(data.email, data.start_date, data.end_date, data.duration, data.name, data.institution, "pending", hash);        
         return hash;
     }
 

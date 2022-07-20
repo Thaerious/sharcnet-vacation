@@ -32,7 +32,7 @@ submitRoute.use(`/submit`, async (req, res, next) => {
     else if (!req.body.name) reject400(req, res, "missing body parameter: name");            
     else if (!req.body.institution) reject400(req, res, "missing body parameter: institution");            
     else if (!req.body.email) reject400(req, res, "missing body parameter: email");            
-    else if (!req.body.term) reject400(req, res, "missing body parameter: term");
+    else if (!req.body.duration) reject400(req, res, "missing body parameter: duration");
     else try {
         await submitNew(req.body, dbi, emi);
         res.redirect(constants.loc.endpoint.SUBMITTED);

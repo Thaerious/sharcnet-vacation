@@ -26,7 +26,7 @@ async function submitNew(data, dbi, emi){
         status : constants.status.PENDING,
         ...data
     }
-    if (sData.term == "full") sData.term = "full day";
+    if (sData.duration == "full") sData.duration = "full day";
     const subectStaff = "Vacation Request Verfication Notice (2a)";
     await emi.sendFile(data.email, constants.response.NOTIFY_STAFF, subectStaff, sData);
     return hash;

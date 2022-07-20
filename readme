@@ -13,5 +13,12 @@ Testing
 =======
 npx mocha
 
-Setup
-=====
+Calendar Setup
+==============
+
+Open up the the google calendar (calendar.google.com).
+Under 'My calendars' to the right of the calendar find the menu (3 vertical dots).
+Select 'Settings and sharing'.
+Under 'Share with specific people' add the app email.
+Set that share to 'Make changes to events'.
+Under 'Integrate calendar' copy the calendar id and paste it into the .env in the 'CALENDAR_ID' value.

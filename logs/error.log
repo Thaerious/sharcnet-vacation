@@ -19,3 +19,9 @@ TypeError: Cannot read properties of undefined (reading 'institution')
 
  *** Mon Jul 18 2022 13:30:52 GMT-0400 (Eastern Daylight Time)
 TypeError: Cannot read properties of undefined (reading 'institution')
+
+ *** Wed Jul 20 2022 13:09:21 GMT-0400 (Eastern Daylight Time)
+TypeError: Cannot read properties of undefined (reading 'email')
+
+ *** Wed Jul 20 2022 14:06:51 GMT-0400 (Eastern Daylight Time)
+TypeError: Cannot read properties of undefined (reading 'email')
