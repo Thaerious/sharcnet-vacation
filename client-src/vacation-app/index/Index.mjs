@@ -10,7 +10,6 @@ window.addEventListener("load", () => {
 });
 
 function checkDuration() {
-    console.log(document.querySelector("#duration").value);
     switch (document.querySelector("#duration").value) {
         case "am":
         case "pm":

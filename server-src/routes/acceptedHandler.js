@@ -20,6 +20,7 @@ acceptedRoute.use(`/accepted`, async (req, res, next) => {
         await mwm.render("accepted", res, next, data);
     } catch (error){
         logger.error(error.toString());
+        console.error(error);
         reject500(req, res);
     }
 });
