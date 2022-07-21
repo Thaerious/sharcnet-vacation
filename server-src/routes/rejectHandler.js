@@ -19,6 +19,7 @@ rejectRoute.use(`/reject`, async (req, res, next) => {
         res.redirect(`/rejected?hash=${req.query.hash}`);
     } catch (error){
         logger.error(error.toString());
+        console.error(error);
         reject500(req, res);
     }
 });

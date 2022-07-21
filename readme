@@ -54,6 +54,9 @@ sudo apt install apache2
 sudo apt install certbot python3-certbot-apache
 sudo certbot --apache
 
+sudo systemctl start apache2
+sudo systemctl restart apache2 
+
 Install Node
 ============
 cd /usr
