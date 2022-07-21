@@ -42,11 +42,7 @@ class Server {
         this.app.use(Express.static(`client-src`));
 
         this.app.use(`*`, (req, res) => {
-            logger.standard(`404 ${req.originalUrl}`);
-            res.statusMessage = `404 Page Not Found: ${req.originalUrl}`;
-            res.status(404);
-            res.send(`404: page not found`);
-            res.end();
+            res.redirect("/index");            
         });
     }
 

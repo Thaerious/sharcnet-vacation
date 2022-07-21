@@ -13,12 +13,57 @@ Testing
 =======
 npx mocha
 
+Create a Devloper API Key & Service Account
+===========================================
+console.cloud.google.com
+create a new app
+> credentials
+> create credentials / API key
+copy key to .env file as "API_KEY"
+
+> manage service accounts
+> create service account
+use the service account email address in the next step
+
+Create and download a private key from the service account.
+Add the filename to .env as "GKEY_FILENAME".
+
 Calendar Setup
 ==============
 
 Open up the the google calendar (calendar.google.com).
 Under 'My calendars' to the right of the calendar find the menu (3 vertical dots).
 Select 'Settings and sharing'.
-Under 'Share with specific people' add the app email.
+Under 'Share with specific people' add the service account email address.
 Set that share to 'Make changes to events'.
 Under 'Integrate calendar' copy the calendar id and paste it into the .env in the 'CALENDAR_ID' value.
+
+Further Setup
+=============
+Set the server name and log directory in the .env file.
+LOG_DIR=logs
+SERVER_NAME=http://vacation.sharcnet.ca:8000
+
+Server Setup
+============
+
+Install Apache & Let's Encrypt
+==============================
+sudo apt update
+sudo apt install apache2
+sudo apt install certbot python3-certbot-apache
+sudo certbot --apache
+
+Install Node
+============
+cd /usr
+mkdir node
+cd node
+sudo wget https://nodejs.org/dist/v18.6.0/node-v18.6.0-linux-x64.tar.xz
+sudo tar -xvf node-v18.6.0-linux-x64.tar.xz
+sudo mv node-v18.6.0-linux-x64 18.6.0
+sudo rm *.xz
+cd /usr/local/bin
+sudo ln -s /opt/node/18.6.0/bin/node node
+sudo ln -s /opt/node/18.6.0/bin/npx npx
+sudo ln -s /opt/node/18.6.0/bin/npm npm
