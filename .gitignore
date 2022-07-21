@@ -4,3 +4,4 @@ private_key.json
 www/compiled
 www/linked
 db/requests.db
+logs/
