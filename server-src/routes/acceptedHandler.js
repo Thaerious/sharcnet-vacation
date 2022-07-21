@@ -17,6 +17,7 @@ acceptedRoute.use(`/accepted`, async (req, res, next) => {
     try {
         const data = dbi.get(req.query.hash);
         data.inst_email = dbi.lookupRole(data.institution).email;
+        console.log(res.render);
         await mwm.render("accepted", res, next, data);
     } catch (error){
         logger.error(error.toString());

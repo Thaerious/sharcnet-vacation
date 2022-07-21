@@ -41,8 +41,15 @@ class Server {
         this.app.use(Express.static(`www/compiled`));
         this.app.use(Express.static(`client-src`));
 
-        this.app.use(`*`, (req, res) => {
-            res.redirect("/index");            
+        this.app.use('/', (req, res) => {
+            if (req.originalUrl == "/") res.redirect("/index");
+            else {
+                logger.standard(`404 ${req.originalUrl}`);
+                res.statusMessage = `404 Page Not Found: ${req.originalUrl}`;
+                res.status(404);
+                res.send(`404: page not found`);
+                res.end();                      
+            }
         });
     }
 
