@@ -30,17 +30,17 @@ await googleCalendar.insert(process.env.CALENDAR_ID);
 
 async function addAppointment(data) {
     const summary = `${data.name} on vacation`;
-console.log(data);
+
     if (data.duration === "full") {
         await googleCalendar.addEvent(process.env.CALENDAR_ID, data.start_date, data.end_date, summary);
     } else if (data.duration === "am") {
-        data.start_date = data.start_date + "T09:00:00-04:00";
-        data.end_date = data.end_date + "T13:00:00-04:00";
-        await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, data.start_date, data.end_date, summary);
+        const start = data.start_date + "T09:00:00-04:00";
+        const end = data.start_date + "T13:00:00-04:00";
+        await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, start, end, summary);
     } else if (data.duration === "pm") {
-        data.start_date = data.start_date + "T12:00:00-04:00";
-        data.end_date = data.end_date + "T17:00:00-04:00";
-        await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, data.start_date, data.end_date, summary);
+        const start = data.start_date + "T12:00:00-04:00";
+        const end = data.end_date + "T17:00:00-04:00";
+        await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, start, end, summary);
     }
 }
 

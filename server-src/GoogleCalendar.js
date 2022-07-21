@@ -112,6 +112,7 @@ class GoogleCalendar {
         });
     }
 
+    // https://developers.google.com/calendar/api/v3/reference/events/insert
     addTimedEvent(id, start, end, summary) {
         return new Promise((resolve, reject) => {
             const options = {

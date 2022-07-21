@@ -27,18 +27,22 @@
         </div>
         <div class="section">
             <b>Duration</b>
-            <select name="duration">
+            <select id="duration" name="duration">
                 <option value="am">AM</option>
                 <option value="pm">PM</option>
                 <option value="full" selected="selected">Full Day</option>
             </select>
         </div>
         <div class="section">
-            <b>Duration</b>
-            <div class="note">Depart (inclusive) the first day of your vacation.</div>
-            <input type="date" id="start_date" name="start_date" />
-            <div class="note">Return (exclusive) the first day returning to work.</div>
-            <input type="date" id="end_date" name="end_date" />
+            <b>Dates</b>
+            <div id="depart">
+                <div class="note">Depart (inclusive) the first day of your vacation.</div>
+                <input type="date" id="start_date" name="start_date" />
+            </div>
+            <div id="return">
+                <div class="note">Return (exclusive) the first day returning to work.</div>
+                <input type="date" id="end_date" name="end_date" />
+            </div>
         </div>
         <button id="submit" disabled>SUBMIT</button>
     </div>
