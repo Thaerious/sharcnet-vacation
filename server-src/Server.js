@@ -24,10 +24,10 @@ class Server {
         this.app.set(`view engine`, `ejs`);
 
         // ------------ ROUTES
-        this.app.use(`*`, (req, res, next) => {
-            logger.standard(`${req.method} ${req.originalUrl}`);
-            next();
-        });
+        // this.app.use(`*`, (req, res, next) => {
+        //     logger.standard(`${req.method} ${req.originalUrl}`);
+        //     next();
+        // });
 
         this.app.use(submitHandler);
         this.app.use(acceptRoute);

@@ -26,7 +26,6 @@ const dbi = new DBInterface().open();
 const emi = new EMInterface(process.env.EMAIL_USER, process.env.EMAIL_PASSWD);
 
 submitRoute.use(`/submit`, async (req, res, next) => {
-    console.log(req.body);
     if (!req.body.start_date) reject400(req, res, "missing body parameter: start_date");
     else if (!req.body.end_date) reject400(req, res, "missing body parameter: end_date");            
     else if (!req.body.name) reject400(req, res, "missing body parameter: name");            
