@@ -17,7 +17,7 @@ rejectedRoute.use(`/rejected`, async (req, res, next) => {
     try {
         const data = dbi.get(req.query.hash);
         data.inst_email = dbi.lookupRole(data.institution).email;
-        await mwm.render("rejected", res, next, data);
+        await mwm.render("rejected", data, res, next);
     } catch (error){
         logger.error(error.toString());
         console.error(error);
