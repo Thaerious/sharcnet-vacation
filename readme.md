@@ -38,6 +38,14 @@ Under 'Share with specific people' add the service account email address.
 Set that share to 'Make changes to events'.
 Under 'Integrate calendar' copy the calendar id and paste it into the .env in the 'CALENDAR_ID' value.
 
+EMail Setup
+===========
+Fill in the following fields in the .env for Email.
+- EMAIL_USER
+- EMAIL_PASSWD
+- EMAIL_PORT
+- EMAIL_SERVICE
+
 Further Setup
 =============
 Set the server name and log directory in the .env file.
@@ -46,6 +54,7 @@ SERVER_NAME=http://vacation.sharcnet.ca:8000
 
 Server Setup
 ============
+Use when setting up a linux server from scratch.
 
 Install Apache & Let's Encrypt
 ==============================

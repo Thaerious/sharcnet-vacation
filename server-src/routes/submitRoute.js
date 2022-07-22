@@ -23,7 +23,7 @@ const googleCalendar = new GoogleCalendar();
 const submitRoute = Express.Router();
 submitRoute.use(bodyParser.urlencoded({ extended: true }));
 const dbi = new DBInterface().open();
-const emi = new EMInterface(process.env.EMAIL_USER, process.env.EMAIL_PASSWD);
+const emi = new EMInterface(process.env.EMAIL_USER, process.env.EMAIL_PASSWD, process.env.EMAIL_PORT, process.env.EMAIL_HOST);
 
 submitRoute.use(`/submit`, async (req, res, next) => {
     if (!req.body.start_date) reject400(req, res, "missing body parameter: start_date");

@@ -10,7 +10,7 @@ dotenv.config();
 
 const acceptedRoute =  Express.Router();
 const dbi = new DBInterface().open();
-const emi = new EMInterface(process.env.EMAIL_USER, process.env.EMAIL_PASSWD);
+const emi = new EMInterface(process.env.EMAIL_USER, process.env.EMAIL_PASSWD, process.env.EMAIL_PORT, process.env.EMAIL_HOST);
 const mwm = new WidgetMiddleware();
 
 acceptedRoute.use(`/accepted`, async (req, res, next) => {    

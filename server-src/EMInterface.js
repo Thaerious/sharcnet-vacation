@@ -2,15 +2,19 @@ import { loadTemplate } from "@thaerious/utility";
 import nodemailer from "nodemailer";
 import juice from "juice";
 
-
+/**
+ * Email Interface
+ */
 class EMInterface {
     /**
      * @param {string} login The username of the email account.
      * @param {string} password The password of the email account.
      */
-    constructor(login, password) {
+    constructor(login, password, port, host) {
         this.login = login;
         this.password = password;
+        this.host = host;
+        this.port = port;
     }
 
     /**
@@ -23,7 +27,9 @@ class EMInterface {
 
     async send(email, subject, html) {
         let transporter = nodemailer.createTransport({
-            service: "Gmail",
+            host: this.host,
+            secure: false,
+            port: this.port,
             auth: {
                 user: this.login,
                 pass: this.password,
