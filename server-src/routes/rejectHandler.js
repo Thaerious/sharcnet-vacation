@@ -11,7 +11,7 @@ dotenv.config();
 
 const rejectRoute =  Express.Router();
 const dbi = new DBInterface().open();
-const emi = new EMInterface(process.env.EMAIL_USER, process.env.EMAIL_PASSWD, process.env.EMAIL_PORT, process.env.EMAIL_HOST);
+const emi = new EMInterface();
 
 rejectRoute.use(`/reject`, async (req, res, next) => {    
     try {
