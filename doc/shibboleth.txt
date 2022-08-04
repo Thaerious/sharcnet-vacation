@@ -1,0 +1,42 @@
+sudo apt install shibboleth-sp-common shibboleth-sp-utils libapache2-mod-shib
+
+cd /etc/shibboleth
+sudo shib-keygen -b -n sp-signing -u _shibd -g _shibd
+sudo shib-keygen -b -n sp-encrypt -u _shibd -g _shibd
+
+sudo curl -o idp-metadata.xml https://idp.alliancecan.ca/idp/shibboleth
+
+sudo systemctl enable shibd
+sudo systemctl start shibd
+sudo systemctl restart apache2
+
+(setup forwarding to not forward https://vacation.sharcnet.ca/Shibboleth.sso/Metadata)
+
+ok, change the entityid in /etc/shibboleth/shibboleth2.xml
+search for https://sp.example.org/shibboleth
+change it to https://vacation.sharcnet.ca/shibboleth
+
+in shibboleth2.xml change
+<SSO entityID="https://idp.alliancecan.ca/idp/shibboleth" .....>
+<ApplicationDefaults entityID="https://vacation.sharcnet.ca/shibboleth"  .... >
+
+<MetadataProvider type="XML" validate="true" path="partner-metadata.xml"/>
+to
+<MetadataProvider type="XML" validate="true" path="idp-metadata.xml"/>
+
+
+sudo systemctl restart shibd
+sudo systemctl restart apache2
+
+https://vacation.sharcnet.ca/Shibboleth.sso/Metadata retuns the metadata
+
+
+in /etc/apache2/conf-enabled/shib.conf
+<Location />
+    AuthType shibboleth
+    ShibRequestSetting requireSession 1
+    require shib-session
+</Location>
+
+uncommented <MetadataProvider> in Shibboleth2.xml
+

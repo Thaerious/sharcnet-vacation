@@ -1,11 +1,10 @@
 import { loadTemplate } from "@thaerious/utility";
 import nodemailer from "nodemailer";
 
-
 /**
  * Email Interface
  */
-class EMInterface {
+ class EMInterface {
     /**
      * @param {string} login The username of the email account.
      * @param {string} password The password of the email account.
@@ -27,18 +26,23 @@ class EMInterface {
     }
 
     async send(email, subject, html) {
-        let transporter = nodemailer.createTransport({
+        const creds = {
             host: this.host,
             secure: false,
             port: this.port,
             auth: {
-                user: this.login,
+                user: this.user,
                 pass: this.password,
             },
-        });
+        };
+
+        console.log(creds);
+        console.log(this.from);
+
+        const transporter = nodemailer.createTransport(creds);
 
         // send mail with defined transport object
-        let info = await transporter.sendMail({
+        const info = await transporter.sendMail({
             from: `"SHARCNET Vacation Mailer" <${this.from}>`,
             to: email,        // list of receivers
             subject: subject, // Subject line
