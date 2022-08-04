@@ -66,4 +66,16 @@ form{
             background-color: rgb(191, 190, 190);      
         }
     }
+
+    .logout{
+        font-variant-caps: small-caps;
+        text-align: center;
+        text-decoration: none;
+        color: black;
+
+        &:hover{
+            color: blue;
+            font-weight: bold;
+        }
+    }
 }
