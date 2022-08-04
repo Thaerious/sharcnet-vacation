@@ -16,7 +16,7 @@ async function submitNew(data, dbi, emi){
         ...data
     }
 
-    const subjectMgr = `Vacation Request From ${data.name} (2b)`;
+    const subjectMgr = `Vacation Request From ${data.name}`;
     await emi.sendFile(dbi.lookupRole("manager").email, constants.response.NOTIFY_MANAGER, subjectMgr, mData);
 
     // email the staff member
@@ -27,7 +27,7 @@ async function submitNew(data, dbi, emi){
         ...data
     }
     if (sData.duration == "full") sData.duration = "full day";
-    const subectStaff = "Vacation Request Verfication Notice (2a)";
+    const subectStaff = "Vacation Request Verfication Notice";
     await emi.sendFile(data.email, constants.response.NOTIFY_STAFF, subectStaff, sData);
     return hash;
 }
