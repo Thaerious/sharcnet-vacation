@@ -19,11 +19,11 @@ await googleCalendar.insert(process.env.CALENDAR_ID);
     }       
 
     const staffSubject = "Vacation Request Update: Accepted.";
-    emi.sendFile(data.email, constants.response.NOTIFY_STAFF, staffSubject, data);    
+    emi.sendFile(data.email, "", constants.response.NOTIFY_STAFF, staffSubject, data);    
 
     const adminSubject = "SHARCNET Vacation Confirmation";
     const adminEmail = dbi.lookupRole(data.institution).email;
-    emi.sendFile(adminEmail, constants.response.NOTIFY_ADMIN, adminSubject, data);  
+    emi.sendFile(adminEmail, data.manager_email, constants.response.NOTIFY_ADMIN, adminSubject, data);  
 
     await addAppointment(data);
 }

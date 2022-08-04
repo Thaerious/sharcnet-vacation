@@ -15,7 +15,7 @@ import constants from "../constants.js";
     }
 
     const subject = "Vacation Request Update: Rejected.";
-    emi.sendFile(data.email, constants.response.NOTIFY_STAFF, subject, data);    
+    emi.sendFile(data.email, "", constants.response.NOTIFY_STAFF, subject, data);    
 }
 
 export default rejectRequest;

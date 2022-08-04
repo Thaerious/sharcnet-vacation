@@ -20,12 +20,12 @@ import nodemailer from "nodemailer";
     /**
      * Send 'filename' to 'email' using 'data' for templates.
      */
-    async sendFile(email, filename, subject, data) {
+    async sendFile(email, cc, filename, subject, data) {
         const html = loadTemplate(filename, data);
-        await this.send(email, subject, html);
+        await this.send(email, cc, subject, html);
     }
 
-    async send(email, subject, html) {
+    async send(email, cc, subject, html) {
         const creds = {
             host: this.host,
             secure: false,
@@ -36,15 +36,13 @@ import nodemailer from "nodemailer";
             },
         };
 
-        console.log(creds);
-        console.log(this.from);
-
         const transporter = nodemailer.createTransport(creds);
 
         // send mail with defined transport object
         const info = await transporter.sendMail({
             from: `"SHARCNET Vacation Mailer" <${this.from}>`,
             to: email,        // list of receivers
+            cc: cc,
             subject: subject, // Subject line
             text: "",         // plain text body
             html: html,       // html body
