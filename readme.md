@@ -82,6 +82,5 @@ sudo ln -s /opt/node/18.6.0/bin/npm npm
 
 Changing a Destination Email
 ============================
-
 In the sqlite datbase /eb/requests.db
 UPDATE emails set email = "email@address" where role = "university";

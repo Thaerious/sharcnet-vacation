@@ -24,12 +24,10 @@ in shibboleth2.xml change
 to
 <MetadataProvider type="XML" validate="true" path="idp-metadata.xml"/>
 
-
 sudo systemctl restart shibd
 sudo systemctl restart apache2
 
 https://vacation.sharcnet.ca/Shibboleth.sso/Metadata retuns the metadata
-
 
 in /etc/apache2/conf-enabled/shib.conf
 <Location />
@@ -40,3 +38,6 @@ in /etc/apache2/conf-enabled/shib.conf
 
 uncommented <MetadataProvider> in Shibboleth2.xml
 
+datetime (https://phoenixnap.com/kb/how-to-set-or-change-timezone-date-time-ubuntu)
+$ sudo timedatectl set-ntp yes
+$ sudo timedatectl set-timezone Canada/Eastern

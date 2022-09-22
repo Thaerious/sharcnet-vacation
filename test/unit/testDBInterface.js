@@ -31,7 +31,7 @@ function clean() {
         process.chdir(cwd);
         if (FS.existsSync(TEST_DIRECTORY)) FS.rmSync(TEST_DIRECTORY, { recursive: true });
     } else {
-        console.log("\n *** see test directory: test/temp");
+        console.log(`\n *** see test directory: ${TEST_DIRECTORY}`);
     }
 }
 
@@ -44,36 +44,54 @@ describe(`Test Database Interface Class`, function () {
             this.dbi = new DBInterface();
         });
 
-        it("creates a new file 'requests.db'", function () {
-            const actual = FS.existsSync("db/requests.db");
+        it("creates a new file 'production.db'", function () {
+            const actual = FS.existsSync("db/production.db");
             assert.ok(actual);
         });
     });
 
     describe(`Add entry to database`, function () {
         before(function () {
+            const data1 = {
+                "email" : "who@where.com",
+                "start_date" : "2020-01-02",
+                "end_date" : "2020-01-04",                
+                "duration" : "full",
+                "name" : "Waldo Rivera",
+                "institution" : "MIT"
+            }
+
+            const data2 = {
+                "email" : "who@where.com",
+                "start_date" : "2020-12-31",
+                "end_date" : "2021-01-31",                
+                "duration" : "full",
+                "name" : "Alto Soprano",
+                "institution" : "Carnegie"
+            }
+
             this.dbi = new DBInterface().open();
-            this.dbi.add("who@where.com", "2020-01-02", "2020-01-04", "full", "Waldo Rivera", "MIT");
-            this.dbi.add("who@where.com", "2020-12-31", "2021-01-31", "full", "Alto Soprano", "Carnegie");
+            this.dbi.addRequest(data1);
+            this.dbi.addRequest(data2);
         });
 
         after(function () {
             this.dbi.close();
         });
 
-        it("creates a new file 'requests.db'", function () {
-            this.hash = this.dbi.add("who@where.com", "2020-01-02", "2020-01-04", "full", "Waldo Rivera", "MIT");
-            const actual = FS.existsSync("db/requests.db");
+        it("creates a new file 'production.db'", function () {
+            this.hash = this.dbi.addRequest("who@where.com", "2020-01-02", "2020-01-04", "full", "Waldo Rivera", "MIT");
+            const actual = FS.existsSync("db/production.db");
             assert.ok(actual);
         });
 
         it("Poll database (#has) for entry that exists returns true", function () {
-            const actual = this.dbi.has("who@where.com", "2020-01-02");
+            const actual = this.dbi.hasRequest("who@where.com", "2020-01-02");
             assert.ok(actual);
         });
 
         it("Poll database (#has) for entry that doesn't exist returns false", function () {
-            const actual = this.dbi.has("nope", "2020-01-02");
+            const actual = this.dbi.hasRequest("nope", "2020-01-02");
             assert.ok(!actual);
         });
 
@@ -97,16 +115,28 @@ describe(`Test Database Interface Class`, function () {
         });
 
         it("adds the role", function () {
-            const actual = this.dbi.addRole("manager", "manager@somewhere.com").changes;
+            const actual = this.dbi.addRole("everywhere", "manager@somewhere.com", "manager").changes;
             const expected = 1;
             assert.strictEqual(actual, expected);
         });
 
-        it("retrieves correct role", function () {
-            console.log(this.dbi.lookupRole("manager"));
-            const actual = this.dbi.lookupRole("manager").email;
+        it("retrieve all for managers for location 'everywhere'", function () {
+            const actual = this.dbi.getAllRoles("everywhere", "manager");
             const expected = "manager@somewhere.com";
-            assert.strictEqual(actual, expected);
+            assert.strictEqual(actual[0].email, expected);
         });
     });
+
+    describe(`Locations`, function () {
+        before(function () {
+            this.dbi = new DBInterface().open();
+        });
+
+        it("retrieve all locations for the admin role", function () {
+            const actual = this.dbi.getLocations();
+            assert.notStrictEqual(actual.indexOf("guelph"), -1);
+            assert.notStrictEqual(actual.indexOf("waterloo"), -1);
+            assert.strictEqual(actual.indexOf("not real"), -1);
+        });
+    });    
 });

@@ -6,8 +6,9 @@ import { mkdirif } from "@thaerious/utility";
 class DBInterface {
     static DB_DIR = "db";
     static EMPTY_DB_FN = "empty.db";
+    static PRODUCTION_DB = "production.db";
 
-    constructor(filename = "requests.db") {
+    constructor(filename = DBInterface.PRODUCTION_DB) {
         const source = Path.join(DBInterface.DB_DIR, DBInterface.EMPTY_DB_FN);
         const dest = Path.join(DBInterface.DB_DIR, filename);
         if (!FS.existsSync(dest)) FS.copyFileSync(source, mkdirif(dest));
@@ -25,15 +26,21 @@ class DBInterface {
         this.db = undefined;
     }
 
-    add(data) {
+    /**
+     * Add a new request to the requests table.
+     * @param {*} data
+     * @returns 
+     */
+    addRequest(data) {
         const sql = "INSERT INTO requests (email, start_date, end_date, duration, name, institution, status, hash) values (?, ?, ?, ?, ?, ?, ?, ?)";
         const stmt = this.db.prepare(sql);
         const hash = this.generateHash();
+        
         stmt.run(data.email, data.start_date, data.end_date, data.duration, data.name, data.institution, "pending", hash);        
         return hash;
     }
 
-    has(email, start) {
+    hasRequest(email, start) {
         const sql = "SELECT * FROM requests where email = ? AND start_date = ?";
         const stmt = this.db.prepare(sql);
         const results = stmt.get(email, start);
@@ -52,16 +59,40 @@ class DBInterface {
         return stmt.run(status, hash);
     }
 
-    addRole(role, email){
-        const sql = "INSERT INTO emails (email, role) values (?, ?)";
+    addRole(location, email, role = "admin"){
+        const sql = "INSERT INTO emails (email, location, role) values (?, ?, ?)";
         const stmt = this.db.prepare(sql);
-        return stmt.run(email, role);
+        return stmt.run(email, location, role);
     }
 
-    lookupRole(role){
-        const sql = "SELECT * FROM emails where role = ?";
+    /**
+     * Retrieve all rows from a specified location.
+     * @param {*} location 
+     * @returns 
+     */
+    getAllRoles(location, role){
+        const sql = "SELECT * FROM emails where location = ? AND role = ?";
         const stmt = this.db.prepare(sql);
-        return stmt.get(role);
+        const rows = stmt.all(location, role);
+        return rows;
+    }
+
+    /**
+     * Retrieve all unique locations for a given role.
+     * @param {*} role 
+     * @returns 
+     */
+    getLocations(role = "admin"){
+        const sql = "SELECT DISTINCT location FROM emails WHERE role = ?"
+        const stmt = this.db.prepare(sql);
+        const rows = stmt.all(role);
+
+        const r = [];
+        for(const row of rows){
+            r.push(row.location);
+        }
+
+        return r;
     }
 
     generateHash(n = 32){
