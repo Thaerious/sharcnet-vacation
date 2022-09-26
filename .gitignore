@@ -3,6 +3,6 @@ node_modules/
 private_key.json
 www/compiled
 www/linked
-db/requests.db
+db/production.db
 logs/
 /*.json

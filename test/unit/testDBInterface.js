@@ -114,17 +114,33 @@ describe(`Test Database Interface Class`, function () {
             this.dbi = new DBInterface().open();
         });
 
-        it("adds the role", function () {
-            const actual = this.dbi.addRole("everywhere", "manager@somewhere.com", "manager").changes;
+        it("adds the role (manager)", function () {
+            const actual = this.dbi.addRole("guelph", "manager@somewhere.com", "manager").changes;
             const expected = 1;
             assert.strictEqual(actual, expected);
         });
 
-        it("retrieve all for managers for location 'everywhere'", function () {
-            const actual = this.dbi.getAllRoles("everywhere", "manager");
+        it("add second manager", function () {
+            const actual = this.dbi.addRole("toronto", "mngr@there.com", "manager").changes;
+            const expected = 1;
+            assert.strictEqual(actual, expected);
+        });        
+
+        it("retrieve all for managers for location 'guelph'", function () {
+            const actual = this.dbi.getAllRoles("manager", "guelph");
             const expected = "manager@somewhere.com";
             assert.strictEqual(actual[0].email, expected);
         });
+
+        it("retrieve all managers", function () {
+            const actual = this.dbi.getAllRoles("manager");
+            const expected0 = "frar.test@gmail.com"; // empty has this role
+            const expected1 = "manager@somewhere.com";
+            const expected2 = "mngr@there.com";
+            assert.strictEqual(actual[0].email, expected0);
+            assert.strictEqual(actual[1].email, expected1);
+            assert.strictEqual(actual[2].email, expected2);
+        });        
     });
 
     describe(`Locations`, function () {

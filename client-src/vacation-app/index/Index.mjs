@@ -33,4 +33,8 @@ function checkValues() {
     }
 }
 
+function saveValues(){
+    
+}
+
 window.check = checkValues;

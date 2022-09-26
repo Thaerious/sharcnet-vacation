@@ -47,6 +47,11 @@ class DBInterface {
         return results !== undefined;
     }
 
+    /**
+     * Select the vacation request with matching 'hash'
+     * @param {string} hash 
+     * @returns 
+     */
     get(hash) {
         const sql = "SELECT * FROM requests where hash = ?";
         const stmt = this.db.prepare(sql);
@@ -66,20 +71,31 @@ class DBInterface {
     }
 
     /**
-     * Retrieve all rows from a specified location.
-     * @param {*} location 
-     * @returns 
+     * Retrieve all rows from a specified location & role.
+     * Omit location to return all rows with the specified role.
+     * @param {string} location 
+     * @param {string} role 
+     * @returns email rows array
      */
-    getAllRoles(location, role){
+    getAllRoles(role, location){
+        if (!location) return this._getAllRoles(role);
+
         const sql = "SELECT * FROM emails where location = ? AND role = ?";
         const stmt = this.db.prepare(sql);
         const rows = stmt.all(location, role);
         return rows;
     }
 
+    _getAllRoles(role){
+        const sql = "SELECT * FROM emails where role = ?";
+        const stmt = this.db.prepare(sql);
+        const rows = stmt.all(role);
+        return rows;
+    }
+
     /**
      * Retrieve all unique locations for a given role.
-     * @param {*} role 
+     * @param {string} role 
      * @returns 
      */
     getLocations(role = "admin"){
