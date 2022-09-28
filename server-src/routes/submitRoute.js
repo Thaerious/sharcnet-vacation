@@ -1,7 +1,6 @@
 import Express from "express";
 import bodyParser from "body-parser";
 import GoogleCalendar from "../GoogleCalendar.js";
-import constants from "../constants.js";
 import DBInterface from "../DBInterface.js";
 import EMInterface from "../EMInterface.js";
 import logger from "../setupLogger.js";
@@ -33,8 +32,8 @@ submitRoute.use(`/submit`, async (req, res, next) => {
     else if (!req.body.email) reject400(req, res, "missing body parameter: email");            
     else if (!req.body.duration) reject400(req, res, "missing body parameter: duration");
     else try {
-        await submitNew(req.body, dbi, emi);
-        res.redirect(constants.loc.endpoint.SUBMITTED);
+        const result = await submitNew(req.body, dbi, emi);
+        res.send(result);
         res.end();
     } catch (error) {
         logger.error(error.toString());

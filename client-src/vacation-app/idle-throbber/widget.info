@@ -1,0 +1,20 @@
+{
+  "components": [
+    {
+      "type": "component",
+      "fullName": "idle-throbber",
+      "view": "idle-throbber.ejs",
+      "es6": "IdleThrobber.mjs",
+      "style": {
+        "src": "idle-throbber.scss",
+        "dest": "idle-throbber.css"
+      },
+      "dir": {
+        "sub": "vacation-app/idle-throbber",
+        "src": "client-src/vacation-app/idle-throbber"
+      },
+      "package": "vacation-app",
+      "tagName": "idle-throbber"
+    }
+  ]
+}

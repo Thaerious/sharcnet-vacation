@@ -1,0 +1,35 @@
+:host(idle-throbber.hidden){
+    display: none;
+}
+
+#outer{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;    
+
+    width: 100%;
+    height: 100%;
+    background-color: rgba(127, 255, 212, 0.85);
+    border: 1px solid rgb(44, 127, 48);;
+    border-radius: 5px;
+    border-left: 5px solid rgb(44, 127, 48);;
+    border-right: 5px solid rgb(44, 127, 48);;
+    width: 90%;     
+    
+    #message{
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        left: 50%;
+        top: 15px;
+        transform: translateX(-50%);
+        font-size: 1.5em;
+    }
+
+    img{
+        height: 50%;
+        position: absolute;
+        left: 50%;
+        bottom: 0%;
+        transform: translateX(-50%);
+    }
+}

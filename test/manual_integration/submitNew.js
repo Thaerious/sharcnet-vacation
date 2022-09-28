@@ -14,4 +14,6 @@ const data = {
     institution : "guelph"
 }
 
-console.log(await submitNew(data, dbi, emi));
+const resultDate = await submitNew(data, dbi, emi)
+
+console.log(resultDate);
