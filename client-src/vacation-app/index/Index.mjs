@@ -8,13 +8,13 @@ window.addEventListener("load", () => {
     document.querySelector("#end_date").setAttribute("value", today);
 
     loadCookieValues();
-    checkValues();
+    checkFormValues();
 
-    document.querySelector("input[name='name']").addEventListener("change", checkValues);
+    document.querySelector("input[name='name']").addEventListener("change", checkFormValues);
     document.querySelector("input[name='email']").addEventListener("keyup", emailUpdate);
-    document.querySelector("input[name='email']").addEventListener("change", checkValues);
-    document.querySelector("input[name='verify-email']").addEventListener("change", checkValues);
-    document.querySelector("select[name='institution']").addEventListener("change", checkValues);
+    document.querySelector("input[name='email']").addEventListener("change", checkFormValues);
+    document.querySelector("input[name='verify-email']").addEventListener("change", checkFormValues);
+    document.querySelector("select[name='institution']").addEventListener("change", checkFormValues);
     document.querySelector("#duration").addEventListener("change", checkDuration);
 
     // hijack form submission
@@ -91,7 +91,7 @@ function emailUpdate() {
     }
 }
 
-function checkValues() {
+function checkFormValues() {
     const name = document.querySelector("input[name='name']").value;
     const email = document.querySelector("input[name='email']").value;
     const verify = document.querySelector("input[name='verify-email']").value;
@@ -113,4 +113,4 @@ function checkValues() {
     }
 }
 
-window.check = checkValues;
+window.check = checkFormValues;

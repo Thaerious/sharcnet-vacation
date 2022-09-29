@@ -16,11 +16,6 @@ async function submitNew(data, dbi, emi) {
 
     const startDate = new Date(data.start_date);
     const endDate = new Date(data.end_date);
-
-    console.log("outside");
-    console.log(data.start_date + ", " + startDate + ", " + startDate.getTimezoneOffset());
-    console.log(data.end_date + ", " + endDate + ", " + endDate.getTimezoneOffset());
-
     const returnDate = nextWeekday(endDate);
     const opt = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }
 
