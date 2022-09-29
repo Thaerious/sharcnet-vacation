@@ -11,19 +11,31 @@ async function submitNew(data, dbi, emi) {
     const rejectURL = new URL(CONST.LOC.HTML.REJECT_URL);
     rejectURL.searchParams.append("hash", hash);
 
+    data.start_date += "T00:00:00";
+    data.end_date += "T00:00:00";
+
     const startDate = new Date(data.start_date);
     const endDate = new Date(data.end_date);
-    const returnDate = nextWeekday(endDate);
-    const opt = {weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'}
 
-    const mData = {
+    console.log("outside");
+    console.log(data.start_date + ", " + startDate + ", " + startDate.getTimezoneOffset());
+    console.log(data.end_date + ", " + endDate + ", " + endDate.getTimezoneOffset());
+
+    const returnDate = nextWeekday(endDate);
+    const opt = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }
+
+    const rData = {
         ...data,
-        ACCEPTED_URL: acceptUrl,
-        REJECTED_URL: rejectURL,
         weekday_count: countWeekdays(startDate, endDate),
         return_date: returnDate.toLocaleDateString("en-CA", opt),
         start_date: startDate.toLocaleDateString("en-CA", opt),
         end_date: endDate.toLocaleDateString("en-CA", opt),
+    }
+
+    const mData = {
+        ...rData,
+        ACCEPTED_URL: acceptUrl,
+        REJECTED_URL: rejectURL,
     }
 
     // email managers
@@ -37,18 +49,17 @@ async function submitNew(data, dbi, emi) {
 
     // email the staff member
     const sData = {
-        todays_date: new Date().toString(),
+        ...rData,
+        todays_date: new Date().toLocaleDateString("en-CA", opt),
         manager_email: managers.toString(),
         status: CONST.STATUS.PENDING,
-        weekday_count: countWeekdays(data.from_date, data.to_date),
-        ...data
     }
 
     if (sData.duration == "full") sData.duration = "full day";
     const subectStaff = "Vacation Request Verfication Notice";
     await emi.sendFile(data.email, "", CONST.RESPONSE.NOTIFY_STAFF, subectStaff, sData);
 
-    return {...mData, hash: hash};
+    return { ...sData, hash: hash };
 }
 
 export default submitNew;

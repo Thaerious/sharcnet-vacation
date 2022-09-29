@@ -1,0 +1,23 @@
+.button {
+    @include double_border(rgb(44, 127, 48));
+    font-size: larger;
+    font-weight: bolder;           
+    background-color: aquamarine;
+    text-align: center;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+
+    &:hover{
+        background-color: rgb(61, 250, 187);
+        @include double_border(rgb(18, 85, 22));
+    }
+
+    &:disabled{
+        @include double_border(rgb(116, 116, 116));
+        cursor: default;            
+        background-color: rgb(191, 190, 190);      
+    }
+}

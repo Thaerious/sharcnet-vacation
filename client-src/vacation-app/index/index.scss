@@ -1,3 +1,5 @@
+@import '../shared_scss/borders.scss';
+@import '../shared_scss/button.scss';
 
 form{
     position: absolute;    
@@ -18,9 +20,7 @@ form{
     }
 
     .section{
-        border: 1px solid gray;
-        border-radius: 5px;
-        border-left: 5px solid blue;
+        @include single_border(#0000ff);
         width: 90%;        
         background-color: rgba(168, 202, 205, 0.25);
 
@@ -52,25 +52,6 @@ form{
         display: none;
     }
 
-    button {
-        font-size: larger;
-        font-weight: bolder;   
-        border: 2px solid rgb(44, 127, 48);
-        border-radius: 5px;       
-        border-left: 10px solid rgb(44, 127, 48);
-        border-right: 10px solid rgb(44, 127, 48);
-        background-color: aquamarine;
-        cursor: pointer;
-
-        &:disabled{
-            cursor: default;
-            border: 2px solid rgb(116, 116, 116);
-            border-left: 10px solid rgb(116, 116, 116);
-            border-right: 10px solid rgb(116, 116, 116);  
-            background-color: rgb(191, 190, 190);      
-        }
-    }
-
     .logout{
         font-variant-caps: small-caps;
         text-align: center;
@@ -91,4 +72,13 @@ idle-throbber{
     transform: translate(-50%, -50%);
     width: 450px;
     height: 140px;
+}
+
+submit-popup{
+    position: absolute;
+    left: 51%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: 240px;
 }

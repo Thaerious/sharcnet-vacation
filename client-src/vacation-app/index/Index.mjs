@@ -44,7 +44,9 @@ async function submit (event) {
         body : data.join("&")
     });
 
+    const result = await response.json();
     document.querySelector("idle-throbber").hide();
+    document.querySelector("submit-popup").show(result);
 }
 
 function checkDuration() {

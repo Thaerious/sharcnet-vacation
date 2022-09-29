@@ -6,10 +6,17 @@
  * @returns 
  */
 function countWeekdays(startDate, endDate){
+    console.log("before");
+    console.log(startDate + ", " + startDate.getTimezoneOffset());
+    console.log(endDate + ", " + endDate.getTimezoneOffset());
     let sum = 0;
-    for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        console.log(d.getTimezoneOffset());
         if (d.getDay() != 0 && d.getDay() != 6) sum++;
     }
+    console.log("after");
+    console.log(startDate + ", " + startDate.getTimezoneOffset());
+    console.log(endDate + ", " + endDate.getTimezoneOffset());
     return sum;
 }
 

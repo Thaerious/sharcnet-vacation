@@ -1,0 +1,43 @@
+@import '../shared_scss/borders.scss';
+@import '../shared_scss/button.scss';
+
+:host(submit-popup.hidden){
+    display: none;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+#outer{
+    @include single_border(rgb(44, 127, 48));
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;    
+    width: 100%;
+    height: 100%;
+    background-color: rgba(181, 252, 228, 0.85);
+    width: 90%;     
+    
+    #message{
+        @include single_border(rgb(44, 127, 48));
+        position: absolute;        
+ 
+        width: 80%;
+        height: calc(100% - 90px);
+        text-align: center;
+        left: 45%;
+        top: 15px;
+        transform: translateX(-50%);
+        font-size: 1.0em;
+        background-color: rgba(127, 255, 212, 1);
+    }
+
+    #ok_button{
+        position: absolute;
+        left: 45%;
+        bottom: 15px;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 50px;
+    }
+}

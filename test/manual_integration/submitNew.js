@@ -8,7 +8,7 @@ const emi = new EMInterface();
 const data = {
     email: "frar.test@gmail.com",    
     start_date : "2022-07-11",
-    end_date : "2022-07-16", 
+    end_date : "2022-07-11", 
     type : "full", 
     name : "Steve McQueen",
     institution : "guelph"

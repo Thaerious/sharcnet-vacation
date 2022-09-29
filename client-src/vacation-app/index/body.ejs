@@ -40,18 +40,19 @@
         <div class="section">
             <b>Dates</b>
             <div id="depart">
-                <div class="note">Depart (inclusive) the first day of your vacation.</div>
+                <div class="note">Depart - the first day of your vacation.</div>
                 <input type="date" id="start_date" name="start_date" />
             </div>
             <div id="return">
-                <div class="note">Return (exclusive) the first day returning to work.</div>
+                <div class="note">Return - the last day of your vacation.</div>
                 <input type="date" id="end_date" name="end_date" />
             </div>
         </div>
-        <button id="submit" disabled>SUBMIT</button>
+        <button class="button" id="submit" disabled>SUBMIT</button>
     </div>
     <br>
     <a class="logout" href="https://vacation.sharcnet.ca/Shibboleth.sso/Logout">Log out from Alliance SSO</a>
 </form>
 
 <idle-throbber class="hidden"></idle-throbber>
+<submit-popup class="hidden"></submit-popup>

@@ -1,0 +1,15 @@
+
+@mixin single_border($color){
+    border: 1px solid;
+    border-left: 5px solid ;
+    border-radius: 5px;  
+    border-color: $color;
+}
+
+@mixin double_border($color){
+    border: 2px solid;
+    border-left: 5px solid ;
+    border-right: 5px solid;   
+    border-radius: 5px;  
+    border-color: $color;
+}
