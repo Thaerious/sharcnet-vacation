@@ -8,7 +8,6 @@
 function countWeekdays(startDate, endDate){
     let sum = 0;
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-        console.log(d.getTimezoneOffset());
         if (d.getDay() != 0 && d.getDay() != 6) sum++;
     }
     return sum;

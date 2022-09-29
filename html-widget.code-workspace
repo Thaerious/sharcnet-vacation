@@ -1,16 +1,7 @@
 {
 	"folders": [
 		{
-			"path": "../html-widget"
-		},
-		{
-			"path": "../test_temp/test_widget"
-		},
-		{
 			"path": "."
-		},
-		{
-			"path": "../utility"
 		}
 	],
 	"settings": {}

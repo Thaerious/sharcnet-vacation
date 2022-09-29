@@ -25,7 +25,8 @@ LOC.HTML = {
 const RESPONSE = {
     "NOTIFY_MANAGER" : "assets/email_templates/notify_manager.html",
     "NOTIFY_STAFF" : "assets/email_templates/notify_staff.html",
-    "NOTIFY_ADMIN" : "assets/email_templates/notify_admin.html"
+    "NOTIFY_ADMIN" : "assets/email_templates/notify_admin.html",
+    "STAFF_ACCEPTED" : "assets/email_templates/notify_staff_accepted.html"
 }
 
 const STATUS = {

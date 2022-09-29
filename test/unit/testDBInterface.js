@@ -134,12 +134,18 @@ describe(`Test Database Interface Class`, function () {
 
         it("retrieve all managers", function () {
             const actual = this.dbi.getAllRoles("manager");
-            const expected0 = "frar.test@gmail.com"; // empty has this role
-            const expected1 = "manager@somewhere.com";
-            const expected2 = "mngr@there.com";
+            const expected0 = "frar.test+manager1@gmail.com"; // empty has this role
+            const expected1 = "frar.test+manager2@gmail.com"; // empty has this role
+            const expected2 = "manager@somewhere.com";        // added role for the test  
             assert.strictEqual(actual[0].email, expected0);
             assert.strictEqual(actual[1].email, expected1);
             assert.strictEqual(actual[2].email, expected2);
+        });   
+        
+        it("retrieve admin for location 'guelph'", function () {
+            const actual = this.dbi.getAllRoles("admin", "guelph");
+            const expected = "frar.test+guelph@gmail.com";
+            assert.strictEqual(actual[0].email, expected);
         });        
     });
 

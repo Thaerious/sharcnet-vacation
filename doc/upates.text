@@ -1,6 +1,9 @@
-22-09-28
-
 Added confirmation to email address.
 Cleared Up ambiguous date message to Manager.
 Added popup to staff to inidcate request in progress.
 Addup popup to staff to indicate request has been processed.
+Multiple manager emails.
+Update to all emails to remove ambiguous dates.
+Added weekday count to emails.
+All managers now get a confirmation email.
+Changed test emails to differentiate addresses.

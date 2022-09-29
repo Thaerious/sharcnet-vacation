@@ -21,9 +21,11 @@ class SubmitPopup extends WidgetElement {
     buildMessage(data){
         console.log(data);
         return `Vacation Request Submitted\n` +
-        `Starting on ${data.start_date}\n` +
-        `Ending on ${data.end_date}\n` + 
-        `Total days ${data.weekday_count}`;
+        `${data.start_date} to ${data.end_date}\n` +
+        `Returning to work on ${data.return_date}\n` +
+        `Total weekdays: ${data.weekday_count}\n\n` +
+        `Managers have been notified\n` +
+        `You will receive a confirmation email`;
     }
 }
 
