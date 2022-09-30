@@ -7,3 +7,5 @@ Update to all emails to remove ambiguous dates.
 Added weekday count to emails.
 All managers now get a confirmation email.
 Changed test emails to differentiate addresses.
+Added check to ensure multiple managers don't accept the same request.
+Improved accept/reject information screen.

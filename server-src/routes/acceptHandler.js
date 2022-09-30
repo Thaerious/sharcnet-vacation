@@ -8,15 +8,15 @@ import acceptRequest from "../functionality/acceptRequest.js";
 
 dotenv.config();
 
-const acceptRoute =  Express.Router();
+const acceptRoute = Express.Router();
 const dbi = new DBInterface().open();
 const emi = new EMInterface();
 
-acceptRoute.use(`/accept`, async (req, res, next) => {    
+acceptRoute.use(`/accept`, async (req, res, next) => {
     try {
-        acceptRequest(req.query.hash, req.query.email, dbi, emi);
-        res.redirect(`/accepted?hash=${req.query.hash}`);
-    } catch (error){
+        const r = acceptRequest(req.query.hash, req.query.email, dbi, emi);
+        res.redirect(`/status?hash=${req.query.hash}`);
+    } catch (error) {
         logger.error(error.toString());
         reject500(req, res);
     }

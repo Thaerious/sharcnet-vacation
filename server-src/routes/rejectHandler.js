@@ -15,8 +15,10 @@ const emi = new EMInterface();
 
 rejectRoute.use(`/reject`, async (req, res, next) => {    
     try {
-        rejectRequest(req.query.hash, dbi, emi, req.body);
-        res.redirect(`/rejected?hash=${req.query.hash}`);
+        rejectRequest(req.query.hash, req.query.email, dbi, emi, req.body);
+        console.log('/reject');
+        console.log(dbi.get(req.query.hash));
+        res.redirect(`/status?hash=${req.query.hash}`);
     } catch (error){
         logger.error(error.toString());
         console.error(error);

@@ -6,12 +6,11 @@ async function submitNew(data, dbi, emi) {
     const hash = dbi.addRequest(data);
 
     // email managers
-    const subjectMgr = `Vacation Request From ${data.name}`;
+    const subjectMgr = `SHARCNET Vacation Request: ${data.name}, ${data.start_date}`;
     const managers = [];
 
     for (const row of dbi.getAllRoles(CONST.ROLES.MANAGER)) {
         const mData = managerData(data, row.email, hash);
-        console.log(row.email);
         await emi.sendFile(row.email, "", CONST.RESPONSE.NOTIFY_MANAGER, subjectMgr, mData);
         managers.push(row.email);
     }

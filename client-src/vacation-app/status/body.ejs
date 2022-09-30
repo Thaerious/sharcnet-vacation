@@ -1,0 +1,48 @@
+<div id="main_form">
+    <div class="section">
+        <% status = status.charAt(0).toUpperCase() + status.slice(1); %>
+        <h2 class="center">Vacation Request <%- status %></h2>
+        
+        <% if (message != ""){ %>
+        <div class="section">
+            <%- message %>
+        </div>
+        <% } %>
+
+        <div class="section">
+            <b>Name</b>
+            <div id="name"><%- name %></div>
+        </div>
+        <div class="section">
+            <b>Employee Email</b>
+            <div id="email"><%- email %></div>
+        </div>
+        <div class="section">
+            <b>Institutional Email</b>
+            <div id="email"><%- inst_email %></div>
+        </div>
+        <div class="section">
+            <b>Institution</b>
+            <div id="institution"><%- institution %></div>
+        </div>
+        <div class="section">
+            <b>Duration</b>
+            <div id="duration"><%- duration %></div>
+        </div>
+        <div class="section">
+            <b>Start Date</b>
+            <div id="start_date"><%- start_date %></div>
+        </div>        
+        <div class="section">
+            <b>End Date</b>
+            <div id="end_date"><%- end_date %></div>
+        </div>     
+        <div class="section">
+            <b>Return to Work</b>
+            <div id="return_date"><%- return_date %></div>
+        </div>    
+        <div class="section">
+            <b>Status</b>
+            <div id="status"><%- status %></div>
+        </div>                            
+    </div>

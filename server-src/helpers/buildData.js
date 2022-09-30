@@ -39,12 +39,12 @@ function managerData(data, email, hash) {
 
     const rejectURL = new URL(CONST.LOC.HTML.REJECT_URL);
     rejectURL.searchParams.append("hash", hash);
-    acceptUrl.searchParams.append("email", email);
+    rejectURL.searchParams.append("email", email);
 
-    const mData = {
+    return {
         ...buildData(data),
         ACCEPTED_URL: acceptUrl,
-        REJECTED_URL: rejectURL,
+        REJECTED_URL: rejectURL, 
     }
 }
 
@@ -56,12 +56,11 @@ function staffPending(data, managers){
     }
 }
 
-function acceptedData(data, managerEmail){
+function statusData(data, managerEmail){
     return {
         ...buildData(data),
-        manager_email : managerEmail,
-        status : CONST.STATUS.ACCEPTED,
+        manager_email : managerEmail
     }         
 }
 
-export { buildData, managerData, staffPending, acceptedData};
+export { buildData, managerData, staffPending, statusData};
