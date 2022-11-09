@@ -6,20 +6,22 @@ npm i
 
 Running
 =======
-node .
-browser to 127.0.0.1/index
+    node .
+browse to 127.0.0.1/index
 
 Testing
 =======
-npx mocha
+    npx mocha
 
 Create a Devloper API Key & Service Account
 ===========================================
-console.cloud.google.com
+browse to: console.cloud.google.com
+
 create a new app
-> credentials
-> create credentials / API key
-copy key to .env file as "API_KEY"
+
+* credentials
+* create credentials / API key
+* copy key to .env file as "API_KEY"
 
 > manage service accounts
 > create service account
@@ -44,7 +46,8 @@ Fill in the following fields in the .env for Email.
 - EMAIL_USER
 - EMAIL_PASSWD
 - EMAIL_PORT
-- EMAIL_SERVICE
+- EMAIL_HOST
+- EMAIL_FROM
 
 Further Setup
 =============
