@@ -4,6 +4,11 @@ git clone git@github.com:Thaerious/sharcnet-vacation.git
 cd sharcnet-vacation
 npm i
 
+Quick Setup
+===========
+The setup script will prompt the user for the requied .env variables.
+    npm run setup
+
 Running
 =======
     node .

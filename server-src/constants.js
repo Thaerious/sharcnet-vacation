@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const LOC = {
-    "SERVER_ASSETS" : "server-assets",        
+    "SERVER_ASSETS" : "server-assets",   
+    "ROUTES" : "server-src/routes"     
 };
 
 LOC.ENDPOINT = {

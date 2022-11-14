@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="/vacation-app/index/index.css">
-    <script type="importmap">
-        <% if (typeof widget.prebuild === "undefined" || !widget.prebuild) { %>
-        <%- include(widget.lib_file) %>
-        <% } %>
-    </script>
-</head>
-<body>
-    <script type="module" src="/vacation-app/index/Index.mjs"></script>
-    <% if (typeof widget.prebuild === "undefined" || !widget.prebuild) { %>
-    <%- include(widget.template_file) %>
-    <% } %>
-    <%- include('./body.ejs'); %>
-</body>
+    <head>
+        <link rel="stylesheet" href="/vacation-app/index/index.css" />
+        <script type="importmap">
+            {
+                "imports": {
+                    "@html-widget/core": "/@html-widget/core/core-elements/lib.mjs"
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <script type="module" src="/vacation-app/index/Index.mjs"></script>
+        <%- include('./body.ejs'); %> <%- include('../submit-popup/submit-popup.ejs'); %> <%- include('../idle-throbber/idle-throbber.ejs'); %>
+    </body>
 </html>
-

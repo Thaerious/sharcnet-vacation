@@ -1,8 +1,0 @@
-{
-  "imports": {
-    "@html-widget/core": {
-      "path": "/@html-widget/core",
-      "file": "/@html-widget/core/core-elements/lib.mjs"
-    }
-  }
-}

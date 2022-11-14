@@ -24,13 +24,14 @@ async function setup(){
         EMAIL_PASSWD: process.env.EMAIL_PASSWD,
         LOG_DIR: process.env.LOG_DIR || `logs`,
         GKEY_FILENAME: process.env.GKEY_FILENAME || `private_key.json`,
-        SERVER_NAME: process.env.SERVER_NAME
+        SERVER_NAME: process.env.SERVER_NAME || `http:\\127.0.0.1:8000`
     };
 
     await apikey(env);
     await privatekey(env);
     await calendar(env);
     await email(env);
+    await servername(env);
 
     rl.close();
     return env;
@@ -42,6 +43,13 @@ async function apikey(env) {
     
     let value = (await it.next()).value;    
     env["API_KEY"] = value || env.API_KEY;
+}
+
+async function servername(env) {
+    console.log(`Fully Qualified Server Name (${env.SERVER_NAME || ''})>`)
+    
+    let value = (await it.next()).value;    
+    env["SERVER_NAME"] = value || env.SERVER_NAME;
 }
 
 async function privatekey(env) {
@@ -92,4 +100,3 @@ for(const key of Object.keys(env)){
 }
 
 FS.writeFileSync(".env", out);
-
