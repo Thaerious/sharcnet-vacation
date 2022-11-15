@@ -1,6 +1,6 @@
 // see: https://frar.ca/wordpress/?p=318
 
-import {google} from "googleapis";
+import { google } from "googleapis";
 
 /**
  * Handler class for Google Calendar API.

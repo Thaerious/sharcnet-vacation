@@ -1,6 +1,4 @@
 import FS from "fs";
-import Path from "path";
-import {mkdirif} from "@thaerious/utility";
 import readline from "readline";
 import dotenv from "dotenv";
 

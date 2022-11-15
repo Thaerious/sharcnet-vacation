@@ -9,11 +9,6 @@ router.use(
     render   
 );
 
-function log(req, res, next){
-    console.log("HERE");
-    next();
-}
-
 async function render(req, res, next){
     res.render(viewpath, data, (err, html) => {
         if (err) {

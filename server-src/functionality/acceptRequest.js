@@ -25,14 +25,13 @@ await googleCalendar.insert(process.env.CALENDAR_ID);
     const staffSubject = "SHARCNET Vacation Request Update: Accepted.";
     emi.sendFile(data.email, "", CONST.RESPONSE.STAFF_ACCEPTED, staffSubject, data);    
         
-    // Send admin email
+    // Send Admin Email
     const adminSubject = "SHARCNET Staff Vacation Notification";    
     for (const row of dbi.getAllRoles(CONST.ROLES.ADMIN, data.institution)){
         emi.sendFile(row.email, "", CONST.RESPONSE.NOTIFY_ADMIN, adminSubject, data);  
-        emi.sendFile("frar.test+guelph@gmail.com", "", CONST.RESPONSE.NOTIFY_ADMIN, adminSubject, data);  
     }
 
-    // Send manager email
+    // Send Manager Email
     const managerSubject = `SHARCNET Vacation Accepted for '${data.name}'.`;
     for (const row of dbi.getAllRoles(CONST.ROLES.MANAGER)) {
         emi.sendFile(row.email, "", CONST.RESPONSE.NOTIFY_ADMIN, managerSubject, data);          
@@ -49,15 +48,35 @@ await googleCalendar.insert(process.env.CALENDAR_ID);
 async function addAppointment(data) {
     const summary = `${data.name} on vacation`;
 
-    if (data.duration === "full") {
-        await googleCalendar.addEvent(process.env.CALENDAR_ID, data.start_date, data.end_date, summary);
+    if (data.duration === "full day") {
+        const startDate = new Date(data.start_date);
+        const endDate = new Date(data.end_date);
+
+        endDate.setDate(endDate.getDate() + 1);
+
+        const start = startDate.toISOString().split("T")[0];
+        const end = endDate.toISOString().split("T")[0];
+    
+        await googleCalendar.addEvent(process.env.CALENDAR_ID, start, end, summary);
     } else if (data.duration === "am") {
-        const start = data.start_date + "T09:00:00-00:00";
-        const end = data.start_date + "T13:00:00-00:00";
+        const startDate = new Date(data.start_date);
+        const endDate = new Date(data.start_date);    
+
+        startDate.setHours(9);    
+        endDate.setHours(13);  
+
+        const start = startDate.toISOString();
+        const end = endDate.toISOString();
         await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, start, end, summary);
     } else if (data.duration === "pm") {
-        const start = data.start_date + "T12:00:00-00:00";
-        const end = data.end_date + "T17:00:00-00:00";
+        const startDate = new Date(data.start_date);
+        const endDate = new Date(data.start_date);    
+
+        startDate.setHours(13);    
+        endDate.setHours(17);  
+
+        const start = startDate.toISOString();
+        const end = endDate.toISOString();
         await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, start, end, summary);
     }
 }

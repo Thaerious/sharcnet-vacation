@@ -1,22 +1,26 @@
-Downloading
-===========
+# Installation and Setup
+
+## Downloading
+
 git clone git@github.com:Thaerious/sharcnet-vacation.git
 cd sharcnet-vacation
 npm i
 
-Quick Setup
-===========
+## Quick Setup
 The setup script will prompt the user for the requied .env variables.
+The detials of these variables are listed below.
+
     npm run setup
 
-Running
-=======
+## Testing
+    npx mocha test/unit
+
+
+Starting the Server
+===================
     node .
 browse to 127.0.0.1/index
 
-Testing
-=======
-    npx mocha
 
 Create a Devloper API Key & Service Account
 ===========================================

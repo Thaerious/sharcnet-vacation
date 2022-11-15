@@ -3,17 +3,15 @@
 <head>
     <link rel="stylesheet" href="/vacation-app/status/status.css">
     <script type="importmap">
-        <% if (typeof widget.prebuild === "undefined" || !widget.prebuild) { %>
-        <%- include(widget.lib_file) %>
-        <% } %>
+        {
+            "imports": {
+                "@html-widget/core": "/@html-widget/core/core-elements/lib.mjs"
+            }
+        }
     </script>
 </head>
 <body>
     <script type="module" src="/vacation-app/status/Status.mjs"></script>
-    <% if (typeof widget.prebuild === "undefined" || !widget.prebuild) { %>
-    <%- include(widget.template_file) %>
-    <% } %>
     <%- include('./body.ejs'); %>
 </body>
 </html>
-

@@ -3,9 +3,9 @@
         <% status = status.charAt(0).toUpperCase() + status.slice(1); %>
         <h2 class="center">Vacation Request <%- status %></h2>
         
-        <% if (message != ""){ %>
+        <% if (locals.message){ %>
         <div class="section">
-            <%- message %>
+            <%- locals.message %>
         </div>
         <% } %>
 
