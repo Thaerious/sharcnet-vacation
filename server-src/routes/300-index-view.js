@@ -5,6 +5,11 @@ const viewpath = "vacation-app/index/index.ejs";
 const data = {};
 
 router.use(    
+    `[/]`, 
+    render   
+);
+
+router.use(    
     `/index`, 
     render   
 );

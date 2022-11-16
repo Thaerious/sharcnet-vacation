@@ -9,6 +9,6 @@ Description=Vacation Node.JS app
 
 [Service]
 User=ubuntu
-WorkingDirectory=/home/ubuntu/sharcnet-vacation
+WorkingDirectory=~/vacation-app/live/
 ExecStart=node .
 Restart=always
