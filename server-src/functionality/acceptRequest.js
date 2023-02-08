@@ -5,11 +5,7 @@ import {statusData} from "../helpers/buildData.js";
 const googleCalendar = new GoogleCalendar();
 await googleCalendar.insert(process.env.CALENDAR_ID);
 
-/**
- * hash : stored db index hash for the request
- * data : from request body (as json) see doc/vacation_accept.pdf (1)
- */
- async function acceptRequest(hash, managerEmail, dbi, emi){
+async function acceptRequest(hash, managerEmail, dbi, emi){
     // Check and/or update status
     let data = statusData(dbi.get(hash), managerEmail);
     if (data.status !== CONST.STATUS.PENDING){
