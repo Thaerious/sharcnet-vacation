@@ -16,6 +16,7 @@ async function acceptRequest(hash, managerEmail, dbi, emi){
     }
 
     dbi.update(hash, CONST.STATUS.ACCEPTED);
+    data = statusData(dbi.get(hash), managerEmail);
 
     // Send Staff Email
     const staffSubject = "SHARCNET Vacation Request Update: Accepted.";

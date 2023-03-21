@@ -3,8 +3,9 @@
 ## Downloading
 
 git clone git@github.com:Thaerious/sharcnet-vacation.git
-cd sharcnet-vacation
-npm i
+
+    cd sharcnet-vacation    
+    npm i
 
 ## Quick Setup
 The setup script will prompt the user for the requied .env variables.
@@ -19,38 +20,51 @@ The detials of these variables are listed below.
 Starting the Server
 ===================
     node .
-browse to 127.0.0.1/index
+    browse to 127.0.0.1/index
 
 
 Create a Devloper API Key & Service Account
 ===========================================
-browse to: console.cloud.google.com
 
-create a new app
-
-* credentials
+* browse to: console.cloud.google.com
+* from the project selection dropdown in the upper left, select 'new project'
+* select the new project, then click on 'dashboard'
+* APIs & Services > credentials
 * create credentials / API key
 * copy key to .env file as "API_KEY"
-
-> manage service accounts
-> create service account
-use the service account email address in the next step
-
-Create and download a private key from the service account.
-Add the filename to .env as "GKEY_FILENAME".
+* manage service accounts
+* create service account
+* use the service account email address in the next step
+* Create and download a private key from the service account.
+* Actions > Manage Keys > Add Key > JSON
+* Add the filename to .env as "GKEY_FILENAME".
 
 Calendar Setup
 ==============
 
-Open up the the google calendar (calendar.google.com).
-Under 'My calendars' to the right of the calendar find the menu (3 vertical dots).
-Select 'Settings and sharing'.
-Under 'Share with specific people' add the service account email address.
-Set that share to 'Make changes to events'.
-Under 'Integrate calendar' copy the calendar id and paste it into the .env in the 'CALENDAR_ID' value.
+* Open up the the google calendar (calendar.google.com).
+* Under 'My calendars' to the right of the calendar find the menu (3 vertical dots).
+* Select 'Settings and sharing'.
+* Under 'Share with specific people' add the service account email address.
+* Set that share to 'Make changes to events'.
+* Under 'Integrate calendar' copy the calendar id and paste it into the .env in the 'CALENDAR_ID' value.
+* Enable the Google Calendar API (https://console.cloud.google.com/apis/api/calendar-json.googleapis.com/metrics?project=vacation-app-development)
 
 EMail Setup
 ===========
+
+* Go to your Google Account.
+* Select Security.
+* Select 2-Factor Authentication.
+* Under "Signing in to Google," select App Passwords. You may need to sign in. If you don’t have this option, it might be because:
+* 2-Step Verification is not set up for your account.
+* 2-Step Verification is only set up for security keys.
+* Your account is through work, school, or other organization.
+* You turned on Advanced Protection.
+* At the bottom, choose Select app and choose the app you using and then Select device and choose the device you’re using and then Generate.
+* Follow the instructions to enter the App Password. The App Password is the 16-character code in the yellow bar on your device.
+* Tap Done.
+
 Fill in the following fields in the .env for Email.
 - EMAIL_USER
 - EMAIL_PASSWD

@@ -6,7 +6,7 @@ import sass from "sass";
 import { mkdirif } from "@thaerious/utility";
 
 const router = Express.Router();
-const srcDir = "client-src";
+const srcDir = "www/static";
 const destDir = "www/compiled";
 
 router.use(`/*.css`, renderSCSS);

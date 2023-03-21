@@ -16,7 +16,7 @@ import Path from "path";
 class Server {
     constructor() {
         this.app = Express();
-        this.app.set(`views`, `client-src`);
+        this.app.set(`views`, Path.join("www", "static"));
         this.app.set(`view engine`, `ejs`);
         this.loadRoutes();
     }

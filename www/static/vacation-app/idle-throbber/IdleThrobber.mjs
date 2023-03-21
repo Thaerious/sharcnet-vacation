@@ -1,4 +1,4 @@
-import WidgetElement from "@html-widget/core";
+import WidgetElement from "../WidgetElement.mjs";
 
 class IdleThrobber extends WidgetElement {
 
