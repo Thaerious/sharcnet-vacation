@@ -16,7 +16,6 @@ The detials of these variables are listed below.
 ## Testing
     npx mocha test/unit
 
-
 Starting the Server
 ===================
     node .
@@ -78,12 +77,10 @@ Set the server name and log directory in the .env file.
 LOG_DIR=logs
 SERVER_NAME=http://vacation.sharcnet.ca:8000
 
-Server Setup
-============
-Use when setting up a linux server from scratch.
-
 Install Apache & Let's Encrypt
 ==============================
+
+```bash
 sudo apt update
 sudo apt install apache2
 sudo apt install certbot python3-certbot-apache
@@ -91,10 +88,12 @@ sudo certbot --apache
 
 sudo systemctl start apache2
 sudo systemctl restart apache2 
+```
 
 Install Node
 ============
-cd /usr
+
+```bash
 mkdir node
 cd node
 sudo wget https://nodejs.org/dist/v18.6.0/node-v18.6.0-linux-x64.tar.xz
@@ -105,8 +104,81 @@ cd /usr/local/bin
 sudo ln -s /opt/node/18.6.0/bin/node node
 sudo ln -s /opt/node/18.6.0/bin/npx npx
 sudo ln -s /opt/node/18.6.0/bin/npm npm
+```
 
 Changing a Destination Email
 ============================
 In the sqlite datbase /eb/requests.db
 UPDATE emails set email = "email@address" where role = "university";
+
+Install Apache SSL
+==================
+```bash
+sudo vim ../apache2.conf
+vim> ServerName vacation.sharcnet.ca
+sudo apache2ctl configtest
+sudo certbot --apache
+sudo systemctl reload apache2
+```
+
+Setup Reverse Proxy
+===================
+```bash
+cd /etc/apache2
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo systemctl restart apache2
+sudo a2ensite 001-proxy
+```
+
+Setup Shibboleth
+================
+See https://wiki.alliancecan.ca/wiki/ShibbolethSPInstall for shibboleth server names.  The following instructions use the test server.  The production server is 'https://idp.alliancecan.ca/idp/shibboleth'.
+
+```bash
+sudo apt install shibboleth-sp-common shibboleth-sp-utils libapache2-mod-shib
+cd /etc/shibboleth
+sudo shib-keygen -b -n sp-signing -u _shibd -g _shibd
+sudo shib-keygen -b -n sp-encrypt -u _shibd -g _shibd
+sudo curl -o idp-metadata.xml https://idp-alliance.mit.c3.ca/idp/shibboleth
+sudo vim shibboleth2.xml
+    <SSO entityID="https://idp-alliance.mit.c3.ca/idp/shibboleth">
+        SAML2
+    </SSO>
+    <MetadataProvider type="XML" validate="true" path="idp-metadata.xml"/>
+
+    #replace <ApplicationDefaults entityID="https://sp.example.org/shibboleth" ...
+    <ApplicationDefaults entityID="https://vacation.sharcnet.ca/shibboleth"  .... >
+
+sudo systemctl enable shibd
+sudo systemctl start shibd
+sudo systemctl restart httpd    
+```
+
+The following forces shibboleth authentication on root path.
+```bash
+vim /etc/apache2/conf-available/shib.conf
+    <Location />
+        AuthType shibboleth
+        ShibRequestSetting requireSession 1
+        require shib-session
+    </Location>
+```
+
+Setup Time Server (for shibboleth)
+==================================
+```bash
+sudo apt purge ntp                                                                   
+sudo apt install systemd-timesyncd                                                   
+systemctl start systemd-timesyncd                                               
+systemctl status systemd-timesyncd                                              
+sudo timedatectl set-timezone America/Toronto                                        
+sudo timedatectl set-ntp true                                                        
+timedatectl show-timesync                                                       
+vim /etc/systemd/timesyncd.conf                                                  
+    [Time]                                                                        
+    NTP=ntp1.sharcnet.ca ntp2.sharcnet.ca                                         
+sudo systemctl restart systemd-timesyncd.service                                     
+timedatectl show-timesync                                                       
+timedatectl
+```

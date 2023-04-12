@@ -1,3 +1,4 @@
+0.3.0
 Added confirmation to email address.
 Cleared Up ambiguous date message to Manager.
 Added popup to staff to inidcate request in progress.
@@ -9,3 +10,5 @@ All managers now get a confirmation email.
 Changed test emails to differentiate addresses.
 Added check to ensure multiple managers don't accept the same request.
 Improved accept/reject information screen.
+
+0.4.0

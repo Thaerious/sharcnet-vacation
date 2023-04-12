@@ -1,10 +1,18 @@
+See https://wiki.alliancecan.ca/wiki/ShibbolethSPInstall
+
 sudo apt install shibboleth-sp-common shibboleth-sp-utils libapache2-mod-shib
 
 cd /etc/shibboleth
 sudo shib-keygen -b -n sp-signing -u _shibd -g _shibd
 sudo shib-keygen -b -n sp-encrypt -u _shibd -g _shibd
 
+When regenerating the certs notify the sys-admin (Darren Boss) that the certs are new.
+When refreshing the install, use the previous certs.
+
 sudo curl -o idp-metadata.xml https://idp.alliancecan.ca/idp/shibboleth
+
+Production	https://idp.alliancecan.ca/idp/shibboleth
+Test	https://idp-alliance.mit.c3.ca/idp/shibboleth
 
 sudo systemctl enable shibd
 sudo systemctl start shibd
@@ -12,13 +20,13 @@ sudo systemctl restart apache2
 
 (setup forwarding to not forward https://vacation.sharcnet.ca/Shibboleth.sso/Metadata)
 
-ok, change the entityid in /etc/shibboleth/shibboleth2.xml
+change the entityid in /etc/shibboleth/shibboleth2.xml
 search for https://sp.example.org/shibboleth
 change it to https://vacation.sharcnet.ca/shibboleth
 
 in shibboleth2.xml change
 <SSO entityID="https://idp.alliancecan.ca/idp/shibboleth" .....>
-<ApplicationDefaults entityID="https://vacation.sharcnet.ca/shibboleth"  .... >
+
 
 <MetadataProvider type="XML" validate="true" path="partner-metadata.xml"/>
 to
