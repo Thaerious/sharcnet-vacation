@@ -1,36 +1,21 @@
+import { mkdirif } from "@thaerious/utility";
+import FS, { mkdir } from "fs";
+import args from "./parseArgs.js";
+
 import Logger from "@thaerious/logger";
-import {mkdirif} from "@thaerious/utility";
-import FS from "fs";
-import ParseArgs from "@thaerious/parseargs"
+const logger = new Logger();
 
-const options = {
-    flags: [
-        {
-            long: `verbose`,
-            short: `v`,
-            type: `boolean`
-        }
-    ]
-};
+logger.standard.enabled = true;
+logger.error.enabled = true;
+logger.log.enabled = true;
+logger.verbose.enabled = args?.verbose;
 
-const args = new ParseArgs().loadOptions(options).run();
-const appLogger = new Logger();
+logger.verbose("verbose");
 
-appLogger.channel(`standard`).enabled = true;
-appLogger.channel(`error`).enabled = true;
-appLogger.channel(`log`).enabled = true;
-appLogger.channel(`verbose`).enabled = false;
+mkdirif("log/log.text");
+logger.log.handlers = [
+    (text) => FS.appendFileSync("log/log.text", text + "\n"),
+    console
+]
 
-if (args.flags["verbose"]) appLogger.channel(`verbose`).enabled = true;
-
-appLogger.channel(`log`).log = (text) => {
-    FS.appendFileSync("log/log.text", text + "\n");
-}
-
-appLogger.channel("error").log = function(string){
-    console.error("Error: see log files");
-    const path = mkdirif(process.env.LOG_DIR, "error.log");
-    FS.appendFileSync(path, "\n *** " + new Date().toString() + "\n" + string + "\n");
-}
-
-export default appLogger.all();
+export default logger;

@@ -12,9 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "@node-saml/passport-saml": "^4.0.3",
-    "@thaerious/logger": "^0.2.1",
-    "@thaerious/parseargs": "^0.5.0",
-    "@thaerious/utility": "^0.0.7",
+    "@thaerious/logger": "*",
+    "@thaerious/parseargs": "*",
+    "@thaerious/utility": "*",
     "better-sqlite3": "^7.5.3",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.1",

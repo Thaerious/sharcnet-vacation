@@ -1,11 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config();
-
-import ParseArgs from "@thaerious/parseargs";
-import parseArgsOptions from "./parseArgsOptions.js";
-const args = new ParseArgs().loadOptions(parseArgsOptions).run();
-if (args.flags.cwd) process.chdir(args.flags.cwd);
-
+import args from "./parseArgs.js";
 import Express from "express";
 import http from "http";
 import CONST from "./constants.js";
@@ -13,6 +7,8 @@ import logger from "./setupLogger.js";
 import FS from "fs";
 import Path from "path";
 import https from "https";
+
+dotenv.config();
 
 class Server {
     constructor() {
