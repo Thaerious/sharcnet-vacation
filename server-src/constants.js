@@ -41,9 +41,15 @@ const ROLES = {
     ADMIN : "admin"
 }
 
+const SERVER = {
+    SSL_KEY: `${process.env.SSL_KEY || './keys/privkey.pem'}`,
+    SSL_CERT: `${process.env.SSL_CERT || './keys/cert.pem'}`,    
+}
+
 export default {
     ROLES    : ROLES,
     LOC      : LOC,
     STATUS   : STATUS,
-    RESPONSE : RESPONSE
+    RESPONSE : RESPONSE,
+    SERVER   : SERVER
 };
