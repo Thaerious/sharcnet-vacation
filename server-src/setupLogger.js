@@ -12,9 +12,9 @@ logger.verbose.enabled = args?.verbose;
 
 logger.verbose("verbose");
 
-mkdirif("log/log.text");
+mkdirif("logs/log.text");
 logger.log.handlers = [
-    (text) => FS.appendFileSync("log/log.text", text + "\n"),
+    (text) => FS.appendFileSync("logs/log.text", text + "\n"),
     console
 ]
 
