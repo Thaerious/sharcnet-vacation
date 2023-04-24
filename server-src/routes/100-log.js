@@ -1,11 +1,10 @@
 import express from "express";
-import Logger from "@thaerious/logger";
+import logger from "../setupLogger.js";
 
 const router = express.Router();
-const logger = Logger.getLogger();
 
 router.use(`*`, (req, res, next) => {
-    logger.channel(`server`).log(req.method + ` ` + req.originalUrl);
+    logger.log(req.method + ` ` + req.originalUrl);
     next();
 });
 

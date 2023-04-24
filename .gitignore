@@ -4,4 +4,5 @@ private_key.json
 www/compiled
 db/production.db
 logs/
+keys/
 /*.json

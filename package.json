@@ -11,9 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@node-saml/passport-saml": "^4.0.3",
     "@thaerious/logger": "*",
     "@thaerious/parseargs": "*",
-    "@thaerious/sql-model-factory": "github:Thaerious/SQLModelFactory",
     "@thaerious/utility": "*",
     "better-sqlite3": "*",
     "date-fns": "^2.29.3",
@@ -22,9 +22,13 @@
     "express": "^4.18.1",
     "googleapis": "*",
     "juice": "*",
+    "https": "^1.0.0",
     "nodemailer": "^6.7.5",
+    "passport": "^0.6.0",
+    "passport-saml": "^3.2.4",
     "readline": "^1.3.0",
-    "sass": "^1.56.1"
+    "sass": "^1.56.1",
+    "shibboleth": "^0.1.4"
   },
   "devDependencies": {
     "eslint": "^8.16.0",

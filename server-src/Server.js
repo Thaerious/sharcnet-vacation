@@ -1,17 +1,14 @@
 import dotenv from "dotenv";
-dotenv.config();
-
-import ParseArgs from "@thaerious/parseargs";
-import parseArgsOptions from "./parseArgsOptions.js";
-const args = new ParseArgs().loadOptions(parseArgsOptions).run();
-if (args.flags.cwd) process.chdir(args.flags.cwd);
-
+import args from "./parseArgs.js";
 import Express from "express";
 import http from "http";
 import CONST from "./constants.js";
 import logger from "./setupLogger.js";
 import FS from "fs";
 import Path from "path";
+import https from "https";
+
+dotenv.config();
 
 class Server {
     constructor() {
@@ -21,7 +18,12 @@ class Server {
         this.loadRoutes();
     }
 
-    start(port = 8000, ip = `0.0.0.0`) {
+    start() {
+        // this.startHTTP();
+        this.startHTTPS();
+    }
+
+    startHTTP(port = 80, ip = `0.0.0.0`) {
         this.server = http.createServer(this.app);
         this.server.listen(port, ip, () => {
             logger.standard(`Listening on port ${port}`);
@@ -32,6 +34,26 @@ class Server {
         return this;
     }
 
+    startHTTPS(port = 443, ip = `0.0.0.0`) {
+        if (CONST.SERVER.SSL_KEY && CONST.SERVER.SSL_CERT) {
+            try {
+                const key = FS.readFileSync(CONST.SERVER.SSL_KEY);
+                const cert = FS.readFileSync(CONST.SERVER.SSL_CERT);
+                this.https = https.createServer({ cert, key }, this.app);
+                this.https.listen(port, ip, () => {
+                    logger.standard(`<green>HTTPS Listening on port ${port}</green>`);
+                });
+            } catch (err) {
+                console.log(err);
+                logger.standard(`<red>HTTPS Server Not Started.</red>`);
+            }
+        }
+
+        process.on(`SIGINT`, () => this.stop(this.https));
+        process.on(`SIGTERM`, () => this.stop(this.https));
+        return this;
+    }
+
     stop() {
         logger.standard(`Stopping this.server`);
         this.server.close();
@@ -39,17 +61,17 @@ class Server {
     }
 
     async loadRoutes(path = CONST.LOC.ROUTES) {
-        logger.verbose(`routes path ${path} ${FS.existsSync(path)}`); 
+        logger.verbose(`routes path ${path} ${FS.existsSync(path)}`);
         if (!FS.existsSync(path)) return;
-        
+
         const contents = FS.readdirSync(path).sort();
 
         for (const entry of contents) {
             const fullpath = Path.join(process.cwd(), path, entry);
             const { default: route } = await import(fullpath);
             this.app.use(route);
-            logger.verbose(`router ${fullpath}`);        
-        }        
+            logger.verbose(`router ${fullpath}`);
+        }
     }
 }
 
