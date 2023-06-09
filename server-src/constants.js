@@ -6,7 +6,7 @@ dotenv.config();
 
 const LOC = {
     "SERVER_ASSETS" : "server-assets",   
-    "ROUTES" : "server-src/routes-enabled"     
+    "ROUTES" : "server-src/routes-enabled",    
 };
 
 LOC.ENDPOINT = {
@@ -14,7 +14,7 @@ LOC.ENDPOINT = {
     "REJECTED"  : "/rejected",
     "ACCEPT"    : "/accept",
     "REJECT"    : "/reject",
-    "SUBMITTED" : "/submitted"
+    "SUBMITTED" : "/submitted",
 }
 
 LOC.HTML = {
@@ -34,12 +34,12 @@ const RESPONSE = {
 const STATUS = {
     PENDING : "pending",
     REJECTED : "rejected",
-    ACCEPTED : "accepted"
+    ACCEPTED : "accepted",
 }
 
 const ROLES = {
     MANAGER : "manager",
-    ADMIN : "admin"
+    ADMIN : "admin",
 }
 
 const SERVER = {
@@ -54,5 +54,5 @@ export default {
     LOC      : LOC,
     STATUS   : STATUS,
     RESPONSE : RESPONSE,
-    SERVER   : SERVER
+    SERVER   : SERVER,
 };

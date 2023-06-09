@@ -1,0 +1,109 @@
+.button {
+  border: 2px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(44, 127, 48);
+  font-size: larger;
+  font-weight: bolder;
+  background-color: aquamarine;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button:hover {
+  background-color: rgb(61, 250, 187);
+  border: 2px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(18, 85, 22);
+}
+.button:disabled {
+  border: 2px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(116, 116, 116);
+  cursor: default;
+  background-color: rgb(191, 190, 190);
+}
+
+#main_form {
+  position: absolute;
+  top: 50px;
+  width: 400px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+#main_form * {
+  display: block;
+  margin: 10px;
+  box-sizing: border-box;
+}
+#main_form .center {
+  text-align: center;
+}
+#main_form .section {
+  border: 1px solid;
+  border-left: 5px solid;
+  border-radius: 5px;
+  border-color: #0000ff;
+  width: 90%;
+  background-color: rgba(168, 202, 205, 0.25);
+}
+#main_form .section * {
+  position: relative;
+  left: 5px;
+}
+#main_form .section input {
+  width: 90%;
+}
+#main_form .section.hidden {
+  display: none;
+}
+#main_form #submit {
+  width: 90%;
+  height: 50px;
+}
+#main_form .note {
+  font-variant-caps: small-caps;
+  color: rgb(119, 119, 119);
+}
+#main_form .hidden {
+  display: none;
+}
+#main_form .logout {
+  font-variant-caps: small-caps;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+#main_form .logout:hover {
+  color: blue;
+  font-weight: bold;
+}
+
+idle-throbber {
+  position: absolute;
+  left: 51%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  height: 140px;
+}
+
+submit-popup {
+  position: absolute;
+  left: 51%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  height: 240px;
+}
+
+/*# sourceMappingURL=index.css.map */

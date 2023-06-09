@@ -10,7 +10,8 @@ const options = {
         {
             long: 'port',
             type: 'string',
-            short: 'p'
+            short: 'p',
+            default: undefined
         }
     ]
 };
