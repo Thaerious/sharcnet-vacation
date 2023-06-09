@@ -1,5 +1,4 @@
 import dotenv from "dotenv";
-import args from "./parseArgs.js";
 import Express from "express";
 import http from "http";
 import CONST from "./constants.js";
@@ -7,6 +6,7 @@ import logger from "./setupLogger.js";
 import FS from "fs";
 import Path from "path";
 import https from "https";
+import args from "./parseArgs.js";
 
 dotenv.config();
 
@@ -19,11 +19,11 @@ class Server {
     }
 
     start() {
-        // this.startHTTP();
-        this.startHTTPS();
+        if (!args['no-http']) this.startHTTP();
+        if (!args['no-ssl']) this.startHTTPS();
     }
 
-    startHTTP(port = 80, ip = `0.0.0.0`) {
+    startHTTP(port = CONST.SERVER.PORT, ip = `0.0.0.0`) {
         this.server = http.createServer(this.app);
         this.server.listen(port, ip, () => {
             logger.standard(`Listening on port ${port}`);

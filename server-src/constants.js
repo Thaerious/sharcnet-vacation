@@ -1,11 +1,12 @@
 import Path from "path";
 import dotenv from "dotenv";
+import args from "./parseArgs.js";
 
 dotenv.config();
 
 const LOC = {
     "SERVER_ASSETS" : "server-assets",   
-    "ROUTES" : "server-src/routes"     
+    "ROUTES" : "server-src/routes-enabled"     
 };
 
 LOC.ENDPOINT = {
@@ -43,7 +44,9 @@ const ROLES = {
 
 const SERVER = {
     SSL_KEY: `${process.env.SSL_KEY || './keys/privkey.pem'}`,
-    SSL_CERT: `${process.env.SSL_CERT || './keys/cert.pem'}`,    
+    SSL_CERT: `${process.env.SSL_CERT || './keys/cert.pem'}`,
+    PORT: `${args.port || process.env.PORT || 80}`,
+    SSLPORT : `${args.sslport || process.env.SSLPORT || 433}`,
 }
 
 export default {

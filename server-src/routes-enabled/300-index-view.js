@@ -21,7 +21,7 @@ async function render(req, res, next){
         } else{
             res.send(html);
         }
-    });    
+    });
 }
 
 export default router;

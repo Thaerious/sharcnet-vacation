@@ -6,7 +6,8 @@
   "scripts": {
     "watch-css": "sass www/static/vacation-app/index/index.scss:www/compiled/vacation-app/index/index.css --watch",
     "build-css": "sass www/static/vacation-app/index/index.scss:www/compiled/vacation-app/index/index.css",
-    "setup": "nodejs server-src/setup/setup.js"
+    "setup": "nodejs server-src/setup/setup.js",
+    "clean": "rm www/compiled/* -r"
   },
   "author": "",
   "license": "ISC",

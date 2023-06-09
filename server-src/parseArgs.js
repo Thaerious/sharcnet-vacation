@@ -1,21 +1,20 @@
-import { parseArgs } from "node:util";
+import ParseArgs from "@thaerious/parseargs";
 
 const options = {
-    verbose: {
-        type: 'boolean',
-        short: 'v',
-    },
-    port: {
-        type: 'string',
-        short: 'p'
-    }
+    flags: [
+        {
+            long: 'verbose',
+            type: 'boolean',
+            short: 'v',
+        },
+        {
+            long: 'port',
+            type: 'string',
+            short: 'p'
+        }
+    ]
 };
 
-const { _, tokens } = parseArgs({ args: process.args, options: options, tokens: true });
-const args = {};
-const t = tokens.map(t => {
-    const c = args[t.name] ? args[t.name].count + 1 : 1;
-    args[t.name] = { ...t, count: c };
-});
-
+const args = new ParseArgs(options);
+console.log(args.port);
 export default args;
