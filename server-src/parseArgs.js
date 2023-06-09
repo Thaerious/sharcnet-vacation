@@ -17,5 +17,4 @@ const options = {
 };
 
 const args = new ParseArgs(options);
-console.log(args.port);
 export default args;

@@ -8,7 +8,6 @@ class SubmitPopup extends WidgetElement {
 
     async connectedCallback() {
         await super.connectedCallback();
-        console.log(this.dom);
         this.dom.okButton.addEventListener("click", ()=> this.hide());
     }
 
@@ -19,7 +18,6 @@ class SubmitPopup extends WidgetElement {
     }
 
     buildMessage(data){
-        console.log(data);
         return `Vacation Request Submitted\n` +
         `${data.start_date} to ${data.end_date}\n` +
         `Returning to work on ${data.return_date}\n` +

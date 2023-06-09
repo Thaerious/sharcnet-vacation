@@ -44,7 +44,7 @@ class Server {
                     logger.standard(`<green>HTTPS Listening on port ${port}</green>`);
                 });
             } catch (err) {
-                console.log(err);
+                logger.log(err);
                 logger.standard(`<red>HTTPS Server Not Started.</red>`);
             }
         }

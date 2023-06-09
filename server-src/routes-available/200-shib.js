@@ -3,9 +3,6 @@ import passport from "passport";
 import saml from "@node-saml/passport-saml";
 import fs from "fs";
 
-console.log(saml);
-console.log(saml.Strategy);
-
 passport.use(
     new saml.Strategy({
         path: "https://edward.sharcnet.ca//Shibboleth.sso/SAML2/POST",
@@ -21,26 +18,20 @@ passport.use(
 );
 
 function signOn(profile, done) {
-    console.log("signon");
-    console.log(profile);
     return done(null, "none");
 }
  
 function signOff(profile, done) {
-    console.log("signoff");
-    console.log(profile);
     return done(null, "none");
 }
 
 const route = Express.Router();
 route.use("/",
-    (req, res, next) => { console.log("Shib Handler"); next(); },
     passport.authenticate(
         "saml",
         { failureRedirect: "/", failureFlash: true }
     ),
     function (req, res) {
-        console.log("redirect function");
         res.redirect("/");
     }
 );

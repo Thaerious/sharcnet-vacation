@@ -1,8 +1,7 @@
 import { mkdirif } from "@thaerious/utility";
-import FS, { mkdir } from "fs";
+import FS from "fs";
 import args from "./parseArgs.js";
-
-import Logger from "@thaerious/logger";
+import Logger, { position } from "@thaerious/logger";
 const logger = new Logger();
 
 logger.standard.enabled = true;
@@ -10,11 +9,28 @@ logger.error.enabled = true;
 logger.log.enabled = true;
 logger.verbose.enabled = args?.verbose;
 
-logger.verbose("verbose");
+logger.standard.handlers = [
+    position,
+    console
+]
+
+logger.error.handlers = [
+    position,
+    console
+]
+
+logger.verbose.handlers = [
+    position,
+    console
+]
 
 mkdirif("logs/log.text");
 logger.log.handlers = [
-    (text) => FS.appendFileSync("logs/log.text", text + "\n"),
+    position,
+    (text) => {
+        FS.appendFileSync("logs/log.text", text + "\n");
+        return text;
+    },
     console
 ]
 
