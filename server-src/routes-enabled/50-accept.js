@@ -12,7 +12,7 @@ const acceptRoute = Express.Router();
 const dbi = new DBInterface().open();
 const emi = new EMInterface();
 
-acceptRoute.use(`/accept`, async (req, res, next) => {
+acceptRoute.use(`/accept`, async (req, res, next) => {    
     try {
         const r = acceptRequest(req.query.hash, req.query.email, dbi, emi);
         res.redirect(`/status?hash=${req.query.hash}`);

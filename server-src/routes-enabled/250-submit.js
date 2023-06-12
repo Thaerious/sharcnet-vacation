@@ -16,7 +16,7 @@ import submitNew from "../functionality/submitNew.js";
  * The request body is json encoded.
  * See doc/vacation_accept.pdf for the 'request body' schema (1).
  * All fields other than 'note' are mandatory.
- */ 
+ */
 
 const googleCalendar = new GoogleCalendar();
 const submitRoute = Express.Router();

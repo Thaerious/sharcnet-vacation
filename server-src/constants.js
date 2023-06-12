@@ -43,10 +43,20 @@ const ROLES = {
 }
 
 const SERVER = {
-    SSL_KEY: `${process.env.SSL_KEY || './keys/privkey.pem'}`,
+    SSL_KEY: `${process.env.SSL_KEY || './keys/key.pem'}`,
     SSL_CERT: `${process.env.SSL_CERT || './keys/cert.pem'}`,
     PORT: `${args.port || process.env.PORT || 80}`,
     SSLPORT : `${args.sslport || process.env.SSLPORT || 433}`,
+}
+
+const GOOGLE = {
+    CLIENT_ID: `${process.env.CLIENT_ID}`,
+    GOOGLE_URL: 'https://accounts.google.com',
+    DISCOVERY_URL: 'https://accounts.google.com/.well-known/openid-configuration'    
+}
+
+const SESSION = {
+    LOGGED_IN: `LOGGED_IN`
 }
 
 export default {
@@ -54,5 +64,7 @@ export default {
     LOC      : LOC,
     STATUS   : STATUS,
     RESPONSE : RESPONSE,
-    SERVER   : SERVER,
+    SERVER: SERVER,
+    GOOGLE: GOOGLE,
+    SESSION: SESSION
 };
