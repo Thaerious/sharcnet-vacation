@@ -35,6 +35,7 @@ submitRoute.use(`/submit`, async (req, res, next) => {
         const result = await submitNew(req.body, dbi, emi);
         res.send(result);
         res.end();
+        dbi.setUserInfo(req.body);
     } catch (error) {
         logger.error(error.toString());
         console.error(error);

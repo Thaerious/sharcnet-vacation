@@ -17,8 +17,8 @@ router.use(
     render   
 );
 
-async function render(req, res, next){
-    const data = statusData(dbi.get(req.query.hash));
+async function render(req, res, next) {
+    const data = statusData(dbi.getRequest(req.query.hash));
     data.inst_email = dbi.getAllRoles(CONST.ROLES.ADMIN, data.institution)[0].email;
 
     res.render(viewpath, data, (err, html) => {

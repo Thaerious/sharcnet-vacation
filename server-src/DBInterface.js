@@ -52,7 +52,7 @@ class DBInterface {
      * @param {string} hash 
      * @returns 
      */
-    get(hash) {
+    getRequest(hash) {
         const sql = "SELECT * FROM requests where hash = ?";
         const stmt = this.db.prepare(sql);
         return stmt.get(hash);
@@ -77,12 +77,13 @@ class DBInterface {
      * @param {string} role 
      * @returns email rows array
      */
-    getAllRoles(role, location){
+    getAllRoles(role, location) {
         if (!location) return this._getAllRoles(role);
 
         const sql = "SELECT * FROM emails where location = ? AND role = ?";
         const stmt = this.db.prepare(sql);
         const rows = stmt.all(location, role);
+
         return rows;
     }
 
@@ -120,6 +121,24 @@ class DBInterface {
         }
         return r;
     }
+
+    hasUserInfo(email) {
+        const sql = "SELECT * FROM users WHERE email = ?"
+        const stmt = this.db.prepare(sql);
+        return stmt.get(email) != undefined;
+    }
+
+    getUserInfo(email) {
+        const sql = "SELECT * FROM users WHERE email = ?"
+        const stmt = this.db.prepare(sql);
+        return stmt.get(email);
+    }
+
+    setUserInfo({email, name, institution}) {
+        const sql = "INSERT OR REPLACE INTO users (email, name, institution) VALUES (?, ?, ?)"
+        const stmt = this.db.prepare(sql);
+        return stmt.run(email, name, institution);
+    }    
 }
 
 export default DBInterface;

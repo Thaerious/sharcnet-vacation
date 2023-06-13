@@ -7,7 +7,7 @@ await googleCalendar.insert(process.env.CALENDAR_ID);
 
 async function acceptRequest(hash, managerEmail, dbi, emi){
     // Check and/or update status
-    let data = statusData(dbi.get(hash), managerEmail);
+    let data = statusData(dbi.getRequest(hash), managerEmail);
     if (data.status !== CONST.STATUS.PENDING){
         return {
             success : false,
@@ -16,7 +16,7 @@ async function acceptRequest(hash, managerEmail, dbi, emi){
     }
 
     dbi.update(hash, CONST.STATUS.ACCEPTED);
-    data = statusData(dbi.get(hash), managerEmail);
+    data = statusData(dbi.getRequest(hash), managerEmail);
 
     // Send Staff Email
     const staffSubject = "SHARCNET Vacation Request Update: Accepted.";

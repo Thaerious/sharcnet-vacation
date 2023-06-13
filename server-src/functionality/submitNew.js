@@ -1,6 +1,9 @@
 import CONST from "../constants.js";
 import {managerData, staffPending} from "../helpers/buildData.js";
 
+/**
+ * Generate emails and update the database when a new vacation request is submitted.
+ */
 async function submitNew(data, dbi, emi) {
     // store pending request in DB
     const hash = dbi.addRequest(data);

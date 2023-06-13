@@ -7,7 +7,6 @@ window.addEventListener("load", () => {
     document.querySelector("#start_date").setAttribute("value", today);
     document.querySelector("#end_date").setAttribute("value", today);
 
-    loadCookieValues();
     checkFormValues();
 
     document.querySelector("input[name='name']").addEventListener("change", checkFormValues);
@@ -55,19 +54,6 @@ function checkDuration() {
         case "full":
             document.querySelector("#return").classList.remove("hidden");
             break;
-    }
-}
-
-/**
- * Load cookie values into the form components.
- */
-function loadCookieValues() {
-    if (Cookie.hasCookie("name")) {
-        document.querySelector("input[name='name']").value = Cookie.getCookie("name");
-    }
-
-    if (Cookie.hasCookie("inst")) {
-        document.querySelector("select[name='institution']").value = Cookie.getCookie("inst");
     }
 }
 

@@ -4,25 +4,25 @@
 
         <div class="section">
             <b>Name</b>
-            <input type="text" name="name" />
+            <input type="text" name="name" value="<%=name%>"/>
         </div>
         <div class="section">
             <b>Email</b>
-            <input type="text" name="email" value="<%=EMAIL%>" disabled/>
+            <input type="text" name="email" value="<%=email%>" disabled/>
         </div>   
         <div class="section">
             <b>Institution</b>
             <select name="institution">
                 <option value="n/a"></option>
-                <option value="brock">Brock</option>
-                <option value="guelph">Guelph</option>
-                <option value="laurier">Laurier</option>
-                <option value="mcmaster">McMaster</option>
-                <option value="otu">OTU</option>
-                <option value="waterloo">Waterloo</option>
-                <option value="western">Western</option>
-                <option value="windsor">Windsor</option>
-                <option value="york">York</option>
+                <option value="brock"    <% if (institution == "brock") { %>selected="selected"<% } %>>Brock</option>
+                <option value="guelph"   <% if (institution == "guelph") { %>selected="selected"<% } %>>Guelph</option>
+                <option value="laurier"  <% if (institution == "laurier") { %>selected="selected"<% } %>>Laurier</option>
+                <option value="mcmaster" <% if (institution == "mcmaster") { %>selected="selected"<% } %>>McMaster</option>
+                <option value="otu"      <% if (institution == "otu") { %>selected="selected"<% } %>>OTU</option>
+                <option value="waterloo" <% if (institution == "waterloo") { %>selected="selected"<% } %>>Waterloo</option>
+                <option value="western"  <% if (institution == "western") { %>selected="selected"<% } %>>Western</option>
+                <option value="windsor"  <% if (institution == "windsor") { %>selected="selected"<% } %>>Windsor</option>
+                <option value="york"     <% if (institution == "york") { %>selected="selected"<% } %>>York</option>
             </select>
         </div>
         <div class="section">

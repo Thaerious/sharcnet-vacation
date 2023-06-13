@@ -6,7 +6,7 @@ import {statusData} from "../helpers/buildData.js";
  * data : from request body (as json) see doc/vacation_accept.pdf (1)
  */
  async function rejectRequest(hash, managerEmail, dbi, emi){
-    let data = statusData(dbi.get(hash), managerEmail);
+    let data = statusData(dbi.getRequst(hash), managerEmail);
     if (data.status !== CONST.STATUS.PENDING){
         return {
             success : false,

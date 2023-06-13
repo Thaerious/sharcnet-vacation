@@ -5,23 +5,14 @@ import args from "./parseArgs.js";
 dotenv.config();
 
 const LOC = {
-    "SERVER_ASSETS" : "server-assets",   
     "ROUTES" : "server-src/routes-enabled",    
 };
 
-LOC.ENDPOINT = {
-    "ACCEPTED"  : "/accepted",
-    "REJECTED"  : "/rejected",
-    "ACCEPT"    : "/accept",
-    "REJECT"    : "/reject",
-    "SUBMITTED" : "/submitted",
-}
-
 LOC.HTML = {
-    "BAD_REQUEST_400" : Path.join(LOC.SERVER_ASSETS, "400_bad_request.html"),
-    "SERVER_ERROR_500" : Path.join(LOC.SERVER_ASSETS, "500_server_error.html"),
-    "ACCEPT_URL" : process.env.SERVER_NAME + LOC.ENDPOINT.ACCEPT,
-    "REJECT_URL" : process.env.SERVER_NAME + LOC.ENDPOINT.REJECT,    
+    "BAD_REQUEST_400" : Path.join("server-assets", "400_bad_request.html"),
+    "SERVER_ERROR_500" : Path.join("server-assets", "500_server_error.html"),
+    "ACCEPT_URL" : process.env.SERVER_NAME + "/accept",
+    "REJECT_URL" : process.env.SERVER_NAME + "/reject",    
 }
 
 const RESPONSE = {
@@ -39,7 +30,8 @@ const STATUS = {
 
 const ROLES = {
     MANAGER : "manager",
-    ADMIN : "admin",
+    ADMIN: "admin",
+    USER: "user"
 }
 
 const SERVER = {
@@ -50,14 +42,12 @@ const SERVER = {
 }
 
 const GOOGLE = {
-    CLIENT_ID: `${process.env.CLIENT_ID}`,
-    GOOGLE_URL: 'https://accounts.google.com',
-    DISCOVERY_URL: 'https://accounts.google.com/.well-known/openid-configuration'    
+    CLIENT_ID: `${process.env.CLIENT_ID}`
 }
 
 const SESSION = {
     LOGGED_IN: `LOGGED_IN`,
-    USER_EMAIL: `USER_EMAIL`
+    EMAIL: `USER_EMAIL`
 }
 
 export default {
