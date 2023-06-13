@@ -11,9 +11,6 @@ window.addEventListener("load", () => {
     checkFormValues();
 
     document.querySelector("input[name='name']").addEventListener("change", checkFormValues);
-    document.querySelector("input[name='email']").addEventListener("keyup", emailUpdate);
-    document.querySelector("input[name='email']").addEventListener("change", checkFormValues);
-    document.querySelector("input[name='verify-email']").addEventListener("change", checkFormValues);
     document.querySelector("select[name='institution']").addEventListener("change", checkFormValues);
     document.querySelector("#duration").addEventListener("change", checkDuration);
 
@@ -69,12 +66,6 @@ function loadCookieValues() {
         document.querySelector("input[name='name']").value = Cookie.getCookie("name");
     }
 
-    if (Cookie.hasCookie("email")) {
-        document.querySelector("input[name='email']").value = Cookie.getCookie("email");
-        document.querySelector("input[name='verify-email']").value = Cookie.getCookie("email");
-        document.querySelector("#verify-email").classList.add("hidden");
-    }
-
     if (Cookie.hasCookie("inst")) {
         document.querySelector("select[name='institution']").value = Cookie.getCookie("inst");
     }
@@ -94,16 +85,9 @@ function emailUpdate() {
 function checkFormValues() {
     const name = document.querySelector("input[name='name']").value;
     const email = document.querySelector("input[name='email']").value;
-    const verify = document.querySelector("input[name='verify-email']").value;
     const inst = document.querySelector("select[name='institution']").value;
 
-    if (email.trim() !== verify.trim()) {
-        document.querySelector("#submit").setAttribute("disabled", true);
-        document.querySelector("#verify-email").classList.remove("hidden");
-        return;
-    }
-
-    if (name.trim() != "" && email.trim() != "" && inst.trim() != "n/a") {
+    if (name.trim() != "" && inst.trim() != "n/a") {
         Cookie.setCookie(`name`, name.trim());
         Cookie.setCookie(`email`, email.trim());
         Cookie.setCookie(`inst`, inst.trim());
