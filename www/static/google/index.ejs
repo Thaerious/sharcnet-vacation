@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Google Prompt</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="stylesheet" href="/google.css" />
+</head>
+
+<body>
+    <div class="main_form">
+        <div class="section">
+            <!-- Copied from https://developers.google.com/identity/gsi/web/tools/configurator -->
+            <div id="g_id_onload"
+                data-client_id="<%= CLIENT_ID%>"
+                data-context="signin"
+                data-ux_mode="popup"
+                data-login_uri="google_cred_resp"
+                data-auto_prompt="false">
+            </div>
+
+            <!-- Copied from https://developers.google.com/identity/gsi/web/tools/configurator -->
+            <div class="g_id_signin google_button"
+                data-type="standard"
+                data-shape="rectangular"
+                data-theme="outline"
+                data-width=200
+                data-text="signin_with"
+                data-size="large"
+                data-logo_alignment="left">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

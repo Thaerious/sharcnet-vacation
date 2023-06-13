@@ -4,8 +4,8 @@
   "description": "",
   "main": "server-src/Server.js",
   "scripts": {
-    "watch-css": "sass www/static/vacation-app/scss/:www/compiled --watch",
-    "build-css": "sass www/static/vacation-app/scss/:www/compiled",
+    "watch-css": "sass www/scss/:www/compiled --watch",
+    "build-css": "sass www/scss/:www/compiled",
     "setup": "nodejs server-src/setup/setup.js",
     "clean": "rm www/compiled/* -r"
   },
@@ -16,9 +16,11 @@
     "@thaerious/logger": "*",
     "@thaerious/parseargs": "*",
     "@thaerious/utility": "*",
+    "axios": "^1.4.0",
     "base64url": "^3.0.1",
     "better-sqlite3": "*",
     "better-sqlite3-session-store": "^0.1.0",
+    "cookie-parser": "^1.4.6",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",

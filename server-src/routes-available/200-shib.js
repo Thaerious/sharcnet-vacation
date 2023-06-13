@@ -32,7 +32,7 @@ route.use("/",
         { failureRedirect: "/", failureFlash: true }
     ),
     function (req, res) {
-        res.redirect("/");
+        res.redirect("/app");
     }
 );
 

@@ -56,7 +56,8 @@ const GOOGLE = {
 }
 
 const SESSION = {
-    LOGGED_IN: `LOGGED_IN`
+    LOGGED_IN: `LOGGED_IN`,
+    USER_EMAIL: `USER_EMAIL`
 }
 
 export default {

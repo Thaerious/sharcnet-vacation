@@ -2,7 +2,8 @@ node_modules/
 .env
 private_key.json
 www/compiled
-db/production.db
 logs/
 keys/
 /*.json
+db/production.db
+db/sessions.db

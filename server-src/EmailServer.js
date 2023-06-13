@@ -32,7 +32,12 @@ app.get('/auth', (req, res) => {
 app.get('/verify', async (req, res) => {
     const { code } = req.query;
     const { tokens } = await oauth2Client.getToken(code);
-
+    
+    console.log("tokens ----");
+    console.log(tokens);
+    console.log("code ----");
+    console.log(code);
+    
     oauth2Client.setCredentials(tokens);
 
     const oauth2 = google.oauth2({
@@ -56,5 +61,6 @@ app.get('/verify', async (req, res) => {
 });
 
 app.listen(80, "0.0.0.0", () => {
-    console.log('Server running on port 3000');
+    console.log('Server running on port 80');
+    console.log('browse /auth to test');
 });
