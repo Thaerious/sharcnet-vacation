@@ -1,9 +1,8 @@
 import Express from "express";
-import DBInterface from "../DBInterface.js";
 import viewResponseHandler from "../helpers/viewResponseHandler.js";
+import checkLoggedIn from "../helpers/checkLoggedIn.js";
 
 const router = Express.Router();
-const dbi = new DBInterface().open();
 
 const data = {
     client_id: process.env.CLIENT_ID

@@ -1,7 +1,7 @@
 import Express from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import verify from "../verify_google_token.js";
+import verify from "../verifyGoogleToken.js";
 import CONST from "../constants.js";
 import DBInterface from "../DBInterface.js";
 

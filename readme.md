@@ -16,14 +16,11 @@ The detials of these variables are listed below.
 ## Testing
     npx mocha test/unit
 
-Starting the Server
-===================
-    node .
+## Starting the Server
+    node . --no-http
     browse to 127.0.0.1/index
 
-
-Create a Devloper API Key & Service Account
-===========================================
+## Create a Devloper API Key & Service Account
 
 * browse to: console.cloud.google.com
 * from the project selection dropdown in the upper left, select 'new project'
