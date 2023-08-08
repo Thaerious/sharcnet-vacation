@@ -1,6 +1,5 @@
 import Express from "express";
 import viewResponseHandler from "../helpers/viewResponseHandler.js";
-import checkLoggedIn from "../helpers/checkLoggedIn.js";
 
 const router = Express.Router();
 
