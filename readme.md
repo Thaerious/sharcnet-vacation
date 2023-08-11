@@ -74,8 +74,8 @@ Set the server name and log directory in the .env file.
 LOG_DIR=logs
 SERVER_NAME=http://vacation.sharcnet.ca:8000
 
-Install Apache & Let's Encrypt
-==============================
+Install Apache & Let's Encrypt (DEPRECATED)
+===========================================
 
 ```bash
 sudo apt update
