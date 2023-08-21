@@ -2,7 +2,7 @@
   "name": "vacation-app",
   "version": "0.3.0",
   "description": "",
-  "main": "server-src/Server.js",
+  "main": "server-src/main.js",
   "scripts": {
     "watch-css": "sass www/scss/:www/compiled --watch",
     "build-css": "sass www/scss/:www/compiled",

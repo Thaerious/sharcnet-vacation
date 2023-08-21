@@ -8,8 +8,6 @@ import Path from "path";
 import https from "https";
 import args from "./parseArgs.js";
 
-dotenv.config();
-
 class Server {
     constructor() {
         this.app = Express();
@@ -19,7 +17,7 @@ class Server {
     }
 
     start() {
-        if (!args['no-http']) this.startHTTP();
+        // if (!args['no-http']) this.startHTTP();
         if (!args['no-ssl']) this.startHTTPS();
     }
 
@@ -36,17 +34,17 @@ class Server {
 
     startHTTPS(port = 443, ip = `0.0.0.0`) {
         if (CONST.SERVER.SSL_KEY && CONST.SERVER.SSL_CERT) {
-            try {
-                const key = FS.readFileSync(CONST.SERVER.SSL_KEY);
-                const cert = FS.readFileSync(CONST.SERVER.SSL_CERT);
-                this.https = https.createServer({ cert, key }, this.app);
-                this.https.listen(port, ip, () => {
-                    logger.standard(`<green>HTTPS Listening on port ${port}</green>`);
-                });
-            } catch (err) {
-                logger.log(err);
-                logger.standard(`<red>HTTPS Server Not Started.</red>`);
-            }
+            const key = FS.readFileSync(CONST.SERVER.SSL_KEY);
+            const cert = FS.readFileSync(CONST.SERVER.SSL_CERT);
+            this.https = https.createServer({ cert, key }, this.app);
+
+            this.https.on('error', error => {
+                throw (new Error(error));
+            });
+
+            this.https.listen(port, ip, () => {
+                logger.standard(`<green>HTTPS Listening on port ${port}</green>`);
+            });
         }
 
         process.on(`SIGINT`, () => this.stop(this.https));
@@ -75,9 +73,4 @@ class Server {
     }
 }
 
-try {
-    const server = new Server();
-    server.start();
-} catch (err) {
-    console.error(err);
-}
+export default Server;
