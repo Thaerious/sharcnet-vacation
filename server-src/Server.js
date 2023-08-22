@@ -7,6 +7,7 @@ import FS from "fs";
 import Path from "path";
 import https from "https";
 import args from "./parseArgs.js";
+import chalk from "chalk";
 
 class Server {
     constructor() {
@@ -17,14 +18,14 @@ class Server {
     }
 
     start() {
-        // if (!args['no-http']) this.startHTTP();
-        if (!args['no-ssl']) this.startHTTPS();
+        if (args['no-ssl']) this.startHTTP();
+        else this.startHTTPS();
     }
 
     startHTTP(port = CONST.SERVER.PORT, ip = `0.0.0.0`) {
         this.server = http.createServer(this.app);
         this.server.listen(port, ip, () => {
-            logger.standard(`Listening on port ${port}`);
+            logger.standard(chalk.green(`HTTP Listening on port ${port}`));
         });
 
         process.on(`SIGINT`, () => this.stop(this.server));
@@ -32,19 +33,23 @@ class Server {
         return this;
     }
 
-    startHTTPS(port = 443, ip = `0.0.0.0`) {
+    startHTTPS(port = CONST.SERVER.PORT, ip = `0.0.0.0`) {
         if (CONST.SERVER.SSL_KEY && CONST.SERVER.SSL_CERT) {
             const key = FS.readFileSync(CONST.SERVER.SSL_KEY);
             const cert = FS.readFileSync(CONST.SERVER.SSL_CERT);
-            this.https = https.createServer({ cert, key }, this.app);
+            this.server = https.createServer({ cert, key }, this.app);
 
-            this.https.on('error', error => {
-                throw (new Error(error));
+            this.server.on('error', error => {
+                throw new Error(error);
             });
 
-            this.https.listen(port, ip, () => {
-                logger.standard(`<green>HTTPS Listening on port ${port}</green>`);
+            this.server.listen(port, ip, () => {
+                logger.standard(chalk.green(`HTTPS Listening on port ${port}`));
             });
+
+            process.on(`SIGINT`, () => this.stop());
+            process.on(`SIGTERM`, () => this.stop());
+            return this;            
         }
 
         process.on(`SIGINT`, () => this.stop(this.https));
@@ -53,7 +58,7 @@ class Server {
     }
 
     stop() {
-        logger.standard(`Stopping this.server`);
+        logger.verbose(chalk.green(`Shutting down server.`));
         this.server.close();
         process.exit();
     }
@@ -63,12 +68,20 @@ class Server {
         if (!FS.existsSync(path)) return;
 
         const contents = FS.readdirSync(path).sort();
+        const errors = [];
 
         for (const entry of contents) {
             const fullpath = Path.join(process.cwd(), path, entry);
-            const { default: route } = await import(fullpath);
-            this.app.use(route);
-            logger.verbose(`router ${fullpath}`);
+            try {
+                const { default: route } = await import(fullpath);
+                this.app.use(route);
+                logger.verbose(chalk.blue(`router ${fullpath}`));
+            }
+            catch (err) {
+                logger.verbose(chalk.red(`router ${fullpath}`));
+                console.log(err);  
+                this.stop();
+            }
         }
     }
 }

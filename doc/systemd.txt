@@ -5,7 +5,7 @@ Permits:
 To enable system control add the following to /etc/systemd/system/vacation.service
 
 [Unit]
-Description=Vacation Node.JS app
+Description=Vacation Portal
 
 [Service]
 User=ubuntu

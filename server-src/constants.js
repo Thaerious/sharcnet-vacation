@@ -37,8 +37,7 @@ const ROLES = {
 const SERVER = {
     SSL_KEY: `${process.env.SSL_KEY || './keys/key.pem'}`,
     SSL_CERT: `${process.env.SSL_CERT || './keys/cert.pem'}`,
-    PORT: `${args.port || process.env.PORT || 80}`,
-    SSLPORT : `${args.sslport || process.env.SSLPORT || 433}`,
+    PORT : `${args.sslport || process.env.SSL_PORT || 443}`,
 }
 
 const GOOGLE = {

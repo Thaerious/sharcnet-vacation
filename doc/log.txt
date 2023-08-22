@@ -11,4 +11,8 @@ Changed test emails to differentiate addresses.
 Added check to ensure multiple managers don't accept the same request.
 Improved accept/reject information screen.
 
-0.4.0
+0.3.1
+Added sharcnet logo to splash screen.
+Added exception handling to server http launcher.
+Removed Shibboleth documentation.
+Apache and Shibboleth instructions removed from readme.md

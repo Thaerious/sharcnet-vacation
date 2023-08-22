@@ -7,6 +7,8 @@ const data = {
     client_id: process.env.CLIENT_ID
 };
 
+console.log(data);
+
 router.use(`/google`,
     (req, res, next) => {
         const data = {

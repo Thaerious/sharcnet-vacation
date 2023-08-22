@@ -4,6 +4,7 @@ import args, { options } from "./parseArgs.js";
 import helpString from "@thaerious/parseargs/src/helpString.js";
 
 dotenv.config();
+console.log(process.env);
 
 if (args.help) {
     console.log(helpString(options));
