@@ -27,7 +27,8 @@ class DBInterface {
     }
 
     /**
-     * Add a new request to the requests table.
+     * Add a new vacation request to the requests table.
+     * This would normally originate from the user.
      * @param {*} data
      * @returns 
      */
@@ -35,11 +36,14 @@ class DBInterface {
         const sql = "INSERT INTO requests (email, start_date, end_date, duration, name, institution, status, hash) values (?, ?, ?, ?, ?, ?, ?, ?)";
         const stmt = this.db.prepare(sql);
         const hash = this.generateHash();
-        
-        stmt.run(data.email, data.start_date, data.end_date, data.duration, data.name, data.institution, "pending", hash);        
+
+        stmt.run(data.email, data.start_date, data.end_date, data.duration, data.name, data.institution, "pending", hash);
         return hash;
     }
 
+    /**
+     * Determine if a vacation request exists for the user on the given date.
+     */
     hasRequest(email, start) {
         const sql = "SELECT * FROM requests where email = ? AND start_date = ?";
         const stmt = this.db.prepare(sql);
@@ -48,7 +52,7 @@ class DBInterface {
     }
 
     /**
-     * Select the vacation request with matching 'hash'
+     * Retrieve a vacation request with matching 'hash'.
      * @param {string} hash 
      * @returns 
      */
@@ -58,16 +62,13 @@ class DBInterface {
         return stmt.get(hash);
     }
 
-    update(hash, status){
+    /**
+     * Update the status of an existing vacation request.
+     */
+    update(hash, status) {
         const sql = "UPDATE requests SET status = ? where hash = ?";
         const stmt = this.db.prepare(sql);
         return stmt.run(status, hash);
-    }
-
-    addRole(location, email, role = "admin"){
-        const sql = "INSERT INTO emails (email, location, role) values (?, ?, ?)";
-        const stmt = this.db.prepare(sql);
-        return stmt.run(email, location, role);
     }
 
     /**
@@ -78,20 +79,18 @@ class DBInterface {
      * @returns email rows array
      */
     getAllRoles(role, location) {
-        if (!location) return this._getAllRoles(role);
-
-        const sql = "SELECT * FROM emails where location = ? AND role = ?";
-        const stmt = this.db.prepare(sql);
-        const rows = stmt.all(location, role);
-
-        return rows;
-    }
-
-    _getAllRoles(role){
-        const sql = "SELECT * FROM emails where role = ?";
-        const stmt = this.db.prepare(sql);
-        const rows = stmt.all(role);
-        return rows;
+        if (!location) {
+            const sql = "SELECT * FROM emails where role = ?";
+            const stmt = this.db.prepare(sql);
+            const rows = stmt.all(role);
+            return rows;
+        }
+        else {
+            const sql = "SELECT * FROM emails where location = ? AND role = ?";
+            const stmt = this.db.prepare(sql);
+            const rows = stmt.all(location, role);
+            return rows;
+        }
     }
 
     /**
@@ -99,46 +98,58 @@ class DBInterface {
      * @param {string} role 
      * @returns 
      */
-    getLocations(role = "admin"){
+    getLocations(role = "admin") {
         const sql = "SELECT DISTINCT location FROM emails WHERE role = ?"
         const stmt = this.db.prepare(sql);
         const rows = stmt.all(role);
 
         const r = [];
-        for(const row of rows){
+        for (const row of rows) {
             r.push(row.location);
         }
 
         return r;
     }
 
-    generateHash(n = 32){
+    /**
+     * Create an alpha-numeric hash of length 'n'.
+     */
+    generateHash(n = 32) {
         let r = '';
         let c = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let l = c.length;
-        while (r.length < n){
+        while (r.length < n) {
             r += c.charAt(Math.floor(Math.random() * l));
         }
         return r;
     }
 
+    /**
+     * Determine if 'email' has been previously used.
+     */
     hasUserInfo(email) {
         const sql = "SELECT * FROM users WHERE email = ?"
         const stmt = this.db.prepare(sql);
         return stmt.get(email) != undefined;
     }
 
+    /**
+     * Retrieve user information by 'email'.
+     */    
     getUserInfo(email) {
         const sql = "SELECT * FROM users WHERE email = ?"
         const stmt = this.db.prepare(sql);
         return stmt.get(email);
     }
 
-    setUserInfo({email, name, institution}) {
+    /**
+     * Insert/Update user name and institution by 'email'.
+     */
+    setUserInfo({ email, name, institution }) {
         const sql = "INSERT OR REPLACE INTO users (email, name, institution) VALUES (?, ?, ?)"
         const stmt = this.db.prepare(sql);
         return stmt.run(email, name, institution);
-    }    
+    }
 }
 
 export default DBInterface;

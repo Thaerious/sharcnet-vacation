@@ -10,12 +10,7 @@ const clientID = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const redirectURI = 'http://127.0.0.1/verify';
 
-console.log(clientID);
-console.log(clientSecret);
-console.log(redirectURI);
 const oauth2Client = new google.auth.OAuth2(clientID, clientSecret, redirectURI);
-
-console.log("EMAIL ADDRESS SERVER");
 
 app.use(`*`, (req, res, next) => {
     console.log(req.method + ` ` + req.originalUrl);
@@ -32,11 +27,6 @@ app.get('/auth', (req, res) => {
 app.get('/verify', async (req, res) => {
     const { code } = req.query;
     const { tokens } = await oauth2Client.getToken(code);
-    
-    console.log("tokens ----");
-    console.log(tokens);
-    console.log("code ----");
-    console.log(code);
     
     oauth2Client.setCredentials(tokens);
 
