@@ -6,7 +6,6 @@
   "scripts": {
     "watch-css": "sass www/scss/:www/compiled --watch",
     "build-css": "sass www/scss/:www/compiled",
-    "setup": "nodejs server-src/setup/setup.js",
     "clean": "rm www/compiled/* -r"
   },
   "author": "",
