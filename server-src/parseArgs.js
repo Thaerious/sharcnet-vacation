@@ -8,7 +8,7 @@ const options = {
     flags: [
         {
             long: 'verbose',
-            type: 'boolean',
+            type: 'count',
             short: 'v',
             desc: 'Display additional information in the terminal.'
         },
@@ -16,8 +16,8 @@ const options = {
             long: 'port',
             type: 'string',
             short: 'p',
-            default: 443,
-            desc: 'Port number to start listen on (default 443).'
+            default: '443',
+            desc: 'Port number to start listening on (default 443).'
         },
         {
             long: 'help',

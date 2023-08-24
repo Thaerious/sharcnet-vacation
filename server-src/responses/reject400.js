@@ -1,5 +1,5 @@
 import {loadTemplate} from "@thaerious/utility";
-import CONST from "./constants.js"
+import CONST from "../constants.js"
 
 export default function reject400(req, res, message) {
     const html = loadTemplate(CONST.LOC.HTML.BAD_REQUEST_400, {

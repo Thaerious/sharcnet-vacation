@@ -1,0 +1,8 @@
+A Vacation request has been submitted for ${name}.
+The requests starts ${start_date} and ends ${end_date}.
+The first day returning to work is ${return_date}.
+The number of Weekdays is ${weekday_count}*.
+To accept this request follow this url: ${ACCEPTED_URL}
+To reject this request follow this url: ${REJECTED_URL}
+
+* Weekday count may include statutory holidays.

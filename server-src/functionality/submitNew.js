@@ -1,29 +1,41 @@
 import CONST from "../constants.js";
-import {managerData, staffPending} from "../helpers/buildData.js";
+import { expandDatesInData, addManagersToData, addURLsToData } from "../helpers/buildData.js";
+import { loadTemplate } from "@thaerious/utility";
+import logger from "../setupLogger.js";
 
 /**
  * Generate emails and update the database when a new vacation request is submitted.
  */
-async function submitNew(data, dbi, emi) {
-    // store pending request in DB
+function submitNew(data, dbi, emi) {
+    data.status = CONST.STATUS.PENDING;
     const hash = dbi.addRequest(data);
+    data = expandDatesInData(data);
+    const managers = emailManagers(addURLsToData(data, hash), dbi, emi);
+    data = addManagersToData(data, managers);
+    emailStaff(data, emi);
 
-    // email managers
-    const subjectMgr = `SHARCNET Vacation Request: ${data.name}, ${data.start_date}`;
-    const managers = [];
+    return data;
+}
 
-    for (const row of dbi.getAllRoles(CONST.ROLES.MANAGER)) {
-        const mData = managerData(data, row.email, hash);
-        await emi.sendFile(row.email, "", CONST.RESPONSE.NOTIFY_MANAGER, subjectMgr, mData);
-        managers.push(row.email);
+function emailManagers(data, dbi, emi) {    
+    const subject = `SHARCNET Vacation Request: ${data.name}, ${data.start_date}`;
+    const managerEmails = dbi.getAllRoles(CONST.ROLES.MANAGER).map(row => row.email);
+    const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_MANAGER.HTML, data);
+    const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_MANAGER.TXT, data);
+
+    for (const email of managerEmails) {
+        emi.send(email, "", subject, html, text);
     }
 
-    // email the staff member
-    const sData = staffPending(data, managers);    
-    const subectStaff = "Vacation Request Confirmation";
-    await emi.sendFile(data.email, "", CONST.RESPONSE.NOTIFY_STAFF, subectStaff, sData);
+    return managerEmails;
+}
 
-    return { ...sData, hash: hash };
+function emailStaff(data, emi) {
+    const subject = "Vacation Request Confirmation";
+    const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_STAFF.HTML, data);
+    const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_STAFF.TXT, data);
+
+    emi.send(data.email, "", subject, html, text);
 }
 
 export default submitNew;

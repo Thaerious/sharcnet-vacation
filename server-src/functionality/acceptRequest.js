@@ -1,48 +1,61 @@
 import CONST from "../constants.js";
 import GoogleCalendar from "../GoogleCalendar.js";
-import {statusData} from "../helpers/buildData.js";
+import { loadTemplate } from "@thaerious/utility";
 
 const googleCalendar = new GoogleCalendar();
 await googleCalendar.insert(process.env.CALENDAR_ID);
 
-async function acceptRequest(hash, managerEmail, dbi, emi){
+async function acceptRequest(hash, managerEmail, dbi, emi) {
     // Check and/or update status
-    let data = statusData(dbi.getRequest(hash), managerEmail);
-    if (data.status !== CONST.STATUS.PENDING){
+    let data = dbi.getRequest(hash);
+    if (data.status !== CONST.STATUS.PENDING) {
         return {
-            success : false,
-            message : "Request status: ${data.status}"
+            success: false,
+            message: "Request status: ${data.status}"
         }
     }
 
     dbi.update(hash, CONST.STATUS.ACCEPTED);
-    data = statusData(dbi.getRequest(hash), managerEmail);
-
-    // Send Staff Email
-    const staffSubject = "SHARCNET Vacation Request Update: Accepted.";
-    emi.sendFile(data.email, "", CONST.RESPONSE.STAFF_ACCEPTED, staffSubject, data);    
-        
-    // Send Admin Email
-    const adminSubject = "SHARCNET Staff Vacation Notification";    
-    for (const row of dbi.getAllRoles(CONST.ROLES.ADMIN, data.institution)){
-        emi.sendFile(row.email, "", CONST.RESPONSE.NOTIFY_ADMIN, adminSubject, data);  
-    }
-
-    // Send Manager Email
-    const managerSubject = `SHARCNET Vacation Accepted for '${data.name}'.`;
-    for (const row of dbi.getAllRoles(CONST.ROLES.MANAGER)) {
-        emi.sendFile(row.email, "", CONST.RESPONSE.NOTIFY_ADMIN, managerSubject, data);          
-    }
-
-    await addAppointment(data);
+    data = dbi.getRequest(hash);
+    sendStaffEmail(data, emi);
+    sendAdminEmail(data, emi, dbi);
+    sendManagerEmail(data, emi, dbi);
+    await addToCalendar(data);
 
     return {
-        success : true,
-        message : "Vacation request has been accepted."
+        success: true,
+        message: "Vacation request has been accepted."
+    }
+}
+
+function sendStaffEmail(data, emi) {
+    const subject = "SHARCNET Vacation Request Update: Accepted.";
+    const html = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_ACCEPTED.HTML, data);
+    const text = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_ACCEPTED.TXT, data);
+    emi.send(data.email, "", subject, html, text);
+}
+
+function sendAdminEmail(data, emi, dbi) {
+    const subject = "SHARCNET Staff Vacation Notification";
+    const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.HTML, data);
+    const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);
+    
+    for (const row of dbi.getAllRoles(CONST.ROLES.ADMIN, data.institution)) {
+        emi.send(row.email, "", subject, html, text);
     }    
 }
 
-async function addAppointment(data) {
+function sendManagerEmail(data, emi, dbi) {
+    const subject = `SHARCNET Vacation Accepted for '${data.name}'.`;
+    const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.HTML, data);
+    const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);
+
+    for (const row of dbi.getAllRoles(CONST.ROLES.MANAGER)) {
+        emi.send(row.email, "", subject, html, text);
+    }    
+}
+
+async function addToCalendar(data) {
     const summary = `${data.name} on vacation`;
 
     if (data.duration === "full day") {
@@ -53,24 +66,24 @@ async function addAppointment(data) {
 
         const start = startDate.toISOString().split("T")[0];
         const end = endDate.toISOString().split("T")[0];
-    
+
         await googleCalendar.addEvent(process.env.CALENDAR_ID, start, end, summary);
     } else if (data.duration === "am") {
         const startDate = new Date(data.start_date);
-        const endDate = new Date(data.start_date);    
+        const endDate = new Date(data.start_date);
 
-        startDate.setHours(9);    
-        endDate.setHours(13);  
+        startDate.setHours(9);
+        endDate.setHours(13);
 
         const start = startDate.toISOString();
         const end = endDate.toISOString();
         await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, start, end, summary);
     } else if (data.duration === "pm") {
         const startDate = new Date(data.start_date);
-        const endDate = new Date(data.start_date);    
+        const endDate = new Date(data.start_date);
 
-        startDate.setHours(13);    
-        endDate.setHours(17);  
+        startDate.setHours(13);
+        endDate.setHours(17);
 
         const start = startDate.toISOString();
         const end = endDate.toISOString();

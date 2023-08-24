@@ -94,6 +94,15 @@ class DBInterface {
     }
 
     /**
+     * Add a new entry to into the email table.
+     */
+    addEmail(location, email, role){
+        const sql = "INSERT INTO emails (email, location, role) values (?, ?, ?)";
+        const stmt = this.db.prepare(sql);
+        return stmt.run(email, location, role);
+    }
+
+    /**
      * Retrieve all unique locations for a given role.
      * @param {string} role 
      * @returns 
@@ -115,13 +124,14 @@ class DBInterface {
      * Create an alpha-numeric hash of length 'n'.
      */
     generateHash(n = 32) {
-        let r = '';
-        let c = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let l = c.length;
-        while (r.length < n) {
-            r += c.charAt(Math.floor(Math.random() * l));
+        let hash = '';
+        const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const len = charset.length;
+
+        while (hash.length < n) {
+            hash += charset.charAt(Math.floor(Math.random() * len));
         }
-        return r;
+        return hash;
     }
 
     /**
@@ -135,6 +145,8 @@ class DBInterface {
 
     /**
      * Retrieve user information by 'email'.
+     * Returns an object with the fields of email table.
+     * {email, role, location}
      */    
     getUserInfo(email) {
         const sql = "SELECT * FROM users WHERE email = ?"

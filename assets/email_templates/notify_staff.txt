@@ -1,0 +1,9 @@
+You have submitted a vacation request for ${name}.
+The requests starts ${start_date} and ends ${end_date}.
+The first day returning to work is ${return_date}.
+The number of Weekdays is ${weekday_count}*.
+
+The following emails have been notified:
+${managers}
+
+* Weekday count may include statutory holidays.

@@ -1,5 +1,5 @@
-import CONST from "./constants.js";
-import logger from "./setupLogger.js";
+import CONST from "../constants.js";
+import logger from "../setupLogger.js";
 import ParseArgs from "@thaerious/parseargs";
 
 const args = new ParseArgs();

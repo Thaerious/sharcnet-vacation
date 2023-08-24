@@ -1,1 +1,0 @@
-import logger from "../server-src/setupLogger.js";

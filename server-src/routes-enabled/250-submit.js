@@ -4,8 +4,9 @@ import GoogleCalendar from "../GoogleCalendar.js";
 import DBInterface from "../DBInterface.js";
 import EMInterface from "../EMInterface.js";
 import logger from "../setupLogger.js";
-import reject400 from "../reject400.js";
-import reject500 from "../reject500.js";
+import accept200 from "../responses/accept200.js";
+import reject400 from "../responses/reject400.js";
+import reject500 from "../responses/reject500.js";
 import submitNew from "../functionality/submitNew.js";
 
 /**
@@ -32,10 +33,10 @@ submitRoute.use(`/submit`, async (req, res, next) => {
     else if (!req.body.email) reject400(req, res, "missing body parameter: email");            
     else if (!req.body.duration) reject400(req, res, "missing body parameter: duration");
     else try {
-        const result = await submitNew(req.body, dbi, emi);
-        res.send(result);
-        res.end();
+        const data = submitNew(req.body, dbi, emi);
+        accept200(req, res, data);
         dbi.setUserInfo(req.body);
+        logger.log(JSON.stringify({ ...data, action: "submit" }));
     } catch (error) {
         logger.error(error.toString());
         console.error(error);

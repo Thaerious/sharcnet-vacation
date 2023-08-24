@@ -2,9 +2,8 @@ import DBInterface from "../../server-src/DBInterface.js";
 import assert from "assert";
 import FS from "fs";
 import Path from "path";
-import ParseArgs from "@thaerious/parseargs";
+import args from "../../server-src/parseArgs.js";
 import { mkdirif } from "@thaerious/utility";
-const args = new ParseArgs().run();
 
 const cwd = process.cwd();
 const TEST_DIRECTORY = "test/mock";
@@ -26,7 +25,7 @@ function init() {
  * Remove test directory unless --no-clean flag is set.
  */
 function clean() {
-    if (!args.flags[`no-clean`]) {
+    if (!args[`no-clean`]) {
         // clean up test directory unless --no-clean is specified
         process.chdir(cwd);
         if (FS.existsSync(TEST_DIRECTORY)) FS.rmSync(TEST_DIRECTORY, { recursive: true });
@@ -102,7 +101,7 @@ describe(`Test Database Interface Class`, function () {
             });
     
             it("#get returns an object with status 'accepted'", function () {
-                const actual = this.dbi.get(this.hash).status;
+                const actual = this.dbi.getRequest(this.hash).status;
                 const expected = "accepted";
                 assert.strictEqual(actual, expected);
             });
@@ -115,13 +114,13 @@ describe(`Test Database Interface Class`, function () {
         });
 
         it("adds the role (manager)", function () {
-            const actual = this.dbi.addRole("guelph", "manager@somewhere.com", "manager").changes;
+            const actual = this.dbi.addEmail("guelph", "manager@somewhere.com", "manager").changes;
             const expected = 1;
             assert.strictEqual(actual, expected);
         });
 
         it("add second manager", function () {
-            const actual = this.dbi.addRole("toronto", "mngr@there.com", "manager").changes;
+            const actual = this.dbi.addEmail("toronto", "mngr@there.com", "manager").changes;
             const expected = 1;
             assert.strictEqual(actual, expected);
         });        

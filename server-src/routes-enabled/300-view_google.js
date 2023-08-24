@@ -3,12 +3,6 @@ import viewResponseHandler from "../helpers/viewResponseHandler.js";
 
 const router = Express.Router();
 
-const data = {
-    client_id: process.env.CLIENT_ID
-};
-
-console.log(data);
-
 router.use(`/google`,
     (req, res, next) => {
         const data = {

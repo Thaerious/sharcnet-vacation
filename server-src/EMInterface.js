@@ -1,50 +1,31 @@
 import { loadTemplate } from "@thaerious/utility";
 import nodemailer from "nodemailer";
+import logger from "./setupLogger.js";
 
 /**
  * Email Interface
  */
- class EMInterface {
-    /**
-     * @param {string} login The username of the email account.
-     * @param {string} password The password of the email account.
-     */
-    constructor() {
-        this.user = process.env.EMAIL_USER
-        this.password = process.env.EMAIL_PASSWD
-        this.port = process.env.EMAIL_PORT
-        this.host = process.env.EMAIL_HOST
-        this.from = process.env.EMAIL_FROM
-    }
-
-    /**
-     * Send 'filename' to 'email' using 'data' for templates.
-     */
-    async sendFile(email, cc, filename, subject, data) {
-        const html = loadTemplate(filename, data);
-        await this.send(email, cc, subject, html);
-    }
-
-    async send(email, cc, subject, html) {
+class EMInterface {
+    async send(email, cc, subject, html, text = "") {
         const creds = {
-            host: this.host,
+            host: process.env.EMAIL_HOST,
             secure: false,
-            port: this.port,
+            port: process.env.EMAIL_PORT,
             auth: {
-                user: this.user,
-                pass: this.password,
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASSWD,
             },
         };
 
         const transporter = nodemailer.createTransport(creds);
 
         // send mail with defined transport object
-        const info = await transporter.sendMail({
-            from: `"SHARCNET Vacation Mailer" <${this.from}>`,
+        await transporter.sendMail({
+            from: `"SHARCNET Vacation Mailer" <${process.env.EMAIL_FROM}>`,
             to: email,        // list of receivers
             cc: cc,
             subject: subject, // Subject line
-            text: "",         // plain text body
+            text: text,       // plain text body
             html: html,       // html body
         });
     }

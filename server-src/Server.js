@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import Express from "express";
 import http from "http";
 import CONST from "./constants.js";
@@ -25,7 +24,7 @@ class Server {
     startHTTP(port = CONST.SERVER.PORT, ip = `0.0.0.0`) {
         this.server = http.createServer(this.app);
         this.server.listen(port, ip, () => {
-            logger.standard(chalk.green(`HTTP Listening on port ${port}`));
+            logger.log(chalk.green(`HTTP Listening on port ${port}`));
         });
 
         process.on(`SIGINT`, () => this.stop(this.server));
@@ -44,7 +43,7 @@ class Server {
             });
 
             this.server.listen(port, ip, () => {
-                logger.standard(chalk.green(`HTTPS Listening on port ${port}`));
+                logger.log(chalk.green(`HTTPS Listening on port ${port}`));
             });
 
             process.on(`SIGINT`, () => this.stop());

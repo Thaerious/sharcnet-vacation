@@ -1,23 +1,26 @@
 import CONST from "../constants.js";
-import {statusData} from "../helpers/buildData.js";
+import { loadTemplate } from "@thaerious/utility";
 
 /**
  * hash : stored db index hash for the request
  * data : from request body (as json) see doc/vacation_accept.pdf (1)
  */
- async function rejectRequest(hash, managerEmail, dbi, emi){
-    let data = statusData(dbi.getRequst(hash), managerEmail);
-    if (data.status !== CONST.STATUS.PENDING){
+async function rejectRequest(hash, managerEmail, dbi, emi) {
+    let data = dbi.getRequest(hash);
+
+    if (data.status !== CONST.STATUS.PENDING) {
         return {
-            success : false,
-            message : "Request status: ${data.status}"
+            success: false,
+            message: "Request status: ${data.status}"
         }
     }
 
-    dbi.update(hash, CONST.STATUS.REJECTED);    
+    dbi.update(hash, CONST.STATUS.REJECTED);
 
     const subject = "Vacation Request Update: Rejected.";
-    emi.sendFile(data.email, "", CONST.RESPONSE.NOTIFY_STAFF, subject, data);    
+    const html = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_REJECTED.HTML, data);
+    const text = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_REJECTED.TXT, data);   
+    emi.send(data.email, "", subject, html, text);
 }
 
 export default rejectRequest;

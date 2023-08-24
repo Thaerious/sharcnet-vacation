@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 import Express from "express";
-import reject400 from "../reject400.js"
-import reject500 from "../reject400.js"
+import reject500 from "../responses/reject500.js"
 import DBInterface from "../DBInterface.js";
 import logger from "../setupLogger.js";
 import EMInterface from "../EMInterface.js";
@@ -19,6 +18,7 @@ rejectRoute.use(`/reject`, async (req, res, next) => {
         logger.log('/reject');
         logger.log(dbi.getRequest(req.query.hash));
         res.redirect(`/status?hash=${req.query.hash}`);
+        logger.log(JSON.stringify({ ...req.query, action: "reject" }));
     } catch (error){
         logger.error(error.toString());
         console.error(error);

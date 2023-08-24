@@ -10,7 +10,7 @@ import { countWeekdays, nextWeekday } from "../helpers/weekdays.js";
  * @param {*} data 
  * @returns 
  */
-function buildData(data) {
+function expandDatesInData(data) {
     const startDate = new Date(data.start_date + "T00:00:00");
     const endDate = new Date(data.end_date + "T00:00:00");
     const returnDate = nextWeekday(endDate);
@@ -29,38 +29,28 @@ function buildData(data) {
 }
 
 /**
- * Expand buildData to include manager accept/reject urls
+ * Expand expandDatesInData to include manager accept/reject urls
  * @param {*} data 
  */
-function managerData(data, email, hash) {    
+function addURLsToData(data, hash) {    
     const acceptUrl = new URL(CONST.LOC.HTML.ACCEPT_URL);
     acceptUrl.searchParams.append("hash", hash);
-    acceptUrl.searchParams.append("email", email);
 
     const rejectURL = new URL(CONST.LOC.HTML.REJECT_URL);
     rejectURL.searchParams.append("hash", hash);
-    rejectURL.searchParams.append("email", email);
 
     return {
-        ...buildData(data),
-        ACCEPTED_URL: acceptUrl,
-        REJECTED_URL: rejectURL, 
+        ...data, 
+        ACCEPTED_URL: acceptUrl.href,
+        REJECTED_URL: rejectURL.href, 
     }
 }
 
-function staffPending(data, managers){
+function addManagersToData(data, managers){
     return {
-        ...buildData(data),
-        manager_email: "<li>" + managers.join("<li>"),
-        status: CONST.STATUS.PENDING,
+        ...data, 
+        managers: managers        
     }
 }
 
-function statusData(data, managerEmail){
-    return {
-        ...buildData(data),
-        manager_email : managerEmail
-    }         
-}
-
-export { buildData, managerData, staffPending, statusData};
+export { expandDatesInData, addURLsToData, addManagersToData};

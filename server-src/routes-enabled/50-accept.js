@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import Express from "express";
-import reject500 from "../reject500.js"
+import reject500 from "../responses/reject500.js"
 import DBInterface from "../DBInterface.js";
 import logger from "../setupLogger.js";
 import EMInterface from "../EMInterface.js";
@@ -16,6 +16,7 @@ acceptRoute.use(`/accept`, async (req, res, next) => {
     try {
         const r = acceptRequest(req.query.hash, req.query.email, dbi, emi);
         res.redirect(`/status?hash=${req.query.hash}`);
+        logger.log(JSON.stringify({ ...req.query, action: "accept" }));
     } catch (error) {
         logger.error(error.toString());
         reject500(req, res);
