@@ -67,7 +67,6 @@ class Server {
         if (!FS.existsSync(path)) return;
 
         const contents = FS.readdirSync(path).sort();
-        const errors = [];
 
         for (const entry of contents) {
             const fullpath = Path.join(process.cwd(), path, entry);
@@ -78,7 +77,7 @@ class Server {
             }
             catch (err) {
                 logger.verbose(chalk.red(`router ${fullpath}`));
-                console.log(err);  
+                logger.log(err);
                 this.stop();
             }
         }

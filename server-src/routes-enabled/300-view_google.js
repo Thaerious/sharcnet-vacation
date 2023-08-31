@@ -1,5 +1,5 @@
 import Express from "express";
-import viewResponseHandler from "../helpers/viewResponseHandler.js";
+import catchRenderingError from "../helpers/catchRenderingError.js";
 
 const router = Express.Router();
 
@@ -12,7 +12,7 @@ router.use(`/google`,
         res.render(
             "google/index.ejs",
             data,
-            viewResponseHandler(res)
+            catchRenderingError(res)
         );
     }
 );

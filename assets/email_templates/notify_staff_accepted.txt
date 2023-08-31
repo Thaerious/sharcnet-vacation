@@ -1,1 +1,12 @@
-NOTIFY STAFF ACCEPTED TXT
+Hello ${name},
+
+Your vacation request has been accepted.
+The requests starts ${start_date} and ends ${end_date}.
+The first day returning to work is ${return_date}.
+The number of Weekdays is ${weekday_count}*.
+The request was processed by %{manager_email}.
+
+Do not reply, this address does not accept incoming email.
+Please forward any inquiries the manager that processed this request.
+
+* Weekday count may include statutory holidays.

@@ -2,6 +2,7 @@ import { mkdirif } from "@thaerious/utility";
 import FS from "fs";
 import args from "./parseArgs.js";
 import Logger, { position } from "@thaerious/logger";
+import CONST from "./constants.js";
 const logger = new Logger();
 
 logger.log.enabled = true;
@@ -47,11 +48,11 @@ logger.verbose.enabled = args.verbose >= 1;
 logger.very.enabled = args.verbose >= 2;
 logger.debug.enabled = args.verbose >= 3;
 
-mkdirif("logs/log.text");
+mkdirif(CONST.LOC.LOGFILE);
 logger.log.handlers = [
     position,
     (text) => {
-        FS.appendFileSync("logs/log.text", text + "\n");
+        FS.appendFileSync(CONST.LOC.LOGFILE, text + "\n");
         return text;
     },
     console

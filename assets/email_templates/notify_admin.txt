@@ -1,1 +1,12 @@
-NOTIFY ADMIN TXT
+Hello,
+
+This automated email is to notify you that the employee, ${name}, in your department has been accepted for vacation by their manager ${manager_email}.
+
+Date:               ${todays_date}
+Approval Status:    ${status}
+Manager:            ${manager_email}
+Employee Email:     ${email}
+Institution:	    ${institution}
+First Vacation Day:	${start_date}
+Last Vacation Day:	${end_date}
+Return to Work: 	${return_date}

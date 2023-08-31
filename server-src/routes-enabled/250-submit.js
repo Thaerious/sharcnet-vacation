@@ -19,7 +19,7 @@ import submitNew from "../functionality/submitNew.js";
  * All fields other than 'note' are mandatory.
  */
 
-const googleCalendar = new GoogleCalendar();
+const googleCalendar = new GoogleCalendar();  // TODO is this neccisary?
 const submitRoute = Express.Router();
 submitRoute.use(bodyParser.urlencoded({ extended: true }));
 const dbi = new DBInterface().open();

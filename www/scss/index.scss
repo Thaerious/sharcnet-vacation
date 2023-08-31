@@ -37,6 +37,15 @@
         &.hidden{
             display: none;
         }
+
+        .note{
+            font-variant-caps: small-caps;
+            color: rgb(119, 119, 119);
+
+            &.small{
+                font-size: 75%;                
+            }
+        }
     }
 
     #submit{
@@ -44,10 +53,10 @@
         height: 50px;
     }
 
-    .note{
-        font-variant-caps: small-caps;
-        color: rgb(119, 119, 119);
-    }
+    // .note{
+    //     font-variant-caps: small-caps;
+    //     color: rgb(119, 119, 119);
+    // }
 
     .hidden{
         display: none;

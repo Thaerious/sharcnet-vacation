@@ -18,4 +18,5 @@
 * Apache and Shibboleth instructions removed from readme.md.
 * Submitting a new request will no longer wait for email interface to respond.
 * Added text response to emails (retained html).
+* Date wording clarification.
 

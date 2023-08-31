@@ -3,8 +3,6 @@ import CONST from "../constants.js"
 
 export default function accept200(req, res, body = {}) {
     const json = JSON.stringify(body);
-    console.log(body);
-    console.log(json);
     res.status(200);
     res.send(json);
     res.end();

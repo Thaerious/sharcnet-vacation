@@ -1,7 +1,7 @@
 import Express from "express";
 import CONST from "../constants.js";
 import DBInterface from "../DBInterface.js";
-import viewResponseHandler from "../helpers/viewResponseHandler.js";
+import catchRenderingError from "../helpers/catchRenderingError.js";
 import { expandDatesInData } from "../helpers/buildData.js";
 
 const router = Express.Router();
@@ -16,7 +16,7 @@ router.use(`/status`,
         res.render(
             "status/index.ejs",
             data,
-            viewResponseHandler(res)
+            catchRenderingError(res)
         );
     }
 );

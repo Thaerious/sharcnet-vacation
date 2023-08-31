@@ -10,6 +10,10 @@ export default {
             "SERVER_ERROR_500": "server-assets/500_server_error.html",
             "ACCEPT_URL": process.env.SERVER_NAME + "/accept",
             "REJECT_URL": process.env.SERVER_NAME + "/reject",
+        },
+        "LOGFILE": "logs/log.txt",
+        ENDPOINTS: {
+            GOOGLE: "/google"
         }
     },
     EMAIL_TEMPLATE: {
