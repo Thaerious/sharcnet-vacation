@@ -16,8 +16,6 @@ function expandDatesInData(data) {
     const returnDate = nextWeekday(endDate);
     const dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }
 
-    if (data.duration == "full") data.duration = "full day";
-
     return {
         ...data,
         weekday_count: countWeekdays(startDate, endDate),

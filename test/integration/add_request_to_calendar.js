@@ -33,8 +33,8 @@ const options = {
             long: 'duration',
             type: 'string',
             short: 'd',
-            desc: 'Duration {full day, am, pm}.',
-            default: "full day"
+            desc: 'Duration {full, am, pm}.',
+            default: "full"
         }           
     ]
 };

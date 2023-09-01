@@ -68,7 +68,7 @@ function sendManagerEmail(data, emi, dbi) {
 async function addToCalendar(data) {    
     const summary = `${data.name} on vacation`;
 
-    if (data.duration === "full day") {
+    if (data.duration === "full") {
         const startDate = new Date(data.start_date);
         const endDate = new Date(data.end_date);
 
