@@ -104,6 +104,10 @@ sudo ln -s /opt/node/18.6.0/bin/npm npm
 In the sqlite datbase /eb/requests.db
 UPDATE emails set email = 'email@address' where role = 'university';
 
+## Helpfull Commands
+### List vacation service user
+``systemctl show vacation.service -pUser``
+
 ## Notes
 
 [1] (https://console.cloud.google.com/apis/api/calendar-json.googleapis.com/metrics?project=vacation-app-development)
