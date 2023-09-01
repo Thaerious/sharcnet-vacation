@@ -55,7 +55,17 @@ function sendManagerEmail(data, emi, dbi) {
     }    
 }
 
-async function addToCalendar(data) {
+/**
+ * Add accepted request to the calendar.
+ * data: the data object recevied from the HTML form.
+ * 
+ * data {
+ *     name : string,
+ *     start_date: string(yyyy-mm-dd),
+ *     end_date: string(yyyy-mm-dd)
+ * }
+ */
+async function addToCalendar(data) {    
     const summary = `${data.name} on vacation`;
 
     if (data.duration === "full day") {
@@ -67,7 +77,7 @@ async function addToCalendar(data) {
         const start = startDate.toISOString().split("T")[0];
         const end = endDate.toISOString().split("T")[0];
 
-        await googleCalendar.addEvent(process.env.CALENDAR_ID, start, end, summary);
+        return await googleCalendar.addEvent(process.env.CALENDAR_ID, start, end, summary);
     } else if (data.duration === "am") {
         const startDate = new Date(data.start_date);
         const endDate = new Date(data.start_date);
@@ -77,7 +87,7 @@ async function addToCalendar(data) {
 
         const start = startDate.toISOString();
         const end = endDate.toISOString();
-        await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, start, end, summary);
+        return await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, start, end, summary);
     } else if (data.duration === "pm") {
         const startDate = new Date(data.start_date);
         const endDate = new Date(data.start_date);
@@ -87,8 +97,14 @@ async function addToCalendar(data) {
 
         const start = startDate.toISOString();
         const end = endDate.toISOString();
-        await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, start, end, summary);
+        return await googleCalendar.addTimedEvent(process.env.CALENDAR_ID, start, end, summary);
     }
 }
 
-export default acceptRequest;
+export {
+    acceptRequest as default,
+    sendStaffEmail,
+    sendAdminEmail,
+    sendManagerEmail,
+    addToCalendar
+};

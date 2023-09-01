@@ -1,16 +1,11 @@
 # Installation and Setup
 
-## Downloading
+## Downloading && Installing
 
     git clone git@github.com:Thaerious/sharcnet-vacation.git
     cd sharcnet-vacation    
     npm i
-
-## Quick Setup
-The setup script will prompt the user for the requied .env variables.
-The detials of these variables are listed below.
-
-    npm run setup
+    npm run build-css
 
 ## Testing
     npx mocha test/unit
