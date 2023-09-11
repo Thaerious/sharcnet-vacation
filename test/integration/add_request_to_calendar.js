@@ -4,7 +4,7 @@ import helpString from "@thaerious/parseargs/src/helpString.js";
 
 const options = {
     name: "SN-Vacation",
-    short: "Vacaion portal addToCalendar manual integration test",
+    short: "Vacation portal addToCalendar manual integration test",
     desc: "",
     synopsis: "node . [OPTIONS]",
     flags: [

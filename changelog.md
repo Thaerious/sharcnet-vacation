@@ -20,3 +20,5 @@
 * Added text response to emails (retained html).
 * Date wording clarification.
 
+## 0.3.2 Hotfix
+* Fix missing email fields.
