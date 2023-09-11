@@ -1,6 +1,7 @@
 import CONST from "../constants.js";
 import GoogleCalendar from "../GoogleCalendar.js";
 import { loadTemplate } from "@thaerious/utility";
+import { expandDatesInData } from "../helpers/buildData.js";
 
 const googleCalendar = new GoogleCalendar();
 await googleCalendar.insert(process.env.CALENDAR_ID);
@@ -16,7 +17,10 @@ async function acceptRequest(hash, managerEmail, dbi, emi) {
     }
 
     dbi.update(hash, CONST.STATUS.ACCEPTED);
-    data = dbi.getRequest(hash);
+    data = expandDatesInData(data);
+    
+    data["status"] = CONST.STATUS.ACCEPTED;
+    data["manager_email"] = managerEmail;
     sendStaffEmail(data, emi);
     sendAdminEmail(data, emi, dbi);
     sendManagerEmail(data, emi, dbi);

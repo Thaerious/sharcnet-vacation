@@ -7,8 +7,10 @@ import { countWeekdays, nextWeekday } from "../helpers/weekdays.js";
 
 /**
  * Populate data with expanded date information.
- * @param {*} data 
- * @returns 
+ * 
+ * This returns a new object and does not modify the source.  Reformats "start_date" and "end_date" to Canadian style.
+ * @param {*} data Source data object, must contain fields: "start_date" and "end_date".
+ * @returns New data object with the additional fields: "weekday_count", "return_date", and "todays_date".
  */
 function expandDatesInData(data) {
     const startDate = new Date(data.start_date + "T00:00:00");
@@ -26,10 +28,6 @@ function expandDatesInData(data) {
     }
 }
 
-/**
- * Expand expandDatesInData to include manager accept/reject urls
- * @param {*} data 
- */
 function addURLsToData(data, hash) {    
     const acceptUrl = new URL(CONST.LOC.HTML.ACCEPT_URL);
     acceptUrl.searchParams.append("hash", hash);

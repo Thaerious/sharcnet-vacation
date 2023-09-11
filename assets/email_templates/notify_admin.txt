@@ -4,7 +4,6 @@ This automated email is to notify you that the employee, ${name}, in your depart
 
 Date:               ${todays_date}
 Approval Status:    ${status}
-Manager:            ${manager_email}
 Employee Email:     ${email}
 Institution:	    ${institution}
 First Vacation Day:	${start_date}

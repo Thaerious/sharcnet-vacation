@@ -6,7 +6,7 @@ import { loadTemplate } from "@thaerious/utility";
  * data : from request body (as json) see doc/vacation_accept.pdf (1)
  */
 async function rejectRequest(hash, managerEmail, dbi, emi) {
-    let data = dbi.getRequest(hash);
+    let data = expandDatesInData(dbi.getRequest(hash));
 
     if (data.status !== CONST.STATUS.PENDING) {
         return {

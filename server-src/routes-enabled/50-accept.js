@@ -14,7 +14,7 @@ const emi = new EMInterface();
 
 acceptRoute.use(`/accept`, async (req, res, next) => {    
     try {
-        const r = acceptRequest(req.query.hash, req.query.email, dbi, emi);
+        acceptRequest(req.query.hash, req.query.email, dbi, emi);
         res.redirect(`/status?hash=${req.query.hash}`);
         logger.log(JSON.stringify({ ...req.query, action: "accept" }));
     } catch (error) {
