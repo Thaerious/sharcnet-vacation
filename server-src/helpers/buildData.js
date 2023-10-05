@@ -7,8 +7,9 @@ import { countWeekdays, nextWeekday } from "../helpers/weekdays.js";
 
 /**
  * Populate data with expanded date information.
- * 
- * This returns a new object and does not modify the source.  Reformats "start_date" and "end_date" to Canadian style.
+ *
+ * This returns a new object and does not modify the source object.  Reformats "start_date"
+ * and "end_date" to Canadian style.
  * @param {*} data Source data object, must contain fields: "start_date" and "end_date".
  * @returns New data object with the additional fields: "weekday_count", "return_date", and "todays_date".
  */
@@ -28,7 +29,13 @@ function expandDatesInData(data) {
     }
 }
 
-function addURLsToData(data, hash) {    
+/**
+ * Populate data object with accept and reject URLs.
+ * @param {*} data The source data.
+ * @param {*} hash The hash value to instert into the url.
+ * @returns New data object with the additional fields: "accepted_url" and "rejected_url".
+ */
+function addURLsToData(data, hash) {
     const acceptUrl = new URL(CONST.LOC.HTML.ACCEPT_URL);
     acceptUrl.searchParams.append("hash", hash);
 
@@ -36,16 +43,22 @@ function addURLsToData(data, hash) {
     rejectURL.searchParams.append("hash", hash);
 
     return {
-        ...data, 
-        ACCEPTED_URL: acceptUrl.href,
-        REJECTED_URL: rejectURL.href, 
+        ...data,
+        accepted_url: acceptUrl.href,
+        rejected_url: rejectURL.href,
     }
 }
 
+/**
+ *
+ * @param {*} data
+ * @param {*} managers
+ * @returns
+ */
 function addManagersToData(data, managers){
     return {
-        ...data, 
-        managers: managers        
+        ...data,
+        managers: managers
     }
 }
 

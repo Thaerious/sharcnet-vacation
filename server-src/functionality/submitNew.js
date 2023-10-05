@@ -1,10 +1,13 @@
 import CONST from "../constants.js";
 import { expandDatesInData, addManagersToData, addURLsToData } from "../helpers/buildData.js";
 import { loadTemplate } from "@thaerious/utility";
-import logger from "../setupLogger.js";
 
 /**
  * Generate emails and update the database when a new vacation request is submitted.
+ * @param {*} data
+ * @param {*} dbi
+ * @param {*} emi
+ * @returns
  */
 function submitNew(data, dbi, emi) {
     data.status = CONST.STATUS.PENDING;
@@ -14,10 +17,10 @@ function submitNew(data, dbi, emi) {
     data = addManagersToData(data, managers);
     emailStaff(data, emi);
 
-    return data;
+    return addURLsToData(data, hash);
 }
 
-function emailManagers(data, dbi, emi) {    
+function emailManagers(data, dbi, emi) {
     const subject = `SHARCNET Vacation Request: ${data.name}, ${data.start_date}`;
     const managerEmails = dbi.getAllRoles(CONST.ROLES.MANAGER).map(row => row.email);
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_MANAGER.HTML, data);

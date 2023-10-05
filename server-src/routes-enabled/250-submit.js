@@ -26,12 +26,12 @@ const dbi = new DBInterface().open();
 const emi = new EMInterface();
 
 submitRoute.use(`/submit`, async (req, res, next) => {
-    if (!req.body.start_date) reject400(req, res, "missing body parameter: start_date");
-    else if (!req.body.end_date) reject400(req, res, "missing body parameter: end_date");            
-    else if (!req.body.name) reject400(req, res, "missing body parameter: name");            
-    else if (!req.body.institution) reject400(req, res, "missing body parameter: institution");            
-    else if (!req.body.email) reject400(req, res, "missing body parameter: email");            
-    else if (!req.body.duration) reject400(req, res, "missing body parameter: duration");
+    if      (!req.body.start_date)  reject400(req, res, "missing body parameter: start_date");
+    else if (!req.body.end_date)    reject400(req, res, "missing body parameter: end_date");
+    else if (!req.body.name)        reject400(req, res, "missing body parameter: name");
+    else if (!req.body.institution) reject400(req, res, "missing body parameter: institution");
+    else if (!req.body.email)       reject400(req, res, "missing body parameter: email");
+    else if (!req.body.duration)    reject400(req, res, "missing body parameter: duration");
     else try {
         const data = submitNew(req.body, dbi, emi);
         accept200(req, res, data);
