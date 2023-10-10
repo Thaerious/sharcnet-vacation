@@ -10,3 +10,4 @@ db/sessions.db
 coverage/
 tests/scratch
 tests/db/
+tests/scratch/
