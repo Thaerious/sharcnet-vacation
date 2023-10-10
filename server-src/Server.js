@@ -13,10 +13,11 @@ class Server {
         this.app = Express();
         this.app.set(`views`, Path.join("www", "static"));
         this.app.set(`view engine`, `ejs`);
-        this.loadRoutes();
     }
 
-    start() {
+    async start() {
+        await this.loadRoutes();
+
         if (args['no-ssl']) this.startHTTP();
         else this.startHTTPS();
     }
@@ -48,7 +49,7 @@ class Server {
 
             process.on(`SIGINT`, () => this.stop());
             process.on(`SIGTERM`, () => this.stop());
-            return this;            
+            return this;
         }
 
         process.on(`SIGINT`, () => this.stop(this.https));

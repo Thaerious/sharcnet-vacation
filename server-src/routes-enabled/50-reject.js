@@ -12,11 +12,11 @@ const rejectRoute =  Express.Router();
 const dbi = new DBInterface().open();
 const emi = new EMInterface();
 
-rejectRoute.use(`/reject`, async (req, res, next) => {    
+rejectRoute.use(`/reject`, async (req, res, next) => {
     try {
         rejectRequest(req.query.hash, req.query.email, dbi, emi, req.body);
         logger.log('/reject');
-        logger.log(dbi.getRequest(req.query.hash));
+        logger.log(dbi.getRequestByHash(req.query.hash));
         res.redirect(`/status?hash=${req.query.hash}`);
         logger.log(JSON.stringify({ ...req.query, action: "reject" }));
     } catch (error){

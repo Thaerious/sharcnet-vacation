@@ -6,9 +6,8 @@ import { mkdirif } from "@thaerious/utility";
 class DBInterface {
     static DB_DIR = "db";
     static EMPTY_DB_FN = "empty.db";
-    static PRODUCTION_DB = "production.db";
 
-    constructor(filename = DBInterface.PRODUCTION_DB) {
+    constructor(filename = process.env["DB_NAME"]) {
         const source = Path.join(DBInterface.DB_DIR, DBInterface.EMPTY_DB_FN);
         const dest = Path.join(DBInterface.DB_DIR, filename);
         if (!FS.existsSync(dest)) FS.copyFileSync(source, mkdirif(dest));
@@ -30,15 +29,15 @@ class DBInterface {
      * Add a new vacation request to the requests table.
      * This would normally originate from the user.
      * @param {*} data
-     * @returns 
+     * @returns
      */
     addRequest(data) {
         const sql = "INSERT INTO requests (email, start_date, end_date, duration, name, institution, status, hash) values (?, ?, ?, ?, ?, ?, ?, ?)";
         const stmt = this.db.prepare(sql);
         const hash = this.generateHash();
 
-        stmt.run(data.email, data.start_date, data.end_date, data.duration, data.name, data.institution, "pending", hash);
-        return hash;
+        const info = stmt.run(data.email, data.start_date, data.end_date, data.duration, data.name, data.institution, "pending", hash);
+        return this.getRequestByHash(hash);
     }
 
     /**
@@ -53,13 +52,24 @@ class DBInterface {
 
     /**
      * Retrieve a vacation request with matching 'hash'.
-     * @param {string} hash 
-     * @returns 
+     * @param {string} hash
+     * @returns
      */
-    getRequest(hash) {
+    getRequestByHash(hash) {
         const sql = "SELECT * FROM requests where hash = ?";
         const stmt = this.db.prepare(sql);
         return stmt.get(hash);
+    }
+
+    /**
+     * Retrieve a vacation request with matching 'hash'.
+     * @param {string} hash
+     * @returns
+     */
+    getRequestById(id) {
+        const sql = "SELECT * FROM requests where id = ?";
+        const stmt = this.db.prepare(sql);
+        return stmt.get(id);
     }
 
     /**
@@ -74,8 +84,8 @@ class DBInterface {
     /**
      * Retrieve all rows from a specified location & role.
      * Omit location to return all rows with the specified role.
-     * @param {string} location 
-     * @param {string} role 
+     * @param {string} location
+     * @param {string} role
      * @returns email rows array
      */
     getAllRoles(role, location) {
@@ -104,8 +114,8 @@ class DBInterface {
 
     /**
      * Retrieve all unique locations for a given role.
-     * @param {string} role 
-     * @returns 
+     * @param {string} role
+     * @returns
      */
     getLocations(role = "admin") {
         const sql = "SELECT DISTINCT location FROM emails WHERE role = ?"
@@ -147,7 +157,7 @@ class DBInterface {
      * Retrieve user information by 'email'.
      * Returns an object with the fields of email table.
      * {email, role, location}
-     */    
+     */
     getUserInfo(email) {
         const sql = "SELECT * FROM users WHERE email = ?"
         const stmt = this.db.prepare(sql);

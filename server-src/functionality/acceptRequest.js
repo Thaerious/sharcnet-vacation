@@ -8,7 +8,7 @@ await googleCalendar.insert(process.env.CALENDAR_ID);
 
 async function acceptRequest(hash, managerEmail, dbi, emi) {
     // Check and/or update status
-    let data = dbi.getRequest(hash);
+    let data = dbi.getRequestByHash(hash);
     if (data.status !== CONST.STATUS.PENDING) {
         return {
             success: false,
@@ -18,7 +18,7 @@ async function acceptRequest(hash, managerEmail, dbi, emi) {
 
     dbi.update(hash, CONST.STATUS.ACCEPTED);
     data = expandDatesInData(data);
-    
+
     data["status"] = CONST.STATUS.ACCEPTED;
     data["manager_email"] = managerEmail;
     sendStaffEmail(data, emi);
@@ -43,10 +43,10 @@ function sendAdminEmail(data, emi, dbi) {
     const subject = "SHARCNET Staff Vacation Notification";
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.HTML, data);
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);
-    
+
     for (const row of dbi.getAllRoles(CONST.ROLES.ADMIN, data.institution)) {
         emi.send(row.email, "", subject, html, text);
-    }    
+    }
 }
 
 function sendManagerEmail(data, emi, dbi) {
@@ -56,20 +56,20 @@ function sendManagerEmail(data, emi, dbi) {
 
     for (const row of dbi.getAllRoles(CONST.ROLES.MANAGER)) {
         emi.send(row.email, "", subject, html, text);
-    }    
+    }
 }
 
 /**
  * Add accepted request to the calendar.
  * data: the data object recevied from the HTML form.
- * 
+ *
  * data {
  *     name : string,
  *     start_date: string(yyyy-mm-dd),
  *     end_date: string(yyyy-mm-dd)
  * }
  */
-async function addToCalendar(data) {    
+async function addToCalendar(data) {
     const summary = `${data.name} on vacation`;
 
     if (data.duration === "full") {

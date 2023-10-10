@@ -11,13 +11,13 @@ import { loadTemplate } from "@thaerious/utility";
  */
 function submitNew(data, dbi, emi) {
     data.status = CONST.STATUS.PENDING;
-    const hash = dbi.addRequest(data);
+    const row = dbi.addRequest(data);
+    data.row_id = row.id;
     data = expandDatesInData(data);
-    const managers = emailManagers(addURLsToData(data, hash), dbi, emi);
+    const managers = emailManagers(addURLsToData(data, row.hash), dbi, emi);
     data = addManagersToData(data, managers);
     emailStaff(data, emi);
-
-    return addURLsToData(data, hash);
+    return data;
 }
 
 function emailManagers(data, dbi, emi) {

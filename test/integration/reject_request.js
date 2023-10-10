@@ -2,7 +2,7 @@ import ParseArgs from "@thaerious/parseargs";
 import FS from "fs";
 import Server from "../../server-src/Server.js";
 import assert from "assert";
-import DBInterface from "../../server-src/DBInterface.js";
+import CONST from "../../server-src/constants.js";
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0"; // turn off ssl check
 process.env["DB_NAME"] = "test.db";
@@ -21,13 +21,13 @@ const args = new ParseArgs({
         {
             "long": "out",
             "short": "o",
-            "default": "test/scratch/submit_response.json",
+            "default": "test/scratch/reject_response.json",
             "type": "string"
         },
         {
             "long": "in",
             "short": "i",
-            "default": "test/scratch/form_data.json",
+            "default": "test/scratch/submit_response.json",
             "type": "string"
         }
     ]
@@ -44,32 +44,19 @@ if (FS.existsSync(args.in)) {
     process.exit();
 }
 
-async function fetchSubmit(data) {
+async function fetchSubmit(inputFileData) {
     const options = {
         method: 'POST',
-        body: encodeForm(data),
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        headers: { },
     }
 
-    const dbi = new DBInterface().open();
+    const acceptUrl = new URL(CONST.LOC.HTML.REJECT_URL);
+    acceptUrl.searchParams.append("hash", inputFileData.row.hash);
 
-    const res = await fetch("https://127.0.0.1/submit", options);
+    const res = await fetch(acceptUrl, options);
     assert.strictEqual(200, res.status);
-    const response = await res.json();
+    const response = await res.text();
 
-    const json = {
-        response: response,
-        row: await dbi.getRequestById(response.row_id)
-    }
-
-    FS.writeFileSync(args.out, JSON.stringify(json, null, 2));
-    dbi.close();
-}
-
-function encodeForm(data) {
-    const body = [];
-    for (var key of Object.keys(data)) {
-        body.push(`${key}=${data[key]}`);
-    }
-    return body.join("&");
+    FS.writeFileSync(args.out, response);
+    console.log(response);
 }

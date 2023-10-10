@@ -1,6 +1,7 @@
 ## Intro
 
-The files in this directory are used on the command line to trigger functionality without running the web server.
+The files in this directory are used on the command line to trigger functionality without
+directly running the web server.
 
 ## Example
 

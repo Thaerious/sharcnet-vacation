@@ -32,6 +32,10 @@ export default {
         STAFF_ACCEPTED: {
             HTML: "assets/email_templates/notify_staff_accepted.html",
             TXT : "assets/email_templates/notify_staff_accepted.txt",
+        },
+        STAFF_REJECTED: {
+            HTML: "assets/email_templates/notify_staff_rejected.html",
+            TXT : "assets/email_templates/notify_staff_rejected.txt",
         }
     },
     STATUS: {

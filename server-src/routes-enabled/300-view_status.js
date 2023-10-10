@@ -9,10 +9,10 @@ const dbi = new DBInterface().open();
 
 router.use(`/status`,
     (req, res, next) => {
-        let data = dbi.getRequest(req.query.hash);
+        let data = dbi.getRequestByHash(req.query.hash);
         data = expandDatesInData(data);
         data.inst_email = dbi.getAllRoles(CONST.ROLES.ADMIN, data.institution)[0].email;
-        
+
         res.render(
             "status/index.ejs",
             data,

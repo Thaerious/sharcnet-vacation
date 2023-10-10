@@ -2,29 +2,36 @@ import ParseArgs from "@thaerious/parseargs";
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import FS from "fs";
-import { mkdirif } from "@thaerious/utility";
+import { fsjson, mkdirif } from "@thaerious/utility";
 
 const rl = readline.createInterface({ input, output });
+const date = new Date();
+const today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate().toString().padStart(2, '0')}`;
 
 const args = new ParseArgs({
-    flags: [
+    "flags": [
         {
-            long: "out",
-            short: "o",
-            default: "test/scratch/form_data.json",
-            type: "string"
+            "long": "out",
+            "short": "o",
+            "default": "test/scratch/form_data.json",
+            "type": "string"
         },
         {
-            long: "in",
-            short: "i",
-            default: "test/scratch/form_data.json",
-            type: "string"
+            "long": "in",
+            "short": "i",
+            "default": "test/scratch/form_data.json",
+            "type": "string"
         }
     ]
 });
 
-const date = new Date();
-const today = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate().toString().padStart(2, '0')}`;
+mkdirif(args.in);
+mkdirif(args.out);
+
+if (args.help) {
+    console.log("Generate mock form data.");
+    process.exit();
+}
 
 var data = {
     start_date: today,
@@ -35,17 +42,8 @@ var data = {
     duration: "full",
 };
 
-mkdirif(args.in);
-mkdirif(args.out);
-
 if (FS.existsSync(args.in)) {
-    const file = FS.readFileSync(args.in);
-    data = JSON.parse(file);
-}
-
-if (args.help) {
-    console.log("Generate mock form data.");
-    process.exit();
+    data = fsjson.load(args.in);
 }
 
 await (async () => {

@@ -22,7 +22,8 @@ import submitNew from "../functionality/submitNew.js";
 const googleCalendar = new GoogleCalendar();  // TODO is this neccisary?
 const submitRoute = Express.Router();
 submitRoute.use(bodyParser.urlencoded({ extended: true }));
-const dbi = new DBInterface().open();
+
+const dbi = new DBInterface(process.env["DB_NAME"] ?? "production.db").open();
 const emi = new EMInterface();
 
 submitRoute.use(`/submit`, async (req, res, next) => {
@@ -36,7 +37,6 @@ submitRoute.use(`/submit`, async (req, res, next) => {
         const data = submitNew(req.body, dbi, emi);
         accept200(req, res, data);
         dbi.setUserInfo(req.body);
-        logger.log(JSON.stringify({ ...data, action: "submit" }));
     } catch (error) {
         logger.error(error.toString());
         console.error(error);
