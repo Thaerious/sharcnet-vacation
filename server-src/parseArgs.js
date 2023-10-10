@@ -3,7 +3,7 @@ import ParseArgs from "@thaerious/parseargs";
 const options = {
     name: "SN-Vacation",
     short: "SHARCNET Vacation Web App",
-    desc: "Online stand-alone web appliction to co-ordinate vacation requests",
+    desc: "Online stand-alone web appliction to co-ordinate vacation requests.",
     synopsis: "sudo node . [OPTIONS]",
     flags: [
         {
@@ -18,6 +18,12 @@ const options = {
             short: 'p',
             default: 8080,
             desc: 'Port number to start listening on (default 8080).',
+            env: 'PORT'
+        },
+        {
+            long: 'ssl',
+            type: 'boolean',
+            desc: 'Start HTTPS server instead of HTTP.',
             env: 'PORT'
         },
         {

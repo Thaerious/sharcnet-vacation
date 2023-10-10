@@ -23,6 +23,11 @@ class Server {
 
     startHTTP(port = process.env.PORT, ip = `0.0.0.0`) {
         this.server = http.createServer(this.app);
+
+        this.server.on('error', error => {
+            throw new Error(error);
+        });
+
         this.server.listen(port, ip, () => {
             logger.log(chalk.green(`HTTP Listening on port ${port}`));
         });
@@ -45,14 +50,10 @@ class Server {
             this.server.listen(port, ip, () => {
                 logger.log(chalk.green(`HTTPS Listening on port ${port}`));
             });
-
-            process.on(`SIGINT`, () => this.stop());
-            process.on(`SIGTERM`, () => this.stop());
-            return this;
         }
 
-        process.on(`SIGINT`, () => this.stop(this.https));
-        process.on(`SIGTERM`, () => this.stop(this.https));
+        process.on(`SIGINT`, () => this.stop());
+        process.on(`SIGTERM`, () => this.stop());
         return this;
     }
 
