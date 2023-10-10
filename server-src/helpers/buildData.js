@@ -36,15 +36,15 @@ function expandDatesInData(data) {
  * @returns New data object with the additional fields: "accepted_url" and "rejected_url".
  */
 function addURLsToData(data, hash) {
-    const acceptUrl = new URL(CONST.LOC.HTML.ACCEPT_URL);
-    acceptUrl.searchParams.append("hash", hash);
+    const acceptURL = new URL(process.env.SERVER_NAME + "/" + CONST.LOC.HTML.ACCEPT_PATH);
+    acceptURL.searchParams.append("hash", hash);
 
-    const rejectURL = new URL(CONST.LOC.HTML.REJECT_URL);
+    const rejectURL = new URL(process.env.SERVER_NAME + "/" + CONST.LOC.HTML.REJECT_PATH);
     rejectURL.searchParams.append("hash", hash);
 
     return {
         ...data,
-        accepted_url: acceptUrl.href,
+        accepted_url: acceptURL.href,
         rejected_url: rejectURL.href,
     }
 }

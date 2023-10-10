@@ -6,10 +6,10 @@ directly running the web server.
 ## Example
 
 ```
-$> node test/manual_integration/generate_form_data.js
-$> node test/manual_integration/submit_new.js
-$> node test/manual_integration/accept_request.js
-$> node test/manual_integration/reject_request.js
-$> node test/manual_integration/status.js
+$> node test/integration/generate_form_data.js
+$> node test/integration/submit_new.js
+$> node test/integration/accept_request.js
+$> node test/integration/reject_request.js
+$> node test/integration/status.js
 
 ```

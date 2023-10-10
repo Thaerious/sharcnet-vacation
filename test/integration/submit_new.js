@@ -3,10 +3,29 @@ import FS from "fs";
 import Server from "../../server-src/Server.js";
 import assert from "assert";
 import DBInterface from "../../server-src/DBInterface.js";
+import { options } from "../../server-src/parseArgs.js";
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0"; // turn off ssl check
+process.env["DB_DIR"] = "test/db";
 process.env["DB_NAME"] = "test.db";
 
+options.flags.push({
+    "long": "out",
+    "short": "o",
+    "default": "test/scratch/submit_response.json",
+    "type": "string"
+});
+
+options.flags.push({
+    "long": "in",
+    "short": "i",
+    "default": "test/scratch/form_data.json",
+    "type": "string"
+});
+
+const args = new ParseArgs(options);
+
+// Start Server
 var server = null;
 try {
     server = new Server();
@@ -15,23 +34,6 @@ try {
     console.error(err);
     process.exit();
 }
-
-const args = new ParseArgs({
-    "flags": [
-        {
-            "long": "out",
-            "short": "o",
-            "default": "test/scratch/submit_response.json",
-            "type": "string"
-        },
-        {
-            "long": "in",
-            "short": "i",
-            "default": "test/scratch/form_data.json",
-            "type": "string"
-        }
-    ]
-});
 
 // Check for input files
 if (FS.existsSync(args.in)) {
@@ -53,7 +55,7 @@ async function fetchSubmit(data) {
 
     const dbi = new DBInterface().open();
 
-    const res = await fetch("https://127.0.0.1/submit", options);
+    const res = await fetch(`http://127.0.0.1:${args.port}/submit`, options);
     assert.strictEqual(200, res.status);
     const response = await res.json();
 
@@ -62,6 +64,7 @@ async function fetchSubmit(data) {
         row: await dbi.getRequestById(response.row_id)
     }
 
+    console.log(`Writing results to ${args.out}`);
     FS.writeFileSync(args.out, JSON.stringify(json, null, 2));
     dbi.close();
 }

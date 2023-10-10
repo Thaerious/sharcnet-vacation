@@ -8,7 +8,7 @@ import CONST from "./constants.js";
 dotenv.config();
 
 if (args.help) {
-    console.log(helpString(options));
+    logger.console(helpString(options));
     process.exit();
 }
 

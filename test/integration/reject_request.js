@@ -3,9 +3,27 @@ import FS from "fs";
 import Server from "../../server-src/Server.js";
 import assert from "assert";
 import CONST from "../../server-src/constants.js";
+import { options } from "../../server-src/parseArgs.js";
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0"; // turn off ssl check
+process.env["DB_DIR"] = "test/db";
 process.env["DB_NAME"] = "test.db";
+
+options.flags.push({
+    "long": "out",
+    "short": "o",
+    "default": "test/scratch/reject_response.html",
+    "type": "string"
+});
+
+options.flags.push({
+    "long": "in",
+    "short": "i",
+    "default": "test/scratch/submit_response.json",
+    "type": "string"
+});
+
+const args = new ParseArgs(options);
 
 var server = null;
 try {
@@ -15,23 +33,6 @@ try {
     console.error(err);
     process.exit();
 }
-
-const args = new ParseArgs({
-    "flags": [
-        {
-            "long": "out",
-            "short": "o",
-            "default": "test/scratch/reject_response.json",
-            "type": "string"
-        },
-        {
-            "long": "in",
-            "short": "i",
-            "default": "test/scratch/submit_response.json",
-            "type": "string"
-        }
-    ]
-});
 
 // Check for input files
 if (FS.existsSync(args.in)) {

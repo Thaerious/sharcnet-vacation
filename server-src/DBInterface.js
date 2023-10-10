@@ -5,13 +5,11 @@ import { mkdirif } from "@thaerious/utility";
 import CONST from "./constants.js";
 
 class DBInterface {
-    constructor(destination) {
-        if (!destination) {
-            destination = mkdirif(
-                process.env["DB_DIR"] || "db",
-                process.env["DB_NAME"] || "production.db"
-            );
-        }
+    constructor() {
+        const destination = mkdirif(
+            process.env["DB_DIR"] || "db",
+            process.env["DB_NAME"] || "production.db"
+        );
 
         const source = Path.join(CONST.DB.EMPTY_DB_PATH);
         if (!FS.existsSync(destination)) {

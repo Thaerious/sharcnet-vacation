@@ -8,8 +8,8 @@ export default {
         "HTML": {
             "BAD_REQUEST_400": "server-assets/400_bad_request.html",
             "SERVER_ERROR_500": "server-assets/500_server_error.html",
-            "ACCEPT_URL": process.env.SERVER_NAME + "/accept",
-            "REJECT_URL": process.env.SERVER_NAME + "/reject",
+            "ACCEPT_PATH": "/accept",
+            "REJECT_PATH": "/reject",
         },
         "LOGFILE": "logs/log.txt",
         "ENDPOINTS": {

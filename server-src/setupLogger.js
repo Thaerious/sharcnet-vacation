@@ -10,6 +10,11 @@ logger.error.enabled = true;
 logger.log.enabled = true;
 logger.verbose.enabled = args?.verbose;
 
+logger.console.handlers = [
+    position,
+    console
+]
+
 logger.log.handlers = [
     position,
     console

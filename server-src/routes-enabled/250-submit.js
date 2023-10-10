@@ -23,7 +23,7 @@ const googleCalendar = new GoogleCalendar();  // TODO is this neccisary?
 const submitRoute = Express.Router();
 submitRoute.use(bodyParser.urlencoded({ extended: true }));
 
-const dbi = new DBInterface(process.env["DB_NAME"] ?? "production.db").open();
+const dbi = new DBInterface().open();
 const emi = new EMInterface();
 
 submitRoute.use(`/submit`, async (req, res, next) => {

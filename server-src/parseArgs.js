@@ -24,7 +24,6 @@ const options = {
             long: 'ssl',
             type: 'boolean',
             desc: 'Start HTTPS server instead of HTTP.',
-            env: 'PORT'
         },
         {
             long: 'help',
