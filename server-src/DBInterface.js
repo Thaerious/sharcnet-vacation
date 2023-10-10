@@ -2,16 +2,23 @@ import FS, { mkdir } from "fs";
 import Path from "path";
 import sqlite3 from "better-sqlite3";
 import { mkdirif } from "@thaerious/utility";
+import CONST from "./constants.js";
 
 class DBInterface {
-    static DB_DIR = "db";
-    static EMPTY_DB_FN = "empty.db";
+    constructor(destination) {
+        if (!destination) {
+            destination = mkdirif(
+                process.env["DB_DIR"] || "db",
+                process.env["DB_NAME"] || "production.db"
+            );
+        }
 
-    constructor(filename = process.env["DB_NAME"]) {
-        const source = Path.join(DBInterface.DB_DIR, DBInterface.EMPTY_DB_FN);
-        const dest = Path.join(DBInterface.DB_DIR, filename);
-        if (!FS.existsSync(dest)) FS.copyFileSync(source, mkdirif(dest));
-        this.dbPath = dest;
+        const source = Path.join(CONST.DB.EMPTY_DB_PATH);
+        if (!FS.existsSync(destination)) {
+            FS.copyFileSync(source, destination);
+        }
+
+        this.dbPath = destination;
     }
 
     open() {
@@ -75,7 +82,7 @@ class DBInterface {
     /**
      * Update the status of an existing vacation request.
      */
-    update(hash, status) {
+    updateStatusByHash(hash, status) {
         const sql = "UPDATE requests SET status = ? where hash = ?";
         const stmt = this.db.prepare(sql);
         return stmt.run(status, hash);
@@ -106,7 +113,7 @@ class DBInterface {
     /**
      * Add a new entry to into the email table.
      */
-    addEmail(location, email, role){
+    addEmail(location, email, role) {
         const sql = "INSERT INTO emails (email, location, role) values (?, ?, ?)";
         const stmt = this.db.prepare(sql);
         return stmt.run(email, location, role);

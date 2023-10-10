@@ -1,12 +1,13 @@
 import DBInterface from "../../server-src/DBInterface.js";
 import assert from "assert";
 import FS from "fs";
-import Path from "path";
 import args from "../../server-src/parseArgs.js";
 import { mkdirif } from "@thaerious/utility";
 
 const cwd = process.cwd();
 const TEST_DIRECTORY = "test/mock";
+process.env["DB_DIR"] = "test/db";
+process.env["DB_NAME"] = "test.db";
 
 function init() {
     if (!process.cwd().endsWith(TEST_DIRECTORY)) {
@@ -43,8 +44,8 @@ describe(`Test Database Interface Class`, function () {
             this.dbi = new DBInterface();
         });
 
-        it("creates a new file 'production.db'", function () {
-            const actual = FS.existsSync("db/production.db");
+        it("creates a new file 'test.db'", function () {
+            const actual = FS.existsSync("test/db/test.db");
             assert.ok(actual);
         });
     });
@@ -54,7 +55,7 @@ describe(`Test Database Interface Class`, function () {
             const data1 = {
                 "email" : "who@where.com",
                 "start_date" : "2020-01-02",
-                "end_date" : "2020-01-04",                
+                "end_date" : "2020-01-04",
                 "duration" : "full",
                 "name" : "Waldo Rivera",
                 "institution" : "MIT"
@@ -63,7 +64,7 @@ describe(`Test Database Interface Class`, function () {
             const data2 = {
                 "email" : "who@where.com",
                 "start_date" : "2020-12-31",
-                "end_date" : "2021-01-31",                
+                "end_date" : "2021-01-31",
                 "duration" : "full",
                 "name" : "Alto Soprano",
                 "institution" : "Carnegie"
@@ -78,9 +79,9 @@ describe(`Test Database Interface Class`, function () {
             this.dbi.close();
         });
 
-        it("creates a new file 'production.db'", function () {
-            this.hash = this.dbi.addRequest("who@where.com", "2020-01-02", "2020-01-04", "full", "Waldo Rivera", "MIT");
-            const actual = FS.existsSync("db/production.db");
+        it("creates a new file 'test.db'", function () {
+            this.row = this.dbi.addRequest("who@where.com", "2020-01-02", "2020-01-04", "full", "Waldo Rivera", "MIT");
+            const actual = FS.existsSync("test/db/test.db");
             assert.ok(actual);
         });
 
@@ -97,15 +98,15 @@ describe(`Test Database Interface Class`, function () {
         describe(`Update an entry's status`, function () {
             before(function () {
                 this.dbi = new DBInterface().open();
-                this.dbi.update(this.hash, "accepted");
+                this.dbi.updateStatusByHash(this.row.hash, "accepted");
             });
-    
+
             it("#get returns an object with status 'accepted'", function () {
-                const actual = this.dbi.getRequest(this.hash).status;
+                const actual = this.dbi.getRequestByHash(this.row.hash).status;
                 const expected = "accepted";
                 assert.strictEqual(actual, expected);
             });
-        });        
+        });
     });
 
     describe(`Roles`, function () {
@@ -123,7 +124,7 @@ describe(`Test Database Interface Class`, function () {
             const actual = this.dbi.addEmail("toronto", "mngr@there.com", "manager").changes;
             const expected = 1;
             assert.strictEqual(actual, expected);
-        });        
+        });
 
         it("retrieve all for managers for location 'guelph'", function () {
             const actual = this.dbi.getAllRoles("manager", "guelph");
@@ -135,17 +136,17 @@ describe(`Test Database Interface Class`, function () {
             const actual = this.dbi.getAllRoles("manager");
             const expected0 = "frar.test+manager1@gmail.com"; // empty has this role
             const expected1 = "frar.test+manager2@gmail.com"; // empty has this role
-            const expected2 = "manager@somewhere.com";        // added role for the test  
+            const expected2 = "manager@somewhere.com";        // added role for the test
             assert.strictEqual(actual[0].email, expected0);
             assert.strictEqual(actual[1].email, expected1);
             assert.strictEqual(actual[2].email, expected2);
-        });   
-        
+        });
+
         it("retrieve admin for location 'guelph'", function () {
             const actual = this.dbi.getAllRoles("admin", "guelph");
             const expected = "frar.test+guelph@gmail.com";
             assert.strictEqual(actual[0].email, expected);
-        });        
+        });
     });
 
     describe(`Locations`, function () {
@@ -159,5 +160,5 @@ describe(`Test Database Interface Class`, function () {
             assert.notStrictEqual(actual.indexOf("waterloo"), -1);
             assert.strictEqual(actual.indexOf("not real"), -1);
         });
-    });    
+    });
 });

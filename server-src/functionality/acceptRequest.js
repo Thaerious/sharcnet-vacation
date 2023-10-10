@@ -16,7 +16,7 @@ async function acceptRequest(hash, managerEmail, dbi, emi) {
         }
     }
 
-    dbi.update(hash, CONST.STATUS.ACCEPTED);
+    dbi.updateStatusByHash(hash, CONST.STATUS.ACCEPTED);
     data = expandDatesInData(data);
 
     data["status"] = CONST.STATUS.ACCEPTED;

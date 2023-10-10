@@ -22,3 +22,7 @@
 
 ## 0.3.2 Hotfix
 * Fix missing email fields.
+
+## 0.3.3 Hotfix
+* Fixed broken reject/status link.
+* Added tests to help detect broken links.

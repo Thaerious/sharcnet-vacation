@@ -12,8 +12,8 @@ export default {
             "REJECT_URL": process.env.SERVER_NAME + "/reject",
         },
         "LOGFILE": "logs/log.txt",
-        ENDPOINTS: {
-            GOOGLE: "/google"
+        "ENDPOINTS": {
+            "GOOGLE": "/google"
         }
     },
     EMAIL_TEMPLATE: {
@@ -56,5 +56,8 @@ export default {
     SESSION: {
         LOGGED_IN: `LOGGED_IN`,
         EMAIL: `USER_EMAIL`
+    },
+    DB: {
+        EMPTY_DB_PATH: `db/empty.db`
     }
 };

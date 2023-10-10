@@ -16,7 +16,7 @@ async function rejectRequest(hash, managerEmail, dbi, emi) {
         }
     }
 
-    dbi.update(hash, CONST.STATUS.REJECTED);
+    dbi.updateStatusByHash(hash, CONST.STATUS.REJECTED);
 
     const subject = "Vacation Request Update: Rejected.";
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_REJECTED.HTML, data);
