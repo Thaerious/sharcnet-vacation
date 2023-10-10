@@ -17,12 +17,11 @@ class Server {
 
     async start() {
         await this.loadRoutes();
-
-        if (args['no-ssl']) this.startHTTP();
-        else this.startHTTPS();
+        if (args['ssl']) this.startHTTPS();
+        else this.startHTTP();
     }
 
-    startHTTP(port = CONST.SERVER.PORT, ip = `0.0.0.0`) {
+    startHTTP(port = process.env.PORT, ip = `0.0.0.0`) {
         this.server = http.createServer(this.app);
         this.server.listen(port, ip, () => {
             logger.log(chalk.green(`HTTP Listening on port ${port}`));
@@ -33,7 +32,7 @@ class Server {
         return this;
     }
 
-    startHTTPS(port = CONST.SERVER.PORT, ip = `0.0.0.0`) {
+    startHTTPS(port = process.env.PORT, ip = `0.0.0.0`) {
         if (CONST.SERVER.SSL_KEY && CONST.SERVER.SSL_CERT) {
             const key = FS.readFileSync(CONST.SERVER.SSL_KEY);
             const cert = FS.readFileSync(CONST.SERVER.SSL_CERT);

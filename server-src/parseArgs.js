@@ -14,16 +14,17 @@ const options = {
         },
         {
             long: 'port',
-            type: 'string',
+            type: 'number',
             short: 'p',
-            default: '443',
-            desc: 'Port number to start listening on (default 443).'
+            default: 8080,
+            desc: 'Port number to start listening on (default 8080).',
+            env: 'PORT'
         },
         {
             long: 'help',
             type: 'boolean',
             desc: 'Display help information.'
-        }        
+        }
     ]
 };
 

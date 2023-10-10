@@ -50,8 +50,7 @@ export default {
     },
     SERVER: {
         SSL_KEY: "./keys/key.pem",
-        SSL_CERT: './keys/cert.pem',
-        PORT: 443
+        SSL_CERT: './keys/cert.pem'
     },
     SESSION: {
         LOGGED_IN: `LOGGED_IN`,

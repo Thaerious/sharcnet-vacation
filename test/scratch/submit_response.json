@@ -7,24 +7,13 @@
     "email": "frar.test@gmail.com",
     "duration": "full",
     "status": "pending",
-    "row_id": 24,
+    "row_id": 1,
     "weekday_count": 1,
     "return_date": "Mon, Oct 9, 2023",
-    "todays_date": "Fri, Oct 6, 2023",
+    "todays_date": "Tue, Oct 10, 2023",
     "managers": [
       "frar.test+manager1@gmail.com",
       "frar.test+manager2@gmail.com"
     ]
-  },
-  "row": {
-    "id": 24,
-    "email": "frar.test@gmail.com",
-    "start_date": "2023-10-06",
-    "end_date": "2023-10-06",
-    "duration": "full",
-    "name": "Freddie Mercury",
-    "institution": "western",
-    "status": "pending",
-    "hash": "YRCGMVvqlqUEXE3CA5GRVDHBuo5vQUwC"
   }
 }
