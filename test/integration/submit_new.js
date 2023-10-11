@@ -4,6 +4,7 @@ import Server from "../../server-src/Server.js";
 import assert from "assert";
 import DBInterface from "../../server-src/DBInterface.js";
 import { options } from "../../server-src/parseArgs.js";
+import { emi } from "../../server-src/routes-enabled/250-submit.js";
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0"; // turn off ssl check
 process.env["DB_DIR"] = "test/db";
@@ -39,6 +40,7 @@ try {
 if (FS.existsSync(args.in)) {
     const file = FS.readFileSync(args.in);
     await fetchSubmit(JSON.parse(file));
+    await emi.wait();
     server.stop();
 } else {
     console.log(`Input file not found: ${args.in}`);

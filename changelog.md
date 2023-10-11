@@ -26,3 +26,5 @@
 ## 0.3.3 Hotfix
 * Fixed broken reject/status link.
 * Added tests to help detect broken links.
+* Added test for missing email interpolations.
+* Added pending send checks for email interface (needed so tests don't end early).

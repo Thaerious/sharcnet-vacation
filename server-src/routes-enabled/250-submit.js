@@ -34,7 +34,7 @@ submitRoute.use(`/submit`, async (req, res, next) => {
     else if (!req.body.email)       reject400(req, res, "missing body parameter: email");
     else if (!req.body.duration)    reject400(req, res, "missing body parameter: duration");
     else try {
-        const data = submitNew(req.body, dbi, emi);
+        const data = await submitNew(req.body, dbi, emi);
         accept200(req, res, data);
         dbi.setUserInfo(req.body);
     } catch (error) {
@@ -44,4 +44,4 @@ submitRoute.use(`/submit`, async (req, res, next) => {
     }
 });
 
-export default submitRoute;
+export {submitRoute as default, emi, dbi}

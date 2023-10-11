@@ -2,8 +2,10 @@ import ParseArgs from "@thaerious/parseargs";
 import FS from "fs";
 import Server from "../../server-src/Server.js";
 import assert from "assert";
-import CONST from "../../server-src/constants.js";
+import logger from "../../server-src/setupLogger.js";
 import { options } from "../../server-src/parseArgs.js";
+import { emi } from "../../server-src/routes-enabled/50-reject.js";
+import exec from "exec";
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0"; // turn off ssl check
 process.env["DB_DIR"] = "test/db";
@@ -38,6 +40,7 @@ try {
 if (FS.existsSync(args.in)) {
     const file = FS.readFileSync(args.in);
     await fetchSubmit(JSON.parse(file));
+    await emi.wait();
     server.stop();
 } else {
     console.log(`Input file not found: ${args.in}`);
@@ -51,13 +54,17 @@ async function fetchSubmit(inputFileData) {
         headers: { },
     }
 
-    const acceptUrl = new URL(CONST.LOC.HTML.REJECT_URL);
-    acceptUrl.searchParams.append("hash", inputFileData.row.hash);
+    const rejectURL = `http://127.0.0.1:${args.port}/accept?hash=${inputFileData.row.hash}`;
 
-    const res = await fetch(acceptUrl, options);
+    const res = await fetch(rejectURL, options);
     assert.strictEqual(200, res.status);
     const response = await res.text();
 
+    logger.console(`response written to '${args.out}'`);
     FS.writeFileSync(args.out, response);
-    console.log(response);
+    logger.verbose(response);
+
+    if (args.browse) {
+        exec(`google-chrome ${args.out}`);
+    }
 }

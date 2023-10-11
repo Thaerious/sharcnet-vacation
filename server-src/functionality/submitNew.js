@@ -9,14 +9,14 @@ import { loadTemplate } from "@thaerious/utility";
  * @param {*} emi
  * @returns
  */
-function submitNew(data, dbi, emi) {
+async function submitNew(data, dbi, emi) {
     data.status = CONST.STATUS.PENDING;
     const row = dbi.addRequest(data);
     data.row_id = row.id;
     data = expandDatesInData(data);
     const managers = emailManagers(addURLsToData(data, row.hash), dbi, emi);
     data = addManagersToData(data, managers);
-    emailStaff(data, emi);
+    await emailStaff(data, emi);
     return data;
 }
 
@@ -33,7 +33,7 @@ function emailManagers(data, dbi, emi) {
     return managerEmails;
 }
 
-function emailStaff(data, emi) {
+async function emailStaff(data, emi) {
     const subject = "Vacation Request Confirmation";
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_STAFF.HTML, data);
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_STAFF.TXT, data);

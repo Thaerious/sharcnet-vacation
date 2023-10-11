@@ -4,6 +4,7 @@ import Server from "../../server-src/Server.js";
 import assert from "assert";
 import { options } from "../../server-src/parseArgs.js";
 import logger from "../../server-src/setupLogger.js";
+import { exec } from 'child_process';
 
 options.flags.push({
     "long": "out",
@@ -61,6 +62,12 @@ async function fetchStatus(inputFileData) {
     FS.writeFileSync(args.out, response);
     logger.console(`Output written to ${args.out}`);
     logger.verbose(response);
+
+    if (args.browse) {
+        console.log("exec");
+        exec(`ls`);
+        exec(`google-chrome ${args.out}`);
+    }
 
     assert.strictEqual(res.status, 200);
 }

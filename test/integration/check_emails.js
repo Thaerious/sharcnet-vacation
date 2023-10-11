@@ -3,6 +3,7 @@
 import Imap from "imap";
 import dotenv from "dotenv";
 import { simpleParser } from "mailparser";
+import assert from "assert";
 
 dotenv.config();
 
@@ -20,9 +21,7 @@ const imapConfig = {
 const imap = new Imap(imapConfig);
 
 imap.once('ready', () => {
-    console.log("ready");
     imap.openBox('INBOX', false, () => {
-        console.log("open");
         imap.search(['UNSEEN'], (err, results) => {
             const f = imap.fetch(results, { bodies: '' });
             f.on('message', msg => {
@@ -44,21 +43,41 @@ imap.once('ready', () => {
 });
 
 function processMail(mail) {
-    console.log(`\nTo: ${mail.to.value[0].address}`);
     for (const headerline of mail.headerLines) {
-        if (headerline.key == "subject") {
-            console.log(headerline.line);
+        if (headerline.key === "x-snvac-id") {
+            sanityCheckInterpolation(mail);
+            break;
         }
     }
-    console.log(mail.text);
-    console.log(mail.html);
-    sanityCheckInterpolation(mail);
 }
 
 function sanityCheckInterpolation(mail) {
-    const index1 = mail.text.search(/(%|\$){[^}]*}/);
-    const index2 = mail.html.search(/(%|\$){[^}]*}/);
-    console.log(index1, index2);
+    const matchTXT = mail.text.match(/(%|\$){[^}]*}/g);
+    const matchHTML = mail.html.match(/(%|\$){[^}]*}/g);
+
+    if (matchTXT !== null) {
+        console.log(`\nIterpolation check failed:`);
+        console.log("data chunk: TEXT");
+        console.log(`TO: ${mail.to.text}`);
+        console.log(getHeader(mail, "subject"));
+        console.log(matchTXT);
+    }
+
+    if (matchHTML !== null) {
+        console.log(`\nIterpolation check failed:`);
+        console.log("data chunk: HTML");
+        console.log(`TO: ${mail.to.text}`);
+        console.log(getHeader(mail, "subject"));
+        console.log(matchHTML);
+    }
+}
+
+function getHeader(mail, key) {
+    for (const headerline of mail.headerLines) {
+        if (headerline.key === key) {
+            return headerline.line;
+        }
+    }
 }
 
 imap.connect();

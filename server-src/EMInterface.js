@@ -7,7 +7,16 @@ import throwIfNot from "./helpers/throwIfNot.js";
  * Email Interface
  */
 class EMInterface {
-    async send(email, cc, subject, html, text, id) {
+    pending = [];
+
+    async wait() {
+        for (const promise of this.pending) {
+            await promise;
+        }
+    }
+
+    send(email, cc, subject, html, text, id) {
+        logger.debug(`EMI.send ${email}`);
         throwIfNot(email, cc, subject, html, text, id);
 
         const creds = {
@@ -23,7 +32,7 @@ class EMInterface {
         const transporter = nodemailer.createTransport(creds);
 
         // send mail with defined transport object
-        await transporter.sendMail({
+        this.pending.push(transporter.sendMail({
             from: `"SHARCNET Vacation Mailer" <${process.env.EMAIL_FROM}>`,
             to: email,        // list of receivers
             cc: cc,
@@ -31,9 +40,9 @@ class EMInterface {
             text: text,       // plain text body
             html: html,       // html body
             headers: {
-                'X-SNVAC-ID': id
+                'x-snvac-id': id
             }
-        });
+        }));
     }
 }
 

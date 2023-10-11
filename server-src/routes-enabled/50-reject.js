@@ -26,5 +26,5 @@ rejectRoute.use(`/reject`, async (req, res, next) => {
     }
 });
 
-export default rejectRoute;
+export {rejectRoute as default, emi, dbi}
 

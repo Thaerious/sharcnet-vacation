@@ -3,6 +3,8 @@ import FS from "fs";
 import Server from "../../server-src/Server.js";
 import assert from "assert";
 import { options } from "../../server-src/parseArgs.js";
+import logger from "../../server-src/setupLogger.js";
+import { emi } from "../../server-src/routes-enabled/50-accept.js";
 
 options.flags.push({
     "long": "out",
@@ -38,6 +40,7 @@ try {
 if (FS.existsSync(args.in)) {
     const file = FS.readFileSync(args.in);
     await fetchSubmit(JSON.parse(file));
+    await emi.wait();
     server.stop();
 } else {
     console.log(`Input file not found: ${args.in}`);
@@ -52,14 +55,16 @@ async function fetchSubmit(inputFileData) {
     }
 
     const acceptURL = `http://127.0.0.1:${args.port}/accept?hash=${inputFileData.row.hash}`;
-    console.log(acceptURL);
-    // const acceptURL = new URL(process.env.SERVER_NAME + CONST.LOC.HTML.ACCEPT_PATH);
-    // acceptURL.searchParams.append("hash", inputFileData.row.hash);
 
     const res = await fetch(acceptURL, options);
     assert.strictEqual(200, res.status);
     const response = await res.text();
 
+    logger.console(`response written to '${args.out}'`);
     FS.writeFileSync(args.out, response);
-    console.log(response);
+    logger.verbose(response);
+
+    if (args.browse) {
+        exec(`google-chrome ${args.out}`);
+    }
 }
