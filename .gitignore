@@ -8,6 +8,5 @@ keys/
 db/production.db
 db/sessions.db
 coverage/
-tests/scratch
-tests/db/
-tests/scratch/
+test/scratch
+test/db/
