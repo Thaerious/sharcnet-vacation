@@ -18,7 +18,6 @@ async function acceptRequest(hash, managerEmail, dbi, emi) {
 
     dbi.updateStatusByHash(hash, CONST.STATUS.ACCEPTED);
     data = expandDatesInData(data);
-
     data["status"] = CONST.STATUS.ACCEPTED;
     data["manager_email"] = managerEmail;
     sendStaffEmail(data, emi);
