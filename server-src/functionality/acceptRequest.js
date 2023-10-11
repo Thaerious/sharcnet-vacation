@@ -35,7 +35,7 @@ function sendStaffEmail(data, emi) {
     const subject = "SHARCNET Vacation Request Update: Accepted.";
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_ACCEPTED.HTML, data);
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_ACCEPTED.TXT, data);
-    emi.send(data.email, "", subject, html, text);
+    emi.send(data.email, "", subject, html, text, data.id);
 }
 
 function sendAdminEmail(data, emi, dbi) {
@@ -44,7 +44,7 @@ function sendAdminEmail(data, emi, dbi) {
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);
 
     for (const row of dbi.getAllRoles(CONST.ROLES.ADMIN, data.institution)) {
-        emi.send(row.email, "", subject, html, text);
+        emi.send(row.email, "", subject, html, text, data.id);
     }
 }
 
@@ -54,7 +54,7 @@ function sendManagerEmail(data, emi, dbi) {
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);
 
     for (const row of dbi.getAllRoles(CONST.ROLES.MANAGER)) {
-        emi.send(row.email, "", subject, html, text);
+        emi.send(row.email, "", subject, html, text, data.id);
     }
 }
 

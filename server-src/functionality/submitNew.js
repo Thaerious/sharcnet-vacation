@@ -27,7 +27,7 @@ function emailManagers(data, dbi, emi) {
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_MANAGER.TXT, data);
 
     for (const email of managerEmails) {
-        emi.send(email, "", subject, html, text);
+        emi.send(email, "", subject, html, text, data.row_id);
     }
 
     return managerEmails;
@@ -38,7 +38,7 @@ function emailStaff(data, emi) {
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_STAFF.HTML, data);
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_STAFF.TXT, data);
 
-    emi.send(data.email, "", subject, html, text);
+    emi.send(data.email, "", subject, html, text, data.row_id);
 }
 
 export default submitNew;

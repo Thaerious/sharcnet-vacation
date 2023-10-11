@@ -21,7 +21,7 @@ async function rejectRequest(hash, managerEmail, dbi, emi) {
     const subject = "Vacation Request Update: Rejected.";
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_REJECTED.HTML, data);
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_REJECTED.TXT, data);
-    emi.send(data.email, "", subject, html, text);
+    emi.send(data.email, "", subject, html, text, data.id);
 }
 
 export default rejectRequest;

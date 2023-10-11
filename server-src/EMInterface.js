@@ -1,12 +1,15 @@
 import { loadTemplate } from "@thaerious/utility";
 import nodemailer from "nodemailer";
 import logger from "./setupLogger.js";
+import throwIfNot from "./helpers/throwIfNot.js";
 
 /**
  * Email Interface
  */
 class EMInterface {
-    async send(email, cc, subject, html, text = "") {
+    async send(email, cc, subject, html, text, id) {
+        throwIfNot(email, cc, subject, html, text, id);
+
         const creds = {
             host: process.env.EMAIL_HOST,
             secure: false,
@@ -27,6 +30,9 @@ class EMInterface {
             subject: subject, // Subject line
             text: text,       // plain text body
             html: html,       // html body
+            headers: {
+                'X-SNVAC-ID': id
+            }
         });
     }
 }
