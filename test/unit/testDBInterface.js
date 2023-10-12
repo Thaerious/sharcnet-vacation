@@ -8,6 +8,10 @@ const cwd = process.cwd();
 process.env["DB_DIR"] = "test/db";
 process.env["DB_NAME"] = "test.db";
 
+function init() {
+    if (FS.existsSync(process.env["DB_DIR"])) FS.rmSync(process.env["DB_DIR"], { recursive: true });
+}
+
 /**
  * Remove test directory unless --no-clean flag is set.
  */
@@ -22,7 +26,7 @@ function clean() {
 }
 
 describe(`Test Database Interface Class`, function () {
-    // before(init);
+    before(init);
     after(clean);
 
     describe(`Create new database interface'`, function () {
@@ -171,7 +175,7 @@ describe(`Test Database Interface Class`, function () {
         });
 
         it("set user info", function () {
-            const actual = this.dbi.setUserInfo("who@where.com", "who whom", "university of where");
+            const actual = this.dbi.setUserInfo({email: "who@where.com", name: "who whom", institution: "university of where"});
             assert.strictEqual(actual.changes, 1);
         });
 
@@ -183,6 +187,19 @@ describe(`Test Database Interface Class`, function () {
         it("has user info: false", function () {
             const actual = this.dbi.hasUserInfo("unknown@where.com");
             assert.ok(!actual);
+        });
+
+        it("get user info", function () {
+            const actual = this.dbi.getUserInfo("who@where.com");
+            assert.deepEqual(
+                actual,
+                {email: "who@where.com", name: "who whom", institution: "university of where", role: "user"}
+            );
+        });
+
+        it("Getting user info that doesn't exist will return undefined. (#getUserInfo)", function () {
+            const actual = this.dbi.getUserInfo("unknown@where.com");
+            assert.strictEqual(actual, undefined);
         });
 
     });

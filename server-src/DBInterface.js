@@ -9,8 +9,8 @@ import chalk from "chalk";
 class DBInterface {
     constructor() {
         const destination = mkdirif(
-            process.env["DB_DIR"] || "db",
-            process.env["DB_NAME"] || "production.db"
+            process.env["DB_DIR"],
+            process.env["DB_NAME"]
         );
 
         const source = Path.join(CONST.DB.EMPTY_DB_PATH);
@@ -23,7 +23,7 @@ class DBInterface {
 
     open() {
         if (this.db) return this;
-        this.db = new sqlite3(this.dbPath);
+        this.db = new sqlite3(this.dbPath, /*{ verbose: console.log }*/);
         return this;
     }
 

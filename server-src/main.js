@@ -3,9 +3,11 @@ import dotenv from "dotenv";
 import args, { options } from "./parseArgs.js";
 import helpString from "@thaerious/parseargs/src/helpString.js";
 import logger from "./setupLogger.js";
-import CONST from "./constants.js";
 
 dotenv.config();
+
+process.env["DB_DIR"] = "db";
+process.env["DB_NAME"] = "production.db";
 
 if (args.help) {
     logger.console(helpString(options));
