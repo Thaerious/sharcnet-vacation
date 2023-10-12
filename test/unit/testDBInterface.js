@@ -5,22 +5,8 @@ import args from "../../server-src/parseArgs.js";
 import { mkdirif } from "@thaerious/utility";
 
 const cwd = process.cwd();
-const TEST_DIRECTORY = "test/mock";
 process.env["DB_DIR"] = "test/db";
 process.env["DB_NAME"] = "test.db";
-
-function init() {
-    if (!process.cwd().endsWith(TEST_DIRECTORY)) {
-        if (FS.existsSync(TEST_DIRECTORY)) FS.rmSync(TEST_DIRECTORY, { recursive: true });
-
-        const dest = mkdirif(TEST_DIRECTORY, "db", "empty.db");
-        FS.copyFileSync("db/empty.db", mkdirif(TEST_DIRECTORY, "db", "empty.db"));
-        FS.copyFileSync("db/empty.db", "test/mock/db/empty.db");
-
-        FS.mkdirSync(TEST_DIRECTORY, { recursive: true });
-        process.chdir(TEST_DIRECTORY);
-    }
-}
 
 /**
  * Remove test directory unless --no-clean flag is set.
@@ -29,14 +15,14 @@ function clean() {
     if (!args[`no-clean`]) {
         // clean up test directory unless --no-clean is specified
         process.chdir(cwd);
-        if (FS.existsSync(TEST_DIRECTORY)) FS.rmSync(TEST_DIRECTORY, { recursive: true });
+        if (FS.existsSync(process.env["DB_DIR"])) FS.rmSync(process.env["DB_DIR"], { recursive: true });
     } else {
-        console.log(`\n *** see test directory: ${TEST_DIRECTORY}`);
+        console.log(`\n *** see test directory: ${process.env["DB_DIR"]}`);
     }
 }
 
 describe(`Test Database Interface Class`, function () {
-    before(init);
+    // before(init);
     after(clean);
 
     describe(`Create new database interface'`, function () {
@@ -47,6 +33,17 @@ describe(`Test Database Interface Class`, function () {
         it("creates a new file 'test.db'", function () {
             const actual = FS.existsSync("test/db/test.db");
             assert.ok(actual);
+        });
+    });
+
+    describe(`Open database twice, no change in state'`, function () {
+        before(function () {
+            this.dbi = new DBInterface();
+        });
+
+        it("open twice", function () {
+            this.dbi.open();
+            this.dbi.open();
         });
     });
 
@@ -71,8 +68,8 @@ describe(`Test Database Interface Class`, function () {
             }
 
             this.dbi = new DBInterface().open();
-            this.dbi.addRequest(data1);
-            this.dbi.addRequest(data2);
+            this.addResult1 = this.dbi.addRequest(data1);
+            this.addResult2 = this.dbi.addRequest(data2);
         });
 
         after(function () {
@@ -95,13 +92,18 @@ describe(`Test Database Interface Class`, function () {
             assert.ok(!actual);
         });
 
+        it("(#getRequestById) returns an data object", function () {
+            const actual = this.dbi.getRequestById(this.addResult1.id);
+            assert.deepEqual(actual, this.addResult1);
+        });
+
         describe(`Update an entry's status`, function () {
             before(function () {
                 this.dbi = new DBInterface().open();
                 this.dbi.updateStatusByHash(this.row.hash, "accepted");
             });
 
-            it("#get returns an object with status 'accepted'", function () {
+            it("(#getRequestByHash) returns an object with status 'accepted'", function () {
                 const actual = this.dbi.getRequestByHash(this.row.hash).status;
                 const expected = "accepted";
                 assert.strictEqual(actual, expected);
@@ -160,5 +162,28 @@ describe(`Test Database Interface Class`, function () {
             assert.notStrictEqual(actual.indexOf("waterloo"), -1);
             assert.strictEqual(actual.indexOf("not real"), -1);
         });
+    });
+
+
+    describe(`User Info`, function () {
+        before(function () {
+            this.dbi = new DBInterface().open();
+        });
+
+        it("set user info", function () {
+            const actual = this.dbi.setUserInfo("who@where.com", "who whom", "university of where");
+            assert.strictEqual(actual.changes, 1);
+        });
+
+        it("has user info: true", function () {
+            const actual = this.dbi.hasUserInfo("who@where.com");
+            assert.ok(actual);
+        });
+
+        it("has user info: false", function () {
+            const actual = this.dbi.hasUserInfo("unknown@where.com");
+            assert.ok(!actual);
+        });
+
     });
 });

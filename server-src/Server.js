@@ -9,6 +9,8 @@ import args from "./parseArgs.js";
 import chalk from "chalk";
 
 class Server {
+    routes = [];
+
     constructor() {
         this.app = Express();
         this.app.set(`views`, Path.join("www", "static"));
@@ -32,8 +34,8 @@ class Server {
             logger.log(chalk.green(`HTTP Listening on port ${port}`));
         });
 
-        process.on(`SIGINT`, () => this.stop(this.server));
-        process.on(`SIGTERM`, () => this.stop(this.server));
+        process.on(`SIGINT`, async () => await this.stop());
+        process.on(`SIGTERM`, async () => await this.stop());
         return this;
     }
 
@@ -52,14 +54,19 @@ class Server {
             });
         }
 
-        process.on(`SIGINT`, () => this.stop());
-        process.on(`SIGTERM`, () => this.stop());
+        process.on(`SIGINT`, async () => await this.stop());
+        process.on(`SIGTERM`, async () => await this.stop());
         return this;
     }
 
-    stop() {
+    async stop() {
         logger.verbose(chalk.green(`Shutting down server.`));
         this.server.close();
+        for (const route of this.routes) {
+            if (typeof route.on === "function") {
+                await route.on("close", {server : this});
+            }
+        }
         process.exit();
     }
 
@@ -75,6 +82,7 @@ class Server {
                 const { default: route } = await import(fullpath);
                 this.app.use(route);
                 logger.verbose(chalk.blue(`router ${fullpath}`));
+                this.routes.push(route);
             }
             catch (err) {
                 logger.verbose(chalk.red(`router ${fullpath}`));

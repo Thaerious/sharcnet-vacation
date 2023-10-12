@@ -28,3 +28,5 @@
 * Added tests to help detect broken links.
 * Added test for missing email interpolations.
 * Added pending send checks for email interface (needed so tests don't end early).
+* EMInterface now waits for emails to complete when server closes.
+* Expanded unit tests.

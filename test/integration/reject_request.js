@@ -4,8 +4,6 @@ import Server from "../../server-src/Server.js";
 import assert from "assert";
 import logger from "../../server-src/setupLogger.js";
 import { options } from "../../server-src/parseArgs.js";
-import { emi } from "../../server-src/routes-enabled/50-reject.js";
-import exec from "exec";
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0"; // turn off ssl check
 process.env["DB_DIR"] = "test/db";
@@ -40,7 +38,6 @@ try {
 if (FS.existsSync(args.in)) {
     const file = FS.readFileSync(args.in);
     await fetchSubmit(JSON.parse(file));
-    await emi.wait();
     server.stop();
 } else {
     console.log(`Input file not found: ${args.in}`);
@@ -63,8 +60,4 @@ async function fetchSubmit(inputFileData) {
     logger.console(`response written to '${args.out}'`);
     FS.writeFileSync(args.out, response);
     logger.verbose(response);
-
-    if (args.browse) {
-        exec(`google-chrome ${args.out}`);
-    }
 }

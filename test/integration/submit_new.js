@@ -2,9 +2,9 @@ import ParseArgs from "@thaerious/parseargs";
 import FS from "fs";
 import Server from "../../server-src/Server.js";
 import assert from "assert";
-import DBInterface from "../../server-src/DBInterface.js";
 import { options } from "../../server-src/parseArgs.js";
-import { emi } from "../../server-src/routes-enabled/250-submit.js";
+import logger from "../../server-src/setupLogger.js";
+import DBInterface from "../../server-src/DBInterface.js";
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0"; // turn off ssl check
 process.env["DB_DIR"] = "test/db";
@@ -24,6 +24,7 @@ options.flags.push({
     "type": "string"
 });
 
+const dbi = new DBInterface().open();
 const args = new ParseArgs(options);
 
 // Start Server
@@ -40,7 +41,6 @@ try {
 if (FS.existsSync(args.in)) {
     const file = FS.readFileSync(args.in);
     await fetchSubmit(JSON.parse(file));
-    await emi.wait();
     server.stop();
 } else {
     console.log(`Input file not found: ${args.in}`);
@@ -55,8 +55,6 @@ async function fetchSubmit(data) {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
     }
 
-    const dbi = new DBInterface().open();
-
     const res = await fetch(`http://127.0.0.1:${args.port}/submit`, options);
     assert.strictEqual(200, res.status);
     const response = await res.json();
@@ -66,8 +64,11 @@ async function fetchSubmit(data) {
         row: await dbi.getRequestById(response.row_id)
     }
 
+    assert.ok(json.row);
+
     console.log(`Writing results to ${args.out}`);
     FS.writeFileSync(args.out, JSON.stringify(json, null, 2));
+    logger.verbose(JSON.stringify(json, null, 2));
     dbi.close();
 }
 

@@ -3,7 +3,6 @@
 import Imap from "imap";
 import dotenv from "dotenv";
 import { simpleParser } from "mailparser";
-import assert from "assert";
 
 dotenv.config();
 

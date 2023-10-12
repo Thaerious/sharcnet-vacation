@@ -3,12 +3,17 @@
 ## Downloading && Installing
 
     git clone git@github.com:Thaerious/sharcnet-vacation.git
-    cd sharcnet-vacation    
+    cd sharcnet-vacation
     npm i
     npm run build-css
 
 ## Testing
     npx mocha test/unit
+
+### Coverage
+    sudo npx c8 mocha test/unit
+    sudo npx c8 -r html report
+    google-chrome coverage/index.html
 
 ## Starting the Server
     node .

@@ -22,5 +22,13 @@ acceptRoute.use(`/accept`, async (req, res, next) => {
     }
 });
 
-export {acceptRoute as default, emi, dbi}
+acceptRoute.on = async (action) => {
+    switch (action) {
+        case "close":
+            await emi.wait();
+            break;
+    }
+}
+
+export {acceptRoute as default}
 

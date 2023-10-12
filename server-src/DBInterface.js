@@ -3,6 +3,8 @@ import Path from "path";
 import sqlite3 from "better-sqlite3";
 import { mkdirif } from "@thaerious/utility";
 import CONST from "./constants.js";
+import logger from "./setupLogger.js";
+import chalk from "chalk";
 
 class DBInterface {
     constructor() {

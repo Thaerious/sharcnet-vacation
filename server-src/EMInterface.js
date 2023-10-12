@@ -1,4 +1,3 @@
-import { loadTemplate } from "@thaerious/utility";
 import nodemailer from "nodemailer";
 import logger from "./setupLogger.js";
 import throwIfNot from "./helpers/throwIfNot.js";
@@ -32,7 +31,7 @@ class EMInterface {
         const transporter = nodemailer.createTransport(creds);
 
         // send mail with defined transport object
-        this.pending.push(transporter.sendMail({
+        const mailPromise = transporter.sendMail({
             from: `"SHARCNET Vacation Mailer" <${process.env.EMAIL_FROM}>`,
             to: email,        // list of receivers
             cc: cc,
@@ -42,7 +41,15 @@ class EMInterface {
             headers: {
                 'x-snvac-id': id
             }
-        }));
+        });
+        mailPromise.name = "Mail Promise";
+
+        mailPromise.then((resolve, reject) => {
+            const index = this.pending.indexOf(mailPromise);
+            this.pending.splice(index, 1);
+        });
+
+        this.pending.push(mailPromise);
     }
 }
 

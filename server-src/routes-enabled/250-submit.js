@@ -27,12 +27,12 @@ const dbi = new DBInterface().open();
 const emi = new EMInterface();
 
 submitRoute.use(`/submit`, async (req, res, next) => {
-    if      (!req.body.start_date)  reject400(req, res, "missing body parameter: start_date");
-    else if (!req.body.end_date)    reject400(req, res, "missing body parameter: end_date");
-    else if (!req.body.name)        reject400(req, res, "missing body parameter: name");
+    if (!req.body.start_date) reject400(req, res, "missing body parameter: start_date");
+    else if (!req.body.end_date) reject400(req, res, "missing body parameter: end_date");
+    else if (!req.body.name) reject400(req, res, "missing body parameter: name");
     else if (!req.body.institution) reject400(req, res, "missing body parameter: institution");
-    else if (!req.body.email)       reject400(req, res, "missing body parameter: email");
-    else if (!req.body.duration)    reject400(req, res, "missing body parameter: duration");
+    else if (!req.body.email) reject400(req, res, "missing body parameter: email");
+    else if (!req.body.duration) reject400(req, res, "missing body parameter: duration");
     else try {
         const data = await submitNew(req.body, dbi, emi);
         accept200(req, res, data);
@@ -44,4 +44,12 @@ submitRoute.use(`/submit`, async (req, res, next) => {
     }
 });
 
-export {submitRoute as default, emi, dbi}
+submitRoute.on = async (action) => {
+    switch (action) {
+        case "close":
+            await emi.wait();
+            break;
+    }
+}
+
+export { submitRoute as default}

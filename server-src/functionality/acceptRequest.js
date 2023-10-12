@@ -9,6 +9,8 @@ await googleCalendar.insert(process.env.CALENDAR_ID);
 async function acceptRequest(hash, managerEmail, dbi, emi) {
     // Check and/or update status
     let data = dbi.getRequestByHash(hash);
+    console.log(hash);
+
     if (data.status !== CONST.STATUS.PENDING) {
         return {
             success: false,
