@@ -16,10 +16,12 @@
     google-chrome coverage/index.html
 
 ## Starting the Server
-    node .
-    browse to 127.0.0.1/index
+    sudo node . --ssl --port 443
+    browse to 127.0.0.1
 
-## Create a Devloper API Key & Service Account
+## Server Environment Setup
+
+### Create a Devloper API Key & Service Account
 
 * Browse to: console.cloud.google.com
 * From the project selection dropdown (upper-left), select 'new project'
@@ -44,7 +46,7 @@
   * Add https://127.0.0.1 to domains
 * Save the file under '/keys'
 
-## Calendar Setup
+### Calendar Setup
 
 * Open up the the google calendar (calendar.google.com).
 * Under 'My calendars' to the right of the calendar find the menu (3 vertical dots).
@@ -57,7 +59,7 @@
 * Select: 'Google Calendar API'
 * Select: 'Enable'
 
-## EMail Setup
+### EMail Setup
 
 * Go to your Google Account.
 * Select Security.
@@ -78,26 +80,11 @@ Fill in the following fields in the .env for Email.
 - EMAIL_HOST
 - EMAIL_FROM
 
-## Further Setup
+### Further Setup
 
 Set the server name and log directory in the .env file.
 LOG_DIR=logs
 SERVER_NAME=http://vacation.sharcnet.ca:8000
-
-## Install Node
-
-```bash
-mkdir node
-cd node
-sudo wget https://nodejs.org/dist/v18.6.0/node-v18.6.0-linux-x64.tar.xz
-sudo tar -xvf node-v18.6.0-linux-x64.tar.xz
-sudo mv node-v18.6.0-linux-x64 18.6.0
-sudo rm *.xz
-cd /usr/local/bin
-sudo ln -s /opt/node/18.6.0/bin/node node
-sudo ln -s /opt/node/18.6.0/bin/npx npx
-sudo ln -s /opt/node/18.6.0/bin/npm npm
-```
 
 ## Changing a Destination Email
 

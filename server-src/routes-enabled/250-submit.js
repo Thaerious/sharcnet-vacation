@@ -47,6 +47,7 @@ submitRoute.use(`/submit`, async (req, res, next) => {
 submitRoute.on = async (action) => {
     switch (action) {
         case "close":
+            dbi.close();
             await emi.wait();
             break;
     }

@@ -29,6 +29,7 @@ rejectRoute.use(`/reject`, async (req, res, next) => {
 rejectRoute.on = async (action) => {
     switch (action) {
         case "close":
+            dbi.close();
             await emi.wait();
             break;
     }

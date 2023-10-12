@@ -25,6 +25,7 @@ acceptRoute.use(`/accept`, async (req, res, next) => {
 acceptRoute.on = async (action) => {
     switch (action) {
         case "close":
+            dbi.close();
             await emi.wait();
             break;
     }
