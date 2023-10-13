@@ -1,3 +1,0 @@
-[1011/131959.026:ERROR:registration_protocol_win.cc(135)] TransactNamedPipe: The pipe has been ended. (0x6D)
-[54972:2592:1011/131959.207:ERROR:process_singleton_win.cc(417)] Lock file can not be created! Error code: 5
-[54972:2592:1011/131959.207:ERROR:chrome_browser_main.cc(1501)] Failed to create a ProcessSingleton for your profile directory. This means that running multiple instances would start multiple browser processes rather than opening a new window in the existing process. Aborting now to avoid profile corruption.

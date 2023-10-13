@@ -11,9 +11,9 @@ import { loadTemplate } from "@thaerious/utility";
  */
 async function submitNew(data, dbi, emi) {
     data.status = CONST.STATUS.PENDING;
+    data = expandDatesInData(data);
     const row = dbi.addRequest(data);
     data.row_id = row.id;
-    data = expandDatesInData(data);
     const managers = emailManagers(addURLsToData(data, row.hash), dbi, emi);
     data = addManagersToData(data, managers);
     await emailStaff(data, emi);

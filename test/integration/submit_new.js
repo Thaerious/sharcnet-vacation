@@ -1,8 +1,9 @@
 import ParseArgs from "@thaerious/parseargs";
+import helpString from "@thaerious/parseargs/src/helpString.js";
 import FS from "fs";
 import Server from "../../server-src/Server.js";
 import assert from "assert";
-import { options } from "../../server-src/parseArgs.js";
+import { options as argOptions } from "../../server-src/parseArgs.js";
 import logger from "../../server-src/setupLogger.js";
 import DBInterface from "../../server-src/DBInterface.js";
 
@@ -10,22 +11,29 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0"; // turn off ssl check
 process.env["DB_DIR"] = "test/db";
 process.env["DB_NAME"] = "test.db";
 
-options.flags.push({
+argOptions.flags.push({
     "long": "out",
     "short": "o",
     "default": "test/scratch/submit_response.json",
-    "type": "string"
+    "type": "string",
+    "desc": "output file path (.json)"
 });
 
-options.flags.push({
+argOptions.flags.push({
     "long": "in",
     "short": "i",
     "default": "test/scratch/form_data.json",
-    "type": "string"
+    "type": "string",
+    "desc": "input file path (.json, from generate_data)"
 });
 
+const args = new ParseArgs(argOptions);
+if (args.help) {
+    logger.console(helpString(argOptions));
+    process.exit();
+}
+
 const dbi = new DBInterface().open();
-const args = new ParseArgs(options);
 
 // Start Server
 var server = null;

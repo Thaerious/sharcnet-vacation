@@ -30,3 +30,6 @@
 * Added pending send checks for email interface (needed so tests don't end early).
 * EMInterface now waits for emails to complete when server closes.
 * Expanded unit tests.
+* Server checks for 'if end_date < start_date then end_date <== start_date'.
+* Weekday count is now set to 0.5 from 1.0 when partial day is selected.
+* Partial days now report return day as same day.

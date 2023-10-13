@@ -1,9 +1,9 @@
 
 /**
  * Count all weekdays between the two dates inclusive.
- * @param {*} startDate 
- * @param {*} endDate 
- * @returns 
+ * @param {*} startDate
+ * @param {*} endDate
+ * @returns
  */
 function countWeekdays(startDate, endDate){
     let sum = 0;
@@ -14,10 +14,10 @@ function countWeekdays(startDate, endDate){
 }
 
 /**
- * Increment the date, 
+ * Increment the date,
  * repeat until the date is a weekday.
- * @param {*} date 
- * @returns 
+ * @param {*} date
+ * @returns
  */
 function nextWeekday(date){
     let weekday = new Date(date);

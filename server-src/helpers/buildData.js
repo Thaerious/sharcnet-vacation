@@ -15,13 +15,15 @@ import { countWeekdays, nextWeekday } from "../helpers/weekdays.js";
  */
 function expandDatesInData(data) {
     const startDate = new Date(data.start_date + "T00:00:00");
-    const endDate = new Date(data.end_date + "T00:00:00");
-    const returnDate = nextWeekday(endDate);
+    let endDate = new Date(data.end_date + "T00:00:00");
+    if (endDate < startDate) endDate = startDate;
+
+    const returnDate = data.duration === "full" ? nextWeekday(endDate) : endDate;
     const dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }
 
     return {
         ...data,
-        weekday_count: countWeekdays(startDate, endDate),
+        weekday_count: data.duration === "full" ? countWeekdays(startDate, endDate) : 0.5,
         return_date: returnDate.toLocaleDateString("en-CA", dateOptions),
         start_date: startDate.toLocaleDateString("en-CA", dateOptions),
         end_date: endDate.toLocaleDateString("en-CA", dateOptions),
