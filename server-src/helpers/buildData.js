@@ -5,30 +5,52 @@
 import CONST from "../constants.js";
 import { countWeekdays, nextWeekday } from "../helpers/weekdays.js";
 
+function internationalizeDates(data) {
+    return {
+        ...data,
+        start_date: data.start_date + "T00:00:00",
+        end_date: data.end_date + "T00:00:00"
+    }
+}
+
 /**
  * Populate data with expanded date information.
  *
- * This returns a new object and does not modify the source object.  Reformats "start_date"
- * and "end_date" to Canadian style.
  * @param {*} data Source data object, must contain fields: "start_date" and "end_date".
  * @returns New data object with the additional fields: "weekday_count", "return_date", and "todays_date".
  */
 function expandDatesInData(data) {
-    const startDate = new Date(data.start_date + "T00:00:00");
-    let endDate = new Date(data.end_date + "T00:00:00");
-    if (endDate < startDate) endDate = startDate;
+    const returnDate = data.duration === "full" ? nextWeekday(data.end_date) : data.end_date;
 
-    const returnDate = data.duration === "full" ? nextWeekday(endDate) : endDate;
-    const dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }
+    const startDate = new Date(data.start_date);
+    let endDate = new Date(data.end_date);
+    if (endDate < startDate) endDate = startDate;
 
     return {
         ...data,
-        weekday_count: data.duration === "full" ? countWeekdays(startDate, endDate) : 0.5,
-        return_date: returnDate.toLocaleDateString("en-CA", dateOptions),
-        start_date: startDate.toLocaleDateString("en-CA", dateOptions),
-        end_date: endDate.toLocaleDateString("en-CA", dateOptions),
-        todays_date: new Date().toLocaleDateString("en-CA", dateOptions),
+        weekday_count: data.duration === "full" ? countWeekdays(data.start_date, data.end_date) : 0.5,
+        return_date: returnDate.toISOString(),
+        start_date: startDate.toISOString(),
+        end_date: endDate.toISOString(),
+        todays_date: new Date().toISOString(),
     }
+}
+/**
+* This returns a new object and does not modify the source object.
+* Reformats dates to human readable 'Canadian' style.
+*/
+function humanizeDates(data) {
+    const dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }
+
+    data = {
+        ...data,
+        return_date: new Date(data.return_date).toLocaleDateString("en-CA", dateOptions),
+        start_date: new Date(data.start_date).toLocaleDateString("en-CA", dateOptions),
+        end_date: new Date(data.end_date).toLocaleDateString("en-CA", dateOptions),
+        todays_date: new Date(data.todays_date).toLocaleDateString("en-CA", dateOptions),
+    }
+
+    return data;
 }
 
 /**
@@ -64,4 +86,4 @@ function addManagersToData(data, managers){
     }
 }
 
-export { expandDatesInData, addURLsToData, addManagersToData};
+export { internationalizeDates, expandDatesInData, addURLsToData, addManagersToData, humanizeDates};

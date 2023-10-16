@@ -1,6 +1,5 @@
 import Express from "express";
 import bodyParser from "body-parser";
-import GoogleCalendar from "../GoogleCalendar.js";
 import DBInterface from "../DBInterface.js";
 import EMInterface from "../EMInterface.js";
 import logger from "../setupLogger.js";
@@ -8,6 +7,7 @@ import accept200 from "../responses/accept200.js";
 import reject400 from "../responses/reject400.js";
 import reject500 from "../responses/reject500.js";
 import submitNew from "../functionality/submitNew.js";
+import { humanizeDates } from "../helpers/buildData.js";
 
 /**
  * Accept a vacation request form submission.
@@ -19,7 +19,6 @@ import submitNew from "../functionality/submitNew.js";
  * All fields other than 'note' are mandatory.
  */
 
-const googleCalendar = new GoogleCalendar();  // TODO is this neccisary?
 const submitRoute = Express.Router();
 submitRoute.use(bodyParser.urlencoded({ extended: true }));
 
@@ -35,7 +34,7 @@ submitRoute.use(`/submit`, async (req, res, next) => {
     else if (!req.body.duration) reject400(req, res, "missing body parameter: duration");
     else try {
         const data = await submitNew(req.body, dbi, emi);
-        accept200(req, res, data);
+        accept200(req, res, humanizeDates(data));
         dbi.setUserInfo(req.body);
     } catch (error) {
         logger.error(error.toString());

@@ -1,7 +1,7 @@
 import CONST from "../constants.js";
 import GoogleCalendar from "../GoogleCalendar.js";
 import { loadTemplate } from "@thaerious/utility";
-import { expandDatesInData } from "../helpers/buildData.js";
+import { expandDatesInData, humanizeDates } from "../helpers/buildData.js";
 
 const googleCalendar = new GoogleCalendar();
 await googleCalendar.insert(process.env.CALENDAR_ID);
@@ -9,8 +9,6 @@ await googleCalendar.insert(process.env.CALENDAR_ID);
 async function acceptRequest(hash, managerEmail, dbi, emi) {
     // Check and/or update status
     let data = dbi.getRequestByHash(hash);
-    console.log(hash);
-
     if (data.status !== CONST.STATUS.PENDING) {
         return {
             success: false,
@@ -34,13 +32,18 @@ async function acceptRequest(hash, managerEmail, dbi, emi) {
 }
 
 function sendStaffEmail(data, emi) {
+    data = humanizeDates(data);
+
     const subject = "SHARCNET Vacation Request Update: Accepted.";
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_ACCEPTED.HTML, data);
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_ACCEPTED.TXT, data);
+
     emi.send(data.email, "", subject, html, text, data.id);
 }
 
 function sendAdminEmail(data, emi, dbi) {
+    data = humanizeDates(data);
+
     const subject = "SHARCNET Staff Vacation Notification";
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.HTML, data);
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);
@@ -51,6 +54,8 @@ function sendAdminEmail(data, emi, dbi) {
 }
 
 function sendManagerEmail(data, emi, dbi) {
+    data = humanizeDates(data);
+
     const subject = `SHARCNET Vacation Accepted for '${data.name}'.`;
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.HTML, data);
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);

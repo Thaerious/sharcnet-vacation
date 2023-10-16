@@ -1,6 +1,7 @@
 import CONST from "../constants.js";
-import { expandDatesInData, addManagersToData, addURLsToData } from "../helpers/buildData.js";
+import { internationalizeDates, expandDatesInData, addManagersToData, addURLsToData, humanizeDates } from "../helpers/buildData.js";
 import { loadTemplate } from "@thaerious/utility";
+import logger from "../../server-src/setupLogger.js";
 
 /**
  * Generate emails and update the database when a new vacation request is submitted.
@@ -11,6 +12,7 @@ import { loadTemplate } from "@thaerious/utility";
  */
 async function submitNew(data, dbi, emi) {
     data.status = CONST.STATUS.PENDING;
+    data = internationalizeDates(data)
     data = expandDatesInData(data);
     const row = dbi.addRequest(data);
     data.row_id = row.id;
@@ -21,6 +23,8 @@ async function submitNew(data, dbi, emi) {
 }
 
 function emailManagers(data, dbi, emi) {
+    data = humanizeDates(data);
+
     const subject = `SHARCNET Vacation Request: ${data.name}, ${data.start_date}`;
     const managerEmails = dbi.getAllRoles(CONST.ROLES.MANAGER).map(row => row.email);
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_MANAGER.HTML, data);
@@ -34,10 +38,11 @@ function emailManagers(data, dbi, emi) {
 }
 
 async function emailStaff(data, emi) {
+    data = humanizeDates(data);
+
     const subject = "Vacation Request Confirmation";
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_STAFF.HTML, data);
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_STAFF.TXT, data);
-
     emi.send(data.email, "", subject, html, text, data.row_id);
 }
 

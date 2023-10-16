@@ -17,13 +17,39 @@ class SubmitPopup extends WidgetElement {
         this.querySelector("#message").innerText = this.buildMessage(data);
     }
 
-    buildMessage(data){
-        return `Vacation Request Submitted\n` +
-        `${data.start_date} to ${data.end_date}\n` +
-        `Returning to work on ${data.return_date}\n` +
-        `Total weekdays: ${data.weekday_count}\n\n` +
-        `Managers have been notified\n` +
-        `You will receive a confirmation email`;
+    buildMessage(data) {
+        if (data.weekday_count == 1) {
+            return `Vacation Request Submitted\n` +
+                `For ${data.start_date}\n` +
+                `Total weekdays: ${data.weekday_count}\n\n` +
+                `Managers have been notified\n` +
+                `You will receive a confirmation email`;
+        }
+
+        if (data.duration === 'full') {
+            return `Vacation Request Submitted\n` +
+                `From ${data.start_date} to ${data.end_date}\n` +
+                `Returning to work on ${data.return_date}\n` +
+                `Total weekdays: ${data.weekday_count}\n\n` +
+                `Managers have been notified\n` +
+                `You will receive a confirmation email`;
+        }
+
+        if (data.duration === 'am') {
+            return `Vacation Request Submitted\n` +
+                `Morning of ${data.start_date}\n` +
+                `Total weekdays: ${data.weekday_count}\n\n` +
+                `Managers have been notified\n` +
+                `You will receive a confirmation email`;
+        }
+
+        if (data.duration === 'pm') {
+            return `Vacation Request Submitted\n` +
+                `Afternoon of ${data.start_date}\n` +
+                `Total weekdays: ${data.weekday_count}\n\n` +
+                `Managers have been notified\n` +
+                `You will receive a confirmation email`;
+        }
     }
 }
 

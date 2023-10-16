@@ -1,6 +1,6 @@
 import CONST from "../constants.js";
 import { loadTemplate } from "@thaerious/utility";
-import { expandDatesInData } from "../helpers/buildData.js";
+import { expandDatesInData, humanizeDates } from "../helpers/buildData.js";
 
 /**
  * hash : stored db index hash for the request
@@ -21,6 +21,7 @@ async function rejectRequest(hash, managerEmail, dbi, emi) {
     const subject = "Vacation Request Update: Rejected.";
     const html = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_REJECTED.HTML, data);
     const text = loadTemplate(CONST.EMAIL_TEMPLATE.STAFF_REJECTED.TXT, data);
+    data = humanizeDates(data);
     emi.send(data.email, "", subject, html, text, data.id);
 }
 

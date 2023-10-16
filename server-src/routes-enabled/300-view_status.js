@@ -2,7 +2,7 @@ import Express from "express";
 import CONST from "../constants.js";
 import DBInterface from "../DBInterface.js";
 import catchRenderingError from "../helpers/catchRenderingError.js";
-import { expandDatesInData } from "../helpers/buildData.js";
+import { expandDatesInData, humanizeDates } from "../helpers/buildData.js";
 import reject400 from "../responses/reject400.js";
 
 const router = Express.Router();
@@ -22,6 +22,7 @@ router.use(`/status`,
         }
 
         data = expandDatesInData(data);
+        data = humanizeDates(data);
         data.inst_email = dbi.getAllRoles(CONST.ROLES.ADMIN, data.institution)[0].email;
 
         res.render(
