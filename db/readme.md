@@ -7,5 +7,3 @@ Active database used by portal server.  This will be copied from empty.db if it 
 ### sessions.db
 Database used exclusivly by the sessions API.
 
-### test.db
-Database used by the unit tests.
