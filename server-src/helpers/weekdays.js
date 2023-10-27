@@ -5,7 +5,10 @@
  * @param {*} endDate
  * @returns
  */
-function countWeekdays(startDate, endDate){
+function countWeekdays(startDate, endDate) {
+    if (typeof (startDate) == "string") startDate = new Date(startDate);
+    if (typeof (endDate) == "string") endDate = new Date(endDate);
+
     let sum = 0;
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
         if (d.getDay() != 0 && d.getDay() != 6) sum++;

@@ -28,7 +28,7 @@ function expandDatesInData(data) {
 
     return {
         ...data,
-        weekday_count: data.duration === "full" ? countWeekdays(data.start_date, data.end_date) : 0.5,
+        weekday_count: data.duration === "full" ? countWeekdays(data.start_date, data.end_date) + 1 : 0.5,
         return_date: returnDate.toISOString(),
         start_date: startDate.toISOString(),
         end_date: endDate.toISOString(),
@@ -79,11 +79,11 @@ function addURLsToData(data, hash) {
  * @param {*} managers
  * @returns
  */
-function addManagersToData(data, managers){
+function addManagersToData(data, managers) {
     return {
         ...data,
         managers: managers
     }
 }
 
-export { internationalizeDates, expandDatesInData, addURLsToData, addManagersToData, humanizeDates};
+export { internationalizeDates, expandDatesInData, addURLsToData, addManagersToData, humanizeDates };
