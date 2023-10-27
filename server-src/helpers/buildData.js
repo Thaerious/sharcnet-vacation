@@ -28,7 +28,7 @@ function expandDatesInData(data) {
 
     return {
         ...data,
-        weekday_count: data.duration === "full" ? countWeekdays(data.start_date, data.end_date) + 1 : 0.5,
+        weekday_count: data.duration === "full" ? countWeekdays(data.start_date, data.end_date) : 0.5,
         return_date: returnDate.toISOString(),
         start_date: startDate.toISOString(),
         end_date: endDate.toISOString(),

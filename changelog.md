@@ -20,10 +20,10 @@
 * Added text response to emails (retained html).
 * Date wording clarification.
 
-## 0.3.2 Hotfix
+## 0.3.2
 * Fix missing email fields.
 
-## 0.3.3 Hotfix
+## 0.3.3
 * Fixed broken reject/status link.
 * Added tests to help detect broken links.
 * Added test for missing email interpolations.
@@ -33,3 +33,6 @@
 * Server checks for 'if end_date < start_date then end_date <== start_date'.
 * Weekday count is now set to 0.5 from 1.0 when partial day is selected.
 * Partial days now report return day as same day.
+
+## 0.3.4
+* Added string -> date conversion to countWeekdays function.
