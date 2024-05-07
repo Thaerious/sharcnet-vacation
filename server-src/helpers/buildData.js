@@ -23,7 +23,7 @@ function internationalizeDates(record) {
  * @returns New record object with additional fields: "weekday_count", "return_date", "todays_date".
  */
 function expandDatesInRecord(record) {
-    const endDate = moment(record.end_date);
+    let endDate = moment(record.end_date);
     const startDate = moment(record.start_date);
 
     // Ensure endDate is not before startDate
