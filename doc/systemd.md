@@ -21,7 +21,7 @@ Restart=on-failure
 WantedBy=multi-user.target
 ```
 
-## As Non Root
+## As Unprivilaged
 ``` bash
 [Unit]
 Description=Vacation Portal

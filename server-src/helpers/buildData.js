@@ -15,7 +15,9 @@ function internationalizeDates(data) {
 
 /**
  * Populate data with expanded date information.
- *
+ * Takes an input object with with the two fields "start_date" and "end_date" and produces a new
+ * object with "weekday_count", "return_date", and "todays_date" in addition to all the fields from
+ * the input object.
  * @param {*} data Source data object, must contain fields: "start_date" and "end_date".
  * @returns New data object with the additional fields: "weekday_count", "return_date", and "todays_date".
  */
@@ -35,6 +37,7 @@ function expandDatesInData(data) {
         todays_date: new Date().toISOString(),
     }
 }
+
 /**
 * This returns a new object and does not modify the source object.
 * Reformats dates to human readable 'Canadian' style.

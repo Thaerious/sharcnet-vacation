@@ -1,7 +1,5 @@
 # Installation and Setup
-
 ## Downloading && Installing
-
     git clone git@github.com:Thaerious/sharcnet-vacation.git
     cd sharcnet-vacation
     npm i
@@ -19,10 +17,10 @@
     sudo node . --ssl --port 443
     browse to 127.0.0.1
 
+Google ClientID is sensative about origin IP, it doesn't equate 127.0.0.1 with localhost.
+
 ## Server Environment Setup
-
 ### Create a Devloper API Key & Service Account
-
 * Browse to: console.cloud.google.com
 * From the project selection dropdown (upper-left), select 'new project'
 * Select the new project (upper-right)
@@ -47,7 +45,6 @@
 * Save the file under '/keys'
 
 ### Calendar Setup
-
 * Open up the the google calendar (calendar.google.com).
 * Under 'My calendars' to the right of the calendar find the menu (3 vertical dots).
 * Select 'Settings and sharing'.
@@ -60,7 +57,6 @@
 * Select: 'Enable'
 
 ### EMail Setup
-
 * Go to your Google Account.
 * Select Security.
 * Select 2-Factor Authentication.
@@ -81,13 +77,11 @@ Fill in the following fields in the .env for Email.
 - EMAIL_FROM
 
 ### Further Setup
-
 Set the server name and log directory in the .env file.
 LOG_DIR=logs
 SERVER_NAME=http://vacation.sharcnet.ca:8000
 
 ## Changing a Destination Email
-
 In the sqlite datbase /eb/requests.db
 UPDATE emails set email = 'email@address' where role = 'university';
 
@@ -96,5 +90,4 @@ UPDATE emails set email = 'email@address' where role = 'university';
 ``systemctl show vacation.service -pUser``
 
 ## Notes
-
 [1] (https://console.cloud.google.com/apis/api/calendar-json.googleapis.com/metrics?project=vacation-app-development)
