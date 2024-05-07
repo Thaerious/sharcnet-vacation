@@ -1,33 +1,40 @@
+import moment from 'moment';
 
 /**
  * Count all weekdays between the two dates inclusive.
- * @param {*} startDate
- * @param {*} endDate
- * @returns
+ * @param {string | Date} startDate - Start date in a string or Date format
+ * @param {string | Date} endDate - End date in a string or Date format
+ * @returns {number} - Number of weekdays
  */
 function countWeekdays(startDate, endDate) {
-    if (typeof (startDate) == "string") startDate = new Date(startDate);
-    if (typeof (endDate) == "string") endDate = new Date(endDate);
+    // Ensure both startDate and endDate are moment objects
+    let start = moment.isMoment(startDate) ? startDate : moment(startDate);
+    let end = moment.isMoment(endDate) ? endDate : moment(endDate);
+    let count = 0;
 
-    let sum = 0;
-    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-        if (d.getDay() != 0 && d.getDay() != 6) sum++;
+    while (start <= end) {
+        // Monday to Friday are days 1-5
+        if (start.day() !== 0 && start.day() !== 6) {
+            count++;
+        }
+        start.add(1, 'days');
     }
-    return sum;
+
+    return count;
 }
 
+
 /**
- * Increment the date,
- * repeat until the date is a weekday.
+ * Increment the date to the next weekday.
  * @param {*} date
  * @returns
  */
 function nextWeekday(date){
     let weekday = new Date(date);
-    weekday.setDate(weekday.getDate() + 1);
+    weekday.setUTCDate(weekday.getUTCDate() + 1);
 
-    while(weekday.getDay() == 0 || weekday.getDay() == 6){
-        weekday.setDate(weekday.getDate() + 1);
+    while(weekday.getUTCDay() == 0 || weekday.getUTCDay() == 6){
+        weekday.setUTCDate(weekday.getUTCDate() + 1);
     }
     return weekday;
 }

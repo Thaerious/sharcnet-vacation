@@ -14,7 +14,7 @@ function internationalizeDates(data) {
 }
 
 /**
- * Populate data with expanded date information.
+ * Create new object with expanded date information.
  * Takes an input object with with the two fields "start_date" and "end_date" and produces a new
  * object with "weekday_count", "return_date", and "todays_date" in addition to all the fields from
  * the input object.
