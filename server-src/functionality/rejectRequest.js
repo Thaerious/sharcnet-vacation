@@ -1,13 +1,13 @@
 import CONST from "../constants.js";
 import { loadTemplate } from "@thaerious/utility";
-import { expandDatesInData, humanizeDates } from "../helpers/buildData.js";
+import { expandDatesInRecord, humanizeDates } from "../helpers/buildData.js";
 
 /**
  * hash : stored db index hash for the request
  * data : from request body (as json) see doc/vacation_accept.pdf (1)
  */
 async function rejectRequest(hash, managerEmail, dbi, emi) {
-    let data = expandDatesInData(dbi.getRequestByHash(hash));
+    let data = expandDatesInRecord(dbi.getRequestByHash(hash));
 
     if (data.status !== CONST.STATUS.PENDING) {
         return {

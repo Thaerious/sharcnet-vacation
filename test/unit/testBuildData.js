@@ -1,9 +1,9 @@
 import assert from "assert";
-import { internationalizeDates, expandDatesInData, addURLsToData, addManagersToData, humanizeDates } from "../../server-src/helpers/buildData.js";
+import { internationalizeDates, expandDatesInRecord, addURLsToData, addManagersToData, humanizeDates } from "../../server-src/helpers/buildData.js";
 import { Console } from "console";
 
 describe(`Test Build Data (buildData.js)`, function () {
-    describe(`expandDatesInData`, function () {
+    describe(`expandDatesInRecord`, function () {
         describe(`single day request`, function () {
             before(function () {
                 // Adds three fields "weekday_count", "return_date", and "todays_date"
@@ -17,7 +17,7 @@ describe(`Test Build Data (buildData.js)`, function () {
                     "duration": "full"
                 }
 
-                this.resultData = expandDatesInData(mockData);
+                this.resultData = expandDatesInRecord(mockData);
             });
 
             it("weekday count is 1", function () {
@@ -38,7 +38,7 @@ describe(`Test Build Data (buildData.js)`, function () {
                     "duration": "full"
                 }
 
-                this.resultData = expandDatesInData(mockData);
+                this.resultData = expandDatesInRecord(mockData);
             });
 
             it("weekday count is 3", function () {
@@ -59,13 +59,12 @@ describe(`Test Build Data (buildData.js)`, function () {
                     "duration": "full"
                 }
 
-                this.resultData = expandDatesInData(mockData);
+                this.resultData = expandDatesInRecord(mockData);
             });
 
             it("weekday count is 2", function () {
                 assert.strictEqual(this.resultData.weekday_count, 2);
             });
         });
-
     });
 });
