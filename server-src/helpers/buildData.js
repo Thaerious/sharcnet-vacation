@@ -34,7 +34,7 @@ function expandDatesInRecord(record) {
     // Calculate the return date based on the duration
     const returnDate = record.duration === "full" ? nextWeekday(endDate) : endDate;
 
-    return {
+    let result = {
         ...record,
         weekday_count: record.duration === "full" ? countWeekdays(startDate, endDate) : 0.5,
         return_date: returnDate.toISOString(),
@@ -42,6 +42,8 @@ function expandDatesInRecord(record) {
         end_date: endDate.toISOString(),
         todays_date: moment().toISOString(),
     }
+
+    return result;
 }
 
 /**
