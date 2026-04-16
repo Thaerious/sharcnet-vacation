@@ -1,0 +1,8 @@
+[Unit]
+Description=Vacation Node.JS app
+
+[Service]
+User=ubuntu
+WorkingDirectory=~/sharcnet-vacation
+ExecStart=node .
+Restart=always

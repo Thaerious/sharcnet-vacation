@@ -1,0 +1,17 @@
+# Ignore files in root
+/*
+
+# Allow specific root directories
+!client-src/
+!doc/
+!server/
+!www/
+
+# Allow specific root files
+!.env.example
+!.gitignore
+!package.json
+!package-lock.json
+
+# Allow specific non-root files
+!db/empty.db

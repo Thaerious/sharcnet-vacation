@@ -1,0 +1,39 @@
+{
+  "name": "vacation-app",
+  "version": "0.3.3",
+  "description": "",
+  "main": "server-src/main.js",
+  "scripts": {
+    "watch-css": "sass client-src/scss/:www/css --watch",
+    "build-css": "sass client-src/scss/:www/css",
+    "clean": "rm www/compiled/* -r"
+  },
+  "author": "Ed Armstrong",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@thaerious/utility": "^0.0.8",
+    "better-sqlite3": "^12.9.0",
+    "better-sqlite3-session-store": "^0.1.0",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.3",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.4.2",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "googleapis": "^171.4.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "pino": "^10.3.1",
+    "pino-pretty": "^13.1.3"
+  },
+  "devDependencies": {
+    "c8": "^8.0.1",
+    "chai": "^5.1.0",
+    "eslint-config-google": "^0.14.0",
+    "mailparser": "^3.6.5",
+    "mocha": "^7.2.0",
+    "sass": "^1.66.1"
+  }
+}

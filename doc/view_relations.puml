@@ -1,0 +1,13 @@
+@startuml view relations
+skinparam linetype ortho
+
+rectangle index
+rectangle landing
+rectangle idle_throbber
+rectangle submit_popup
+
+index --> landing : login
+landing --> index : logout
+landing .. idle_throbber
+landing .. submit_popup
+@enduml

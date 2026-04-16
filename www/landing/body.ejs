@@ -1,0 +1,55 @@
+<form id="main_form" class="outermost_form" action="/submit" method="POST">
+    <div class="section">
+        <h2 class="center">Vacation Request Form</h2>
+
+        <div class="section">
+            <b>Name</b>
+            <input type="text" name="name" value="<%=user.email%>"/>
+        </div>
+        <div class="section">
+            <b>Email</b>
+            <input type="text" name="email" value="<%=user.email%>" disabled/>
+        </div>
+        <div class="section">
+            <b>Institution</b>
+            <select name="institution">
+                <option value="n/a"></option>
+                <option value="brock"    <% if (user.institution == "brock") { %>selected="selected"<% } %>>Brock</option>
+                <option value="guelph"   <% if (user.institution == "guelph") { %>selected="selected"<% } %>>Guelph</option>
+                <option value="laurier"  <% if (user.institution == "laurier") { %>selected="selected"<% } %>>Laurier</option>
+                <option value="mcmaster" <% if (user.institution == "mcmaster") { %>selected="selected"<% } %>>McMaster</option>
+                <option value="otu"      <% if (user.institution == "otu") { %>selected="selected"<% } %>>OTU</option>
+                <option value="waterloo" <% if (user.institution == "waterloo") { %>selected="selected"<% } %>>Waterloo</option>
+                <option value="western"  <% if (user.institution == "western") { %>selected="selected"<% } %>>Western</option>
+                <option value="windsor"  <% if (user.institution == "windsor") { %>selected="selected"<% } %>>Windsor</option>
+                <option value="york"     <% if (user.institution == "york") { %>selected="selected"<% } %>>York</option>
+            </select>
+        </div>
+        <div class="section">
+            <b>Duration</b>
+            <select id="duration" name="duration">
+                <option value="am">AM</option>
+                <option value="pm">PM</option>
+                <option value="full" selected="selected">Full Day</option>
+            </select>
+        </div>
+        <div class="section">
+            <b>Dates</b>
+            <div id="depart">
+                <div class="note">The first day of your vacation.</div>
+                <input type="date" id="start_date" name="start_date" />
+            </div>
+            <div id="return">
+                <div class="note">The last day of your vacation.</div>
+                <input type="date" id="end_date" name="end_date" />
+            </div>
+            <div class="note small">* all dates are inclusive.</div>
+        </div>
+        <button class="button" id="submit" disabled>SUBMIT</button>
+    </div>
+    <br>
+    <a class="logout" href="/logout">Log out from app</a>
+</form>
+
+<idle-throbber class="hidden"></idle-throbber>
+<submit-popup class="hidden"></submit-popup>

@@ -1,0 +1,80 @@
+.button {
+  border: 2px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(44, 127, 48);
+  font-size: larger;
+  font-weight: bolder;
+  background-color: aquamarine;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button:hover {
+  background-color: rgb(61, 250, 187);
+  border: 2px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(18, 85, 22);
+}
+.button:disabled {
+  border: 2px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(116, 116, 116);
+  cursor: default;
+  background-color: rgb(191, 190, 190);
+}
+
+:host(submit-popup.hidden) {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#outer {
+  border: 1px solid;
+  border-left: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(44, 127, 48);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(181, 252, 228, 0.85);
+  width: 90%;
+}
+#outer #message {
+  border: 1px solid;
+  border-left: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(44, 127, 48);
+  position: absolute;
+  width: 80%;
+  height: calc(100% - 90px);
+  text-align: center;
+  left: 45%;
+  top: 15px;
+  transform: translateX(-50%);
+  font-size: 1em;
+  background-color: rgb(127, 255, 212);
+}
+#outer #ok_button {
+  position: absolute;
+  left: 45%;
+  bottom: 15px;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 50px;
+}
+
+/*# sourceMappingURL=submit-popup.css.map */

@@ -1,0 +1,95 @@
+// index.scss
+
+@import '_borders.scss';
+@import '_button.scss';
+@import '_google_button.scss';
+
+.outermost_form{
+    position: absolute;    
+    top: 50px;
+    width: 400px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: Arial, Helvetica, sans-serif;   
+    box-sizing: border-box; 
+
+    * {        
+        margin: 10px;
+        box-sizing: border-box;
+    }
+
+    .standalone-text{
+        text-align: center;
+    }
+
+    .center{
+        text-align: center;
+    }
+
+    .section{
+        @include single_border(#0000ff);
+        width: 90%;        
+        background-color: rgba(168, 202, 205, 0.25);
+
+        .sharcnet_logo{
+            width: 90%;
+            height: 50px;
+        }
+
+        input{
+            width: 90%;
+        }
+
+        &.hidden{
+            display: none;
+        }
+
+        .note{
+            font-variant-caps: small-caps;
+            color: rgb(119, 119, 119);
+
+            &.small{
+                font-size: 75%;                
+            }
+        }
+    }
+
+    #submit{
+        width: 90%;
+        height: 50px;
+    }
+    
+    .hidden{
+        display: none;
+    }
+
+    .logout{
+        font-variant-caps: small-caps;
+        text-align: center;
+        text-decoration: none;
+        color: black;
+
+        &:hover{
+            color: blue;
+            font-weight: bold;
+        }
+    }
+}
+
+idle-throbber{
+    position: absolute;
+    left: 51%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: 140px;
+}
+
+submit-popup{
+    position: absolute;
+    left: 51%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: 240px;
+}

@@ -1,0 +1,7 @@
+Hello ${name},
+
+Your vacation request has been accepted.
+The request was processed by %{manager_email}.
+
+Do not reply, this address does not accept incoming email.
+Please forward any inquiries the manager that processed this request.

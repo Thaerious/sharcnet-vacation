@@ -1,0 +1,28 @@
+// _google_button.scss
+
+.google-btn {
+    @include double_border(rgb(44, 127, 48));
+    background-color: aquamarine;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+    font-weight: bolder;
+    text-decoration: none;
+    color: black;
+    height: 50px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; 
+    gap: 10px;
+
+    img {
+        width: 24px;
+        height: 24px;
+    }
+
+    &:hover {
+        background-color: rgb(61, 250, 187);
+        @include double_border(rgb(18, 85, 22));
+    }
+}

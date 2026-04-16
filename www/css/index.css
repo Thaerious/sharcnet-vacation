@@ -1,0 +1,148 @@
+.button {
+  border: 2px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(44, 127, 48);
+  font-size: larger;
+  font-weight: bolder;
+  background-color: aquamarine;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button:hover {
+  background-color: rgb(61, 250, 187);
+  border: 2px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(18, 85, 22);
+}
+.button:disabled {
+  border: 2px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(116, 116, 116);
+  cursor: default;
+  background-color: rgb(191, 190, 190);
+}
+
+.google-btn {
+  border: 2px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(44, 127, 48);
+  background-color: aquamarine;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: larger;
+  font-weight: bolder;
+  text-decoration: none;
+  color: black;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.google-btn img {
+  width: 24px;
+  height: 24px;
+}
+.google-btn:hover {
+  background-color: rgb(61, 250, 187);
+  border: 2px solid;
+  border-left: 5px solid;
+  border-right: 5px solid;
+  border-radius: 5px;
+  border-color: rgb(18, 85, 22);
+}
+
+.outermost_form {
+  position: absolute;
+  top: 50px;
+  width: 400px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+.outermost_form * {
+  margin: 10px;
+  box-sizing: border-box;
+}
+.outermost_form .standalone-text {
+  text-align: center;
+}
+.outermost_form .center {
+  text-align: center;
+}
+.outermost_form .section {
+  border: 1px solid;
+  border-left: 5px solid;
+  border-radius: 5px;
+  border-color: #0000ff;
+  width: 90%;
+  background-color: rgba(168, 202, 205, 0.25);
+}
+.outermost_form .section .sharcnet_logo {
+  width: 90%;
+  height: 50px;
+}
+.outermost_form .section input {
+  width: 90%;
+}
+.outermost_form .section.hidden {
+  display: none;
+}
+.outermost_form .section .note {
+  font-variant-caps: small-caps;
+  color: rgb(119, 119, 119);
+}
+.outermost_form .section .note.small {
+  font-size: 75%;
+}
+.outermost_form #submit {
+  width: 90%;
+  height: 50px;
+}
+.outermost_form .hidden {
+  display: none;
+}
+.outermost_form .logout {
+  font-variant-caps: small-caps;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+.outermost_form .logout:hover {
+  color: blue;
+  font-weight: bold;
+}
+
+idle-throbber {
+  position: absolute;
+  left: 51%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  height: 140px;
+}
+
+submit-popup {
+  position: absolute;
+  left: 51%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  height: 240px;
+}
+
+/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="index.css" />
+    </head>
+    <body>
+        <script>
+            console.log(<%- JSON.stringify(locals) %>);
+        </script>
+        <script type="module" src="landing/landing.mjs"></script>
+        <%- include('./body.ejs'); %>
+        <%- include('../submit-popup/submit-popup.ejs'); %> 
+        <%- include('../idle-throbber/idle-throbber.ejs'); %>
+    </body>
+</html>
