@@ -1,6 +1,6 @@
 import CONST from "./constants.js";
 import GoogleCalendar from "./GoogleCalendar.js";
-import { loadTemplate } from "@thaerious/utility";
+import loadAsset from "./loadAsset.js";
 import { expandDatesInRecord, humanizeDates } from "./buildData.js";
 import dbi from "./DBInterface.js"
 import { sendEmail } from "./email_interface.js";
@@ -37,8 +37,8 @@ function sendStaffEmail(data) {
     data = humanizeDates(data);
 
     const subject = "SHARCNET Vacation Request Update: Accepted.";
-    const html = loadTemplate(CONST.ASSETS.STAFF_ACCEPTED.HTML, data);
-    const text = loadTemplate(CONST.ASSETS.STAFF_ACCEPTED.TXT, data);
+    const html = loadAsset(CONST.ASSETS.STAFF_ACCEPTED.HTML, data);
+    const text = loadAsset(CONST.ASSETS.STAFF_ACCEPTED.TXT, data);
 
     sendEmail(data.email, "", subject, html, text, data.id);
 }
@@ -47,8 +47,8 @@ function sendAdminEmail(data) {
     data = humanizeDates(data);
 
     const subject = "SHARCNET Staff Vacation Notification";
-    const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.HTML, data);
-    const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);
+    const html = loadAsset(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.HTML, data);
+    const text = loadAsset(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);
 
     for (const row of dbi.getAllRoles(CONST.ROLES.ADMIN, data.institution)) {
         sendEmail(row.email, "", subject, html, text, data.id);
@@ -59,8 +59,8 @@ function sendManagerEmail(data) {
     data = humanizeDates(data);
 
     const subject = `SHARCNET Vacation Accepted for '${data.name}'.`;
-    const html = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.HTML, data);
-    const text = loadTemplate(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);
+    const html = loadAsset(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.HTML, data);
+    const text = loadAsset(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);
 
     for (const row of dbi.getAllRoles(CONST.ROLES.MANAGER)) {
         sendEmail(row.email, "", subject, html, text, data.id);

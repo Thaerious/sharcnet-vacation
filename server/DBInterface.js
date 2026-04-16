@@ -8,10 +8,7 @@ import crypto from "crypto";
 
 class DBInterface {
     constructor() {
-        const destination = mkdirif(
-            process.env.DB_DIR,
-            process.env.DB_NAME
-        );
+        if (dir) FS.mkdirSync(process.env.DB_DIR, { recursive: true });
 
         const source = Path.join(process.env.EMPTY_DB_PATH);
         if (!FS.existsSync(destination)) {

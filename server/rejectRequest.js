@@ -1,5 +1,5 @@
 import CONST from "./constants.js";
-import { loadTemplate } from "@thaerious/utility";
+import loadAsset from "./loadAsset.js";
 import { expandDatesInRecord, humanizeDates } from "./buildData.js";
 import dbi from "./DBInterface.js"
 
@@ -20,8 +20,8 @@ async function rejectRequest(hash) {
     dbi.updateStatusByHash(hash, CONST.STATUS.REJECTED);
 
     const subject = "Vacation Request Update: Rejected.";
-    const html = loadTemplate(CONST.ASSETS.STAFF_REJECTED.HTML, dbRec);
-    const text = loadTemplate(CONST.ASSETS.STAFF_REJECTED.TXT, dbRec);
+    const html = loadAsset(CONST.ASSETS.STAFF_REJECTED.HTML, dbRec);
+    const text = loadAsset(CONST.ASSETS.STAFF_REJECTED.TXT, dbRec);
     dbRec = humanizeDates(dbRec);
     sendMail(dbRec.email, "", subject, html, text, dbRec.id);
 }
