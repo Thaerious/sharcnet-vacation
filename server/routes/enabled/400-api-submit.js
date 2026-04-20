@@ -6,6 +6,7 @@ import chalk from "chalk";
 import requireBody from "../middleware/requireBody.js";
 import requireAuth from "../middleware/requireAuth.js";
 import dbi from "../../DBInterface.js"
+import logMiddleware from "../middleware/logMiddleware.js"
 
 /**
  * Accept a vacation request form submission.
@@ -20,15 +21,16 @@ import dbi from "../../DBInterface.js"
 const submitRoute = Express.Router();
 
 submitRoute.post(
-    `/submit`,
+    `/submit`,    
     bodyParser.json(),
+    logMiddleware,
     requireAuth,
     requireBody("start_date", "end_date", "name", "institution", "duration"),
     async (req, res) => {
         try {
-            await submitNew(req.body);
+            const result = await submitNew(req.body);
             dbi.setUserInfo(req.body);
-            return res.json();
+            return res.json(result);
         } catch (error) {
             logger.error(chalk.red(error.stack));
             return res.status(500).json({

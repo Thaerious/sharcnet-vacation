@@ -3,7 +3,7 @@
 import logger from "../../setupLogger.js";
 import chalk from "chalk";
 
-export function logMiddleware(req, res, next) {
+export default function logMiddleware(req, res, next) {
     const start = Date.now();
     const { method, originalUrl, ip } = req;
 

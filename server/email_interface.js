@@ -5,10 +5,13 @@ import logger from "./setupLogger.js";
 import throwIfNot from "./throwIfNot.js";
 import chalk from "chalk";
 
+// const log = (...args) => logger.debug(...args);
+const log = () => {};
+
 let pending = [];
 
 export function sendEmail(recipient_email, cc, subject, html, text, id) {
-    logger.debug(chalk.blue(`EMI.send ${recipient_email} | subject="${subject}" | id=${id}`));
+    log(chalk.blue(`EMI.send ${recipient_email} | subject="${subject}" | id=${id}`));
 
     // Blow up early if any required argument is missing
     throwIfNot({ recipient_email, cc, subject, html, text, id });
@@ -24,7 +27,7 @@ export function sendEmail(recipient_email, cc, subject, html, text, id) {
         },
     };
 
-    logger.debug(chalk.blue(`EMI.send SMTP host=${creds.host} port=${creds.port} user=${creds.auth.user}`));
+    log(chalk.blue(`EMI.send SMTP host=${creds.host} port=${creds.port} user=${creds.auth.user}`));
 
     const transporter = nodemailer.createTransport(creds);
 
@@ -42,29 +45,29 @@ export function sendEmail(recipient_email, cc, subject, html, text, id) {
         }
     });
 
-    logger.debug(chalk.blue(`EMI.send enqueued | pending=${pending.length + 1} | id=${id}`));
+    log(chalk.blue(`EMI.send enqueued | pending=${pending.length + 1} | id=${id}`));
     pending.push(mailPromise);
 
     mailPromise
         .then((info) => {
-            logger.debug(chalk.green(`EMI.send success | id=${id} | messageId=${info.messageId} | accepted=${info.accepted}`));
+            log(chalk.green(`EMI.send success | id=${id} | messageId=${info.messageId} | accepted=${info.accepted}`));
         })
         .catch((err) => {
-            logger.debug(chalk.red(`EMI.send failed | id=${id} | error=${err.message}`));
+            log(chalk.red(`EMI.send failed | id=${id} | error=${err.message}`));
         })
         .finally(() => {
             const index = pending.indexOf(mailPromise);
             if (index !== -1) pending.splice(index, 1);
-            logger.debug(chalk.blue(`EMI.send settled | id=${id} | pending=${pending.length}`));
+            log(chalk.blue(`EMI.send settled | id=${id} | pending=${pending.length}`));
         });
 }
 
 export async function waitForEmails() {
-    logger.debug(chalk.blue(`EMI.wait called | pending=${pending.length}`));
+    log(chalk.blue(`EMI.wait called | pending=${pending.length}`));
     const snapshot = pending;
     pending = [];
     const results = await Promise.allSettled(snapshot);
     const fulfilled = results.filter(r => r.status === "fulfilled").length;
     const rejected  = results.filter(r => r.status === "rejected").length;
-    logger.debug(chalk.blue(`EMI.wait done | fulfilled=${fulfilled} | rejected=${rejected}`));
+    log(chalk.blue(`EMI.wait done | fulfilled=${fulfilled} | rejected=${rejected}`));
 }
