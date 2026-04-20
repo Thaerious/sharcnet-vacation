@@ -3,12 +3,15 @@
 import FS from "fs";
 import Path from "path";
 import sqlite3 from "better-sqlite3";
-import { mkdirif } from "@thaerious/utility";
 import crypto from "crypto";
+import mkdirif from "./mkdirif.js"
 
 class DBInterface {
     constructor() {
-        if (dir) FS.mkdirSync(process.env.DB_DIR, { recursive: true });
+        const destination = mkdirif(
+            process.env.DB_DIR,
+            process.env.DB_NAME
+        );
 
         const source = Path.join(process.env.EMPTY_DB_PATH);
         if (!FS.existsSync(destination)) {
