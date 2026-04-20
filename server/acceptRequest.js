@@ -11,6 +11,7 @@ await googleCalendar.insert(process.env.CALENDAR_ID);
 async function acceptRequest(hash, managerEmail) {
     // Check and/or update status
     let data = dbi.getRequestByHash(hash);
+
     if (data.status !== CONST.STATUS.PENDING) {
         return {
             success: false,
@@ -47,8 +48,8 @@ function sendAdminEmail(data) {
     data = humanizeDates(data);
 
     const subject = "SHARCNET Staff Vacation Notification";
-    const html = loadAsset(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.HTML, data);
-    const text = loadAsset(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);
+    const html = loadAsset(CONST.ASSETS.NOTIFY_ADMIN.HTML, data);
+    const text = loadAsset(CONST.ASSETS.NOTIFY_ADMIN.TXT, data);
 
     for (const row of dbi.getAllRoles(CONST.ROLES.ADMIN, data.institution)) {
         sendEmail(row.email, "", subject, html, text, data.id);
@@ -59,8 +60,8 @@ function sendManagerEmail(data) {
     data = humanizeDates(data);
 
     const subject = `SHARCNET Vacation Accepted for '${data.name}'.`;
-    const html = loadAsset(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.HTML, data);
-    const text = loadAsset(CONST.EMAIL_TEMPLATE.NOTIFY_ADMIN.TXT, data);
+    const html = loadAsset(CONST.ASSETS.NOTIFY_ADMIN.HTML, data);
+    const text = loadAsset(CONST.ASSETS.NOTIFY_ADMIN.TXT, data);
 
     for (const row of dbi.getAllRoles(CONST.ROLES.MANAGER)) {
         sendEmail(row.email, "", subject, html, text, data.id);
