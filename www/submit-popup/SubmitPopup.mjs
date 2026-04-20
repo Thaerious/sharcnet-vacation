@@ -13,11 +13,11 @@ class SubmitPopup extends WidgetElement {
 
     show(data){
         super.show();
-        this.classList.remove("hidden");
-        this.querySelector("#message").innerText = this.buildMessage(data);
+        this.querySelector("#message").innerText = this.buildMessage(data);        
     }
 
     buildMessage(data) {
+        console.log(data)
         if (data.weekday_count == 1) {
             return `Vacation Request Submitted\n` +
                 `For ${data.start_date}\n` +
@@ -50,6 +50,8 @@ class SubmitPopup extends WidgetElement {
                 `Managers have been notified\n` +
                 `You will receive a confirmation email`;
         }
+
+        return `Vacation Request Submitted\nUnknown duration type: ${data.duration}`;
     }
 }
 
