@@ -2,6 +2,7 @@ import CONST from "./constants.js";
 import loadAsset from "./loadAsset.js";
 import { expandDatesInRecord, humanizeDates } from "./buildData.js";
 import dbi from "./DBInterface.js"
+import { sendEmail } from "./email_interface.js";
 
 /**
  * hash : stored db index hash for the request
