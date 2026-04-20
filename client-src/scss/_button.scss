@@ -1,4 +1,6 @@
-// button.scss
+// _button.scss
+
+@use 'borders' as *;
 
 .button {
     @include double_border(rgb(44, 127, 48));

@@ -1,5 +1,7 @@
 // _google_button.scss
 
+@use "_borders" as *;
+
 .google-btn {
     @include double_border(rgb(44, 127, 48));
     background-color: aquamarine;

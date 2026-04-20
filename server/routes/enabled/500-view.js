@@ -10,7 +10,7 @@ const router = express.Router();
 
 const PUBLIC_ROUTES = ["/", "/index"];
 
-async function serveView(req, res, next) {
+async function authenticateView(req, res, next) {
     // Restrict paths to views (omit extensions)
     const ext = path.extname(req.originalUrl);
     if (ext) return next();
@@ -50,8 +50,8 @@ async function serveView(req, res, next) {
     next();
 }
 
-router.get(`/`, serveView);
-router.get(`/index`, serveView);
-router.get(`/{*name}`, serveView);
+router.get(`/`, authenticateView);
+router.get(`/index`, authenticateView);
+router.get(`/{*name}`, authenticateView);
 
 export default router;

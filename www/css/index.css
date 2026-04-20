@@ -116,11 +116,24 @@
 .outermost_form .hidden {
   display: none;
 }
+.outermost_form .warning::before {
+  content: "Warning: ";
+}
+.outermost_form .warning {
+  font-variant-caps: small-caps;
+  text-align: center;
+  text-decoration: none;
+  background-color: lightpink;
+  color: red;
+  width: 90%;
+}
 .outermost_form .logout {
   font-variant-caps: small-caps;
   text-align: center;
   text-decoration: none;
   color: black;
+  display: block;
+  width: 90%;
 }
 .outermost_form .logout:hover {
   color: blue;

@@ -1,7 +1,7 @@
 // submit-popup.scss
 
-@import '_borders.scss';
-@import '_button.scss';
+@use 'borders' as *;
+@use 'button';
 
 :host(submit-popup.hidden){
     display: none;

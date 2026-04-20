@@ -1,8 +1,8 @@
 // index.scss
 
-@import '_borders.scss';
-@import '_button.scss';
-@import '_google_button.scss';
+@use 'borders' as *;
+@use 'button';
+@use 'google_button';
 
 .outermost_form{
     position: absolute;    
@@ -63,11 +63,27 @@
         display: none;
     }
 
+    .warning{
+        &::before {
+            content: "Warning: ";
+        }
+
+        font-variant-caps: small-caps;
+        text-align: center;
+        text-decoration: none;
+        background-color: lightpink;
+        color: red;
+        // display: block;
+        width: 90%;
+    }
+
     .logout{
         font-variant-caps: small-caps;
         text-align: center;
         text-decoration: none;
         color: black;
+        display: block;
+        width: 90%;
 
         &:hover{
             color: blue;

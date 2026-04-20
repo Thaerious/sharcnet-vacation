@@ -13,6 +13,9 @@ window.addEventListener("load", () => {
     document.querySelector("select[name='institution']").addEventListener("change", checkFormValues);
     document.querySelector("#duration").addEventListener("change", checkDuration);
 
+    const startDate = document.getElementById("start_date");
+    const endDate = document.getElementById("end_date");
+
     // hijack form submission
     document.querySelector("#main_form").addEventListener("submit", submitForm);
 });
