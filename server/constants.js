@@ -9,7 +9,10 @@ export default {
     SESSION:   { LOGGED_IN: "LOGGED_IN", EMAIL: "USER_EMAIL" },
     ENDPOINTS: { GOOGLE: "/google" },
     PATH:      { ACCEPT: "/accept", REJECT: "/reject" },
-    LOC:       { RESPONSE_TEMPLATES: "assets/response_templates" },
+    LOC: {
+        RESPONSE_TEMPLATES: "assets/response_templates",
+        WWW: "www/",
+    },
     ASSETS: {
         NOTIFY_MANAGER:  emailTemplate("notify_manager"),
         NOTIFY_STAFF:    emailTemplate("notify_staff"),

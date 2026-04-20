@@ -15,7 +15,9 @@ passport.use(
         let email = profile.emails[0].value        
         let institution = ""
 
-        if (dbi.hasUserInfo(email)){
+        console.log(`dbi.hasUserInfo(${email}) == ${dbi.hasUserInfo(email)}`);
+        if (dbi.hasUserInfo(email)) {
+            console.log(dbi.getUserInfo(email));
             institution = dbi.getUserInfo(email).institution
         }
 
