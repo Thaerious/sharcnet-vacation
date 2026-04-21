@@ -14,7 +14,6 @@ program
     .parse(process.argv);
 
 const opts = program.opts();
-if (opts.verbose) logger.level = 'debug';
 
 if (!process.env.PORT) process.env.PORT = opts.port;
 

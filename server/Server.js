@@ -32,6 +32,7 @@ class Server {
         });
 
         this.server.listen(port, ip, () => {
+            logger.info(`HTTP listening on ${ip}:${port}`);
             logger.debug(chalk.green(`HTTP listening on ${ip}:${port}`));
         });
 
