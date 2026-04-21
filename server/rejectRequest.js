@@ -9,14 +9,16 @@ import { sendEmail } from "./email_interface.js";
  * data : from request body (as json) see doc/vacation_accept.pdf (1)
  */
 async function rejectRequest(hash) {
-    let dbRec = expandDatesInRecord(dbi.getRequestByHash(hash));
-
-    if (dbRec.status !== CONST.STATUS.PENDING) {
+    const raw = dbi.getRequestByHash(hash);
+    
+    if (!raw || raw.status !== CONST.STATUS.PENDING) {
         return {
             success: false,
-            message: "Request status: ${data.status}"
-        }
+            message: `Invalid or missing request.`
+        }        
     }
+
+    var dbRec = expandDatesInRecord(raw);
 
     dbi.updateStatusByHash(hash, CONST.STATUS.REJECTED);
 
@@ -24,7 +26,7 @@ async function rejectRequest(hash) {
     const html = loadAsset(CONST.ASSETS.STAFF_REJECTED.HTML, dbRec);
     const text = loadAsset(CONST.ASSETS.STAFF_REJECTED.TXT, dbRec);
     dbRec = humanizeDates(dbRec);
-    sendMail(dbRec.email, "", subject, html, text, dbRec.id);
+    sendEmail(dbRec.email, "", subject, html, text, dbRec.id);
 }
 
 export default rejectRequest;

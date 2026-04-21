@@ -26,7 +26,15 @@ router.use(`/status`,
 
         data = expandDatesInRecord(data);
         data = humanizeDates(data);
-        data.inst_email = dbi.getAllRoles(CONST.ROLES.ADMIN, data.institution)[0].email;
+
+        const admins = dbi.getAllRoles(CONST.ROLES.ADMIN, data.institution);
+        if (admins.length == 0) {
+            return res.status(500).json({
+                error: `No administrators found for ${data.institution}`
+            });               
+        }
+
+        data.inst_email = admins[0].email;
 
         res.render(
             "status/index.ejs",
@@ -40,7 +48,9 @@ function catchRenderingError(res) {
     return (err, html) => {
         if (err) {
             logger.error(err);
-            throw new Error(err);
+            return res.status(500).json({
+                error: `Rendering error`
+            });    
         } else {
             res.send(html);
         }

@@ -12,10 +12,10 @@ async function acceptRequest(hash, managerEmail) {
     // Check and/or update status
     let data = dbi.getRequestByHash(hash);
 
-    if (data.status !== CONST.STATUS.PENDING) {
+    if (data == null || data.status !== CONST.STATUS.PENDING) {
         return {
             success: false,
-            message: "Request status: ${data.status}"
+            message: `Request status: ${data?.status}`
         }
     }
 
@@ -60,8 +60,8 @@ function sendManagerEmail(data) {
     data = humanizeDates(data);
 
     const subject = `SHARCNET Vacation Accepted for '${data.name}'.`;
-    const html = loadAsset(CONST.ASSETS.NOTIFY_ADMIN.HTML, data);
-    const text = loadAsset(CONST.ASSETS.NOTIFY_ADMIN.TXT, data);
+    const html = loadAsset(CONST.ASSETS.NOTIFY_MANAGER.HTML, data);
+    const text = loadAsset(CONST.ASSETS.NOTIFY_MANAGER.TXT, data);
 
     for (const row of dbi.getAllRoles(CONST.ROLES.MANAGER)) {
         sendEmail(row.email, "", subject, html, text, data.id);

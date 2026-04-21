@@ -5,9 +5,9 @@ import chalk from "chalk";
 
 const rejectRoute = Express.Router();
 
-rejectRoute.use(`/reject`, async (req, res, next) => {
+rejectRoute.get(`/reject`, async (req, res, next) => {
     try {
-        rejectRequest(req.query.hash, req.query.email, req.body);
+        await rejectRequest(req.query.hash, req.query.email, req.body);
         res.redirect(`/status?hash=${req.query.hash}`);
     } catch (error) {
         logger.error(chalk.red(error.stack));

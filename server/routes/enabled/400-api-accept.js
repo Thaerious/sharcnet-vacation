@@ -7,7 +7,7 @@ const acceptRoute = Express.Router();
 
 acceptRoute.get(`/accept`, async (req, res, next) => {
         try {
-            acceptRequest(req.query.hash, req.query.email);
+            await acceptRequest(req.query.hash, req.query.email);
             res.redirect(`/status?hash=${req.query.hash}`);
         } catch (error) {
             logger.error(chalk.red(error.stack));

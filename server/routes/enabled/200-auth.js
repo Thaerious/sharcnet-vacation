@@ -11,13 +11,14 @@ passport.use(
         clientSecret: process.env.CLIENT_SECRET,
         callbackURL: process.env.CALLBACK_URL
     },
-    (_accessToken, _refreshToken, profile, done) => {
-        let email = profile.emails[0].value        
+        (_accessToken, _refreshToken, profile, done) => {        
+        const email = profile.emails?.[0]?.value;
+        if (!email) {
+             return done(null, false, { message: "No email on Google profile" });
+        }     
         let institution = ""
 
-        console.log(`dbi.hasUserInfo(${email}) == ${dbi.hasUserInfo(email)}`);
         if (dbi.hasUserInfo(email)) {
-            console.log(dbi.getUserInfo(email));
             institution = dbi.getUserInfo(email).institution
         }
 
