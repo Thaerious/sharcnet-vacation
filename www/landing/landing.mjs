@@ -13,9 +13,6 @@ window.addEventListener("load", () => {
     document.querySelector("select[name='institution']").addEventListener("change", checkFormValues);
     document.querySelector("#duration").addEventListener("change", checkDuration);
 
-    const startDate = document.getElementById("start_date");
-    const endDate = document.getElementById("end_date");
-
     // hijack form submission
     document.querySelector("#main_form").addEventListener("submit", submitForm);
 });
@@ -42,25 +39,28 @@ async function submit() {
             body: JSON.stringify(data)
         });
 
+        if (!response.ok) {
+            document.querySelector("submit-popup").showError(`Response status error: ${response.status}`);
+            return
+        }
+
         // Safely parse — server might return non-JSON on errors
         let result;
         try {
             result = await response.json();
-            document.querySelector("submit-popup").show(result);
+            document.querySelector("submit-popup").showData(result);
         } catch {
             result = { error: `Server returned ${response.status}: ${response.statusText}` };
-            document.querySelector("submit-popup").show(result.error);
+            document.querySelector("submit-popup").showError(`Server returned ${response.status}: ${response.statusText}`);
+            return
         }
 
-        console.log(result);
         document.querySelector("idle-throbber").hide();
-        
-
     } catch (err) {
         // Network failure, fetch never completed
         console.error(err);
         document.querySelector("idle-throbber").hide();
-        document.querySelector("submit-popup").show({ error: "Network error, please try again." });
+        document.querySelector("submit-popup").showError("Network error, please try again.");
     }
 }
 
@@ -76,17 +76,6 @@ function checkDuration() {
     }
 }
 
-function emailUpdate() {
-    const email = document.querySelector("input[name='email']").value;
-    const verify = document.querySelector("input[name='verify-email']").value;
-
-    if (email.trim() != verify.trim()) {
-        document.querySelector("input[name='verify-email']").value = "";
-        document.querySelector("#verify-email").classList.remove("hidden");
-        document.querySelector("#submit").setAttribute("disabled", true);
-    }
-}
-
 function checkFormValues() {
     const name = document.querySelector("input[name='name']").value;
     const email = document.querySelector("input[name='email']").value;
@@ -98,8 +87,6 @@ function checkFormValues() {
         Cookie.setCookie(`inst`, inst.trim());
         document.querySelector("#submit").removeAttribute("disabled");
     } else {
-        document.querySelector("#submit").setAttribute("disabled", true);
+        document.querySelector("#submit").setAttribute("disabled", "");
     }
 }
-
-window.check = checkFormValues;

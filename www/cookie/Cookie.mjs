@@ -16,9 +16,9 @@ class Cookie {
         const map = new Map();
 
         for (const s of split){
-            const name = s.substring(0, s.indexOf('='));
-            const value = s.substring(s.indexOf('=') + 1, s.length);
-            map.set(name.trim(), value);
+            const i = s.indexOf('=');
+            if (i === -1) continue;
+            map.set(s.substring(0, i).trim(), s.substring(i + 1));
         }
         
         return map;

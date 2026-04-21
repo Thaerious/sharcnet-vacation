@@ -11,13 +11,20 @@ class SubmitPopup extends WidgetElement {
         this.dom.okButton.addEventListener("click", ()=> this.hide());
     }
 
-    show(data){
+    show(text){
         super.show();
-        this.querySelector("#message").innerText = this.buildMessage(data);        
+        this.querySelector("#message").innerText = text;        
+    }
+
+    showError(text) {
+        this.show(text)
+    }
+
+    showData(data) {
+        this.show(this.buildMessage(data))
     }
 
     buildMessage(data) {
-        console.log(data)
         if (data.weekday_count == 1) {
             return `Vacation Request Submitted\n` +
                 `For ${data.start_date}\n` +
