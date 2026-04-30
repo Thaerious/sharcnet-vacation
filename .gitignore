@@ -6,6 +6,13 @@
 !doc/
 !server/
 !www/
+!tests/
+!db/
+
+# Ignore everything in db/ except specific files
+db/*
+!db/empty.db
+!db/default.db
 
 # Allow specific root files
 !.env.example
