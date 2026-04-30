@@ -6,7 +6,7 @@ import sqlite3 from "better-sqlite3";
 import crypto from "crypto";
 import mkdirif from "./mkdirif.js"
 
-class DBInterface {
+export class DBInterface {
     constructor() {
         const destination = mkdirif(
             process.env.DB_DIR,
@@ -172,7 +172,3 @@ class DBInterface {
         this.db.close();
     }
 }
-
-const dbi = new DBInterface();
-export { dbi, DBInterface };
-export default dbi;

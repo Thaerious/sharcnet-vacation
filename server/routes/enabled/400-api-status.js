@@ -1,6 +1,6 @@
 import Express from "express";
 import CONST from "../../constants.js";
-import dbi from "../../DBInterface.js";
+import dbi from "../../dbi.js";
 import { expandDatesInRecord, humanizeDates } from "../../buildData.js";
 import logger from "../../setupLogger.js"
 import chalk from "chalk"

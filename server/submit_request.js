@@ -2,7 +2,7 @@ import CONST from "./constants.js";
 import { internationalizeDates, expandDatesInRecord, addManagersToData, addURLsToData, humanizeDates } from "./buildData.js";
 import loadAsset from "./loadAsset.js";
 import { sendEmail } from "./email_interface.js";
-import dbi from "./DBInterface.js"
+import dbi from "./dbi.js"
 
 /**
  * Generate emails and update the database when a new vacation request is submitted.

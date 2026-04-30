@@ -5,7 +5,7 @@ import submitNew from "../../submit_request.js";
 import chalk from "chalk";
 import requireBody from "../middleware/requireBody.js";
 import requireAuth from "../middleware/requireAuth.js";
-import dbi from "../../DBInterface.js"
+import dbi from "../../dbi.js"
 import logMiddleware from "../middleware/logMiddleware.js"
 
 /**

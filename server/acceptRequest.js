@@ -2,7 +2,7 @@ import CONST from "./constants.js";
 import GoogleCalendar from "./GoogleCalendar.js";
 import loadAsset from "./loadAsset.js";
 import { expandDatesInRecord, humanizeDates } from "./buildData.js";
-import dbi from "./DBInterface.js"
+import dbi from "./dbi.js"
 import { sendEmail } from "./email_interface.js";
 
 const googleCalendar = new GoogleCalendar();

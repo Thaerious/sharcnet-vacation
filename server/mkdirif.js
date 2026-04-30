@@ -1,6 +1,11 @@
 import Path from "path";
 import FS from "fs"
 
+// Joins path segments and ensures the relevant directory exists, creating it if needed.
+// - Trailing slash: treats the full path as a directory and creates it.
+// - No trailing slash: treats the path as a file and creates its parent directory.
+//   If there is no parent component (bare filename), returns immediately without touching the fs.
+// Returns the joined path in all cases.
 export default function mkdirif(...paths) {
     const path = Path.join(...paths);
 

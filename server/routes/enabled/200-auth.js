@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import dbi from "../../DBInterface.js";
+import dbi from "../../dbi.js";
 
 const router = express.Router();
 
