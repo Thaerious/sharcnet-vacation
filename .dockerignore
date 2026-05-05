@@ -1,0 +1,8 @@
+node_modules/
+coverage/
+logs/
+db/production.db
+db/sessions.db
+.env
+.git/
+*.json.key

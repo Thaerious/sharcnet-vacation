@@ -12,13 +12,17 @@
 # Ignore everything in db/ except specific files
 db/*
 !db/empty.db
-!db/default.db
+!db/default.d
 
 # Allow specific root files
 !.env.example
 !.gitignore
+!.dockerignore
 !package.json
 !package-lock.json
+!Dockerfile
+!docker-compose.yml
+!Makefile
 
 # Allow specific non-root files
 !db/empty.db
